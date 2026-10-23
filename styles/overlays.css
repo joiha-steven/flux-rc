@@ -1,0 +1,58 @@
+/* Dialogs / bottom sheets and the programming screen. */
+dialog.dlg {
+  width: min(560px, calc(100vw - 32px));
+  max-height: calc(100vh - 32px);
+  padding: 0;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--surface);
+  color: var(--text);
+  overflow: hidden;
+}
+dialog.dlg[open] { display: flex; flex-direction: column; }
+dialog.dlg::backdrop { background: var(--scrim); }
+dialog.picker { width: min(640px, calc(100vw - 32px)); }
+.dlg-head { display: flex; align-items: center; justify-content: space-between; gap: var(--sp-1); padding: var(--sp-1) var(--gutter) var(--sp-1) var(--sp-2); border-bottom: 1px solid var(--line); }
+.dlg-head h2 { font-size: var(--fs-display); line-height: var(--lh-display); letter-spacing: -0.01em; }
+.dlg-body { overflow-y: auto; padding: var(--sp-2); display: grid; grid-template-columns: minmax(0, 1fr); gap: var(--sp-2); min-width: 0; }
+@media (max-width: 767px) {
+  dialog.dlg, dialog.picker { width: 100%; max-width: 100%; max-height: 85vh; margin: auto 0 0; border-radius: 16px 16px 0 0; border-bottom: 0; }
+}
+
+.list { display: grid; grid-template-columns: minmax(0, 1fr); gap: var(--sp-1); }
+.list-item { display: grid; grid-template-columns: minmax(0, 1fr); gap: var(--sp-1); min-width: 0; padding: 12px var(--sp-2); border: 1px solid var(--line); border-radius: var(--radius-s); background: var(--bg); }
+.list-title { font-weight: 600; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; min-width: 0; }
+.list-actions { display: flex; flex-wrap: wrap; gap: var(--sp-1); }
+.list-sub { color: var(--muted); font-size: var(--fs-small); line-height: var(--lh-small); }
+.inline-form { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: var(--sp-1); align-items: end; }
+.text-input, .readonly-link { width: 100%; min-height: var(--tap); padding: 0 12px; background: var(--surface-2); border: 1px solid var(--line); border-radius: var(--radius-s); color: var(--text); }
+.readonly-link { font-size: var(--fs-small); }
+.form-error { color: var(--danger); font-size: var(--fs-small); line-height: var(--lh-small); }
+.fields { width: 100%; border-collapse: collapse; font-size: var(--fs-small); font-family: var(--mono); }
+.fields th, .fields td { text-align: left; padding: 4px 0; border-bottom: 1px solid var(--line); font-weight: 400; }
+.fields td { text-align: right; padding-left: var(--sp-1); }
+.fields th { color: var(--muted); }
+.meta { color: var(--muted); font-size: var(--fs-small); font-family: var(--mono); }
+
+/* Mode picker */
+.pick-list { display: grid; gap: 4px; }
+.pick { display: flex; align-items: center; gap: var(--sp-2); width: 100%; min-height: 56px; padding: 4px var(--sp-1); text-align: left; background: none; border: 1px solid transparent; border-radius: var(--radius-s); }
+.pick:hover { background: var(--surface-2); }
+.pick:active { background: var(--line); }
+.pick[aria-current="true"] { border-color: var(--accent); background: var(--surface-2); }
+.pick-img { flex: none; width: 48px; height: 40px; object-fit: cover; object-position: center 65%; border-radius: 6px; }
+.pick-none { display: grid; place-items: center; border: 1px dashed var(--muted); color: var(--muted); }
+.pick-text { display: grid; min-width: 0; }
+.pick-text b { font-weight: 500; }
+.pick-detail { font-size: var(--fs-small); line-height: var(--lh-small); color: var(--muted); }
+.pick[aria-current="true"] b { color: var(--accent); }
+.pick-signal { display: grid; gap: var(--sp-2); padding-top: var(--sp-2); border-top: 1px solid var(--line); }
+.signal-grid { display: grid; gap: var(--sp-1); }
+@media (min-width: 768px) { .signal-grid { grid-template-columns: 1fr 1fr; } }
+
+/* Advanced rows */
+.warning-banner { padding: var(--sp-2); border: 1px solid var(--danger); border-left-width: 4px; border-radius: var(--radius-s); }
+.warning-banner strong { color: var(--danger); }
+.danger-text { color: var(--danger); font-size: var(--fs-small); line-height: var(--lh-small); font-weight: 500; }
+.pin-row select { font-family: var(--mono); }
+.pin-row { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--sp-1); }

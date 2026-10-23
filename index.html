@@ -1,0 +1,127 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="dark">
+  <meta name="theme-color" content="#0b0c0e">
+  <title>flux-rc — NXS R1 optical programmer</title>
+  <meta name="description" content="Pick modes and options, hold the flashlight against the screen, and the flashing square programs it.">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Crect width='16' height='16' rx='3' fill='%230b0c0e'/%3E%3Crect x='4' y='4' width='8' height='8' fill='%23ffb547'/%3E%3C/svg%3E">
+  <link rel="stylesheet" href="styles/fonts.css">
+  <link rel="stylesheet" href="styles/tokens.css">
+  <link rel="stylesheet" href="styles/layout.css">
+  <link rel="stylesheet" href="styles/controls.css">
+  <link rel="stylesheet" href="styles/tiles.css">
+  <link rel="stylesheet" href="styles/overlays.css">
+  <link rel="stylesheet" href="styles/program.css">
+  <link rel="preload" href="assets/fonts/plum-sans-latin.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="assets/fonts/plum-mono-latin.woff2" as="font" type="font/woff2" crossorigin>
+  <!-- Every module the page imports at startup, so they download in parallel instead of one import level at a time. Keep in sync with src/. -->
+  <link rel="modulepreload" href="src/ui/app.js">
+  <link rel="modulepreload" href="src/core/config.js">
+  <link rel="modulepreload" href="src/core/fields.js">
+  <link rel="modulepreload" href="src/core/gif.js">
+  <link rel="modulepreload" href="src/core/index.js">
+  <link rel="modulepreload" href="src/core/levels.js">
+  <link rel="modulepreload" href="src/core/modes.js">
+  <link rel="modulepreload" href="src/core/program.js">
+  <link rel="modulepreload" href="src/core/protocol.js">
+  <link rel="modulepreload" href="src/core/scales.js">
+  <link rel="modulepreload" href="src/core/source.js">
+  <link rel="modulepreload" href="src/core/validate.js">
+  <link rel="modulepreload" href="src/data/presets.js">
+  <link rel="modulepreload" href="src/data/quick-presets.js">
+  <link rel="modulepreload" href="src/ui/controls.js">
+  <link rel="modulepreload" href="src/ui/derive.js">
+  <link rel="modulepreload" href="src/ui/dialog.js">
+  <link rel="modulepreload" href="src/ui/dialogs.js">
+  <link rel="modulepreload" href="src/ui/dom.js">
+  <link rel="modulepreload" href="src/ui/icons.js">
+  <link rel="modulepreload" href="src/ui/issues.js">
+  <link rel="modulepreload" href="src/ui/modes-list.js">
+  <link rel="modulepreload" href="src/ui/program-screen.js">
+  <link rel="modulepreload" href="src/ui/render/advanced.js">
+  <link rel="modulepreload" href="src/ui/render/behaviour.js">
+  <link rel="modulepreload" href="src/ui/render/footer.js">
+  <link rel="modulepreload" href="src/ui/render/groups.js">
+  <link rel="modulepreload" href="src/ui/render/picker.js">
+  <link rel="modulepreload" href="src/ui/render/quick.js">
+  <link rel="modulepreload" href="src/ui/share.js">
+  <link rel="modulepreload" href="src/ui/state.js">
+  <link rel="modulepreload" href="src/ui/storage.js">
+  <link rel="modulepreload" href="src/ui/toast.js">
+  <script type="module" src="src/ui/app.js"></script>
+  <!-- Boot guard: app.js sets data-ready on <html> after its first render. If that never happens (a module failed to load, or 6 s pass) show a message instead of a blank page. -->
+  <script>
+    (function () {
+      var failed = false;
+      function fail() {
+        var main = document.getElementById('main');
+        if (failed || document.documentElement.hasAttribute('data-ready') || !main) return;
+        failed = true;
+        var p = document.createElement('p'); p.className = 'note'; p.setAttribute('role', 'alert');
+        p.textContent = "flux-rc couldn't load. Check your connection and reload the page.";
+        var b = document.createElement('button'); b.type = 'button'; b.className = 'btn btn-primary'; b.textContent = 'Reload';
+        b.onclick = function () { location.reload(); };
+        main.replaceChildren(p, b);
+      }
+      setTimeout(fail, 6000);
+      addEventListener('error', function (e) { if (e.target && e.target.tagName === 'SCRIPT') fail(); }, true);
+    })();
+  </script>
+</head>
+<body>
+<div id="app">
+  <header class="topbar">
+    <div class="page topbar-inner">
+      <div class="brand">
+        <h1 class="wordmark">flux-rc</h1>
+        <p class="tagline">NXS R1 optical programmer</p>
+      </div>
+      <div class="topbar-actions">
+        <button type="button" class="btn btn-outline" id="btn-presets" aria-label="Presets">
+          <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M4 7h10M18 7h2M4 17h2M10 17h10"/><circle cx="16" cy="7" r="2"/><circle cx="8" cy="17" r="2"/></svg>
+          <span class="btn-label">Presets</span>
+        </button>
+        <button type="button" class="btn btn-outline" id="btn-saved" aria-label="Saved">
+          <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"><path d="M6 4h12v17l-6-4-6 4z"/></svg>
+          <span class="btn-label">Saved</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main id="main" class="page main">
+    <noscript><p class="note">flux-rc needs JavaScript to build the programming signal.</p></noscript>
+    <section class="quick" aria-label="Quick start"><div id="quick"></div></section>
+    <div id="groups" class="groups"></div>
+    <section class="behaviour" aria-labelledby="h-behaviour">
+      <h2 id="h-behaviour">Behaviour</h2>
+      <div id="behaviour"></div>
+    </section>
+    <div class="end">
+      <div id="issues-strip" class="issues-strip" hidden></div>
+      <div id="advanced-body" class="advanced-panel" hidden></div>
+      <footer id="footer" class="footer"></footer>
+    </div>
+    <section class="about" aria-labelledby="h-about">
+      <h2 id="h-about">About this page</h2>
+      <p>flux-rc is made by a fan of <a href="https://lux-rc.com/" rel="nofollow noopener noreferrer">Lux-RC</a>.
+        It is not affiliated with, endorsed by or connected to Lux-RC in any way, and I don't own anything of Lux-RC. The Lux-RC and NXS names belong to
+        their owners.</p>
+      <p>Parts of the layout deliberately follow the
+        <a href="https://lux-rc.com/content/NXS/NXS_R1_programming" rel="nofollow noopener noreferrer">original Lux-RC programmer</a>, so the screens and
+        settings sit where you already expect them.</p>
+      <p>This is a non-commercial hobby project: free, no ads, no accounts, and nothing you enter
+        leaves your browser.</p>
+      <p>Use it at your own risk. I take no responsibility for any flashlight, battery or other
+        device, or for any damage or error that comes from using this page.</p>
+      <p><a href="https://github.com/joiha-steven/flux-rc" rel="noopener">Source code on GitHub</a></p>
+    </section>
+  </main>
+</div>
+<div id="toasts" class="toasts" popover="manual" role="status" aria-live="polite"></div>
+<div id="program" class="program" role="dialog" aria-modal="true" aria-label="Program the light" hidden></div>
+</body>
+</html>

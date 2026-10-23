@@ -1,5 +1,9 @@
 # flux-rc
 
+> Made by a fan of [Lux-RC](https://lux-rc.com/). Not affiliated with, endorsed by or connected to Lux-RC in any way.
+> Non-commercial. Use at your own risk: no responsibility is taken for any device, battery or
+> damage. Parts of the layout deliberately follow the original Lux-RC programmer so it feels familiar.
+
 A simpler optical programmer for flashlights that use the NXS R1 driver (Lux-RC 371D light
 engine). Pick your modes and options, hold the flashlight against the screen, and the flashing
 square programs it.

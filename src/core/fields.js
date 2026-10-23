@@ -4,10 +4,10 @@ import { pinField } from './scales.js';
 
 /** Short names of the 15 fields, in protocol order. */
 export const FIELD_NAMES = [
-  'Single-cell mode 1', 'Single-cell mode 2', 'Single-cell mode 3', 'Single-cell mode 4',
-  'Dual-cell mode 1', 'Dual-cell mode 2', 'Dual-cell mode 3', 'Dual-cell mode 4',
-  'Options', 'Mode switch timeout', 'Thermal cutoff', 'Single-cell limit', 'Dual-cell limit',
-  'PIN', 'Bounce sensor',
+  'One-cell mode 1', 'One-cell mode 2', 'One-cell mode 3', 'One-cell mode 4',
+  'Two-cell mode 1', 'Two-cell mode 2', 'Two-cell mode 3', 'Two-cell mode 4',
+  'Options', 'Mode switch timeout', 'Thermal cutoff', 'One-cell output limit', 'Two-cell output limit',
+  'Programming PIN', 'Bounce sensor',
 ];
 
 const MEMORY = { none: 0, standard: 8, hybrid: 24 };

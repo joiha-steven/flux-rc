@@ -1,0 +1,23 @@
+/* Programming screen: Prepare step on a dimmed trail photo, then a black screen with the GIF. */
+.program { position: fixed; inset: 0; z-index: 100; background: #000; color: #c9c9c9; overflow-y: auto; --text: #c9c9c9; --muted: #8d8d8d; --raised: #1a1a1a; --border: #2e2e2e; --line: #2e2e2e; }
+/* The photo is only requested once .prepare is set, i.e. when the screen opens. */
+.program.prepare { background: linear-gradient(rgb(0 0 0 / 0.8), rgb(0 0 0 / 0.8)), url("../assets/trail.webp") center / cover #000; }
+.program-inner { min-height: 100%; display: grid; align-content: center; justify-items: center; gap: var(--sp-2); padding: var(--sp-3) var(--sp-2); }
+.program h2 { font-size: var(--fs-display); line-height: var(--lh-display); letter-spacing: -0.01em; }
+.program h3 { font-size: var(--fs-body); line-height: var(--lh-body); }
+.program-panel { width: min(560px, 100%); display: grid; gap: var(--sp-2); }
+.prepare .program-panel { padding: var(--sp-3); background: rgb(19 21 24 / 0.92); border: 1px solid var(--line); border-radius: var(--radius); }
+.program ol { display: grid; gap: var(--sp-1); padding-left: var(--sp-3); list-style: decimal; }
+.program-tips { display: grid; gap: var(--sp-1); }
+.program-tips li { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: var(--sp-1); align-items: start; color: var(--muted); font-size: var(--fs-small); line-height: var(--lh-small); }
+.program-tips .icon { color: var(--text); }
+.program-tips .icon svg { width: 18px; height: 18px; }
+.program-tip-group { display: grid; gap: var(--sp-1); }
+.program-buttons { display: flex; gap: var(--sp-1); flex-wrap: wrap; }
+.program .btn { background: #141414; color: #bdbdbd; border-color: var(--border); }
+.program .btn:hover:not(:disabled) { background: #1f1f1f; }
+.program .btn-primary { background: var(--accent); color: var(--on-accent); border-color: var(--accent); }
+.program .btn-primary:hover:not(:disabled) { background: var(--accent); }
+.flash-hint { max-width: 360px; text-align: center; font-size: var(--fs-small); line-height: var(--lh-small); color: #6f6f6f; }
+.flash-img { display: block; width: min(300px, calc(100vw - 32px), calc(100vh - 160px)); height: auto; aspect-ratio: 1 / 1; image-rendering: pixelated; background: #000; }
+.program.flashing .btn { color: #6f6f6f; background: #0b0b0b; }
