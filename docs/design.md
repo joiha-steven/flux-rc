@@ -28,6 +28,15 @@ browser.
 Wordmark "flux-rc", tagline "Optical programmer for NXS R1 drivers". Right side: "Presets" and
 "Saved" buttons (icons with labels; labels may hide below 400 px but keep accessible names).
 
+### 0. Quick start
+
+A row of three cards right under the header, from `QUICK_PRESETS` in `src/data/quick-presets.js`:
+Everyday, Tactical, Gentle. Each card shows its name, its one-line description and its four modes
+as small level chips. One tap loads it (replaces the config, "Undo" toast). The card whose config
+equals the current config is marked as selected. Phone: horizontal scroll row with snap, or a
+stacked list if three fit; tablet and desktop: three equal columns. The same three also appear at
+the top of the Presets dialog, above the vendor presets, under a "Quick start" heading.
+
 ### 1. Batteries
 
 Two cards:

@@ -5,7 +5,7 @@
   "description": "Optical programmer for NXS R1 flashlight drivers. Static web page, no server.",
   "type": "module",
   "scripts": {
-    "test": "node --test test/",
+    "test": "node --test test/*.test.js",
     "serve": "python3 -m http.server 8080"
   }
 }
