@@ -23,7 +23,7 @@
   overflow: hidden;
   padding: 0;
   text-align: left;
-  background: var(--surface);
+  background: var(--photo-bg);
   border: 1px solid var(--line);
   border-radius: var(--radius);
 }
@@ -42,6 +42,7 @@
   font-size: var(--fs-caption);
   line-height: var(--lh-caption);
   font-weight: 500;
+  color: var(--photo-text);
   text-shadow: 0 1px 2px #000;
 }
 .tile-label span { display: block; }
@@ -56,31 +57,36 @@
   font-size: var(--fs-caption);
   font-weight: 500;
   background: rgb(0 0 0 / 0.5);
-  border: 1px solid var(--muted);
+  color: var(--photo-text);
+  border: 1px solid var(--photo-muted);
   border-radius: 4px;
 }
 .tile-code { position: absolute; left: var(--sp-1); bottom: var(--sp-1); display: flex; align-items: baseline; gap: var(--sp-1); color: var(--accent); }
-.tile-code small { color: var(--muted); font-size: 11px; line-height: 1; letter-spacing: 0.08em; text-transform: uppercase; }
+.tile-code small { color: var(--photo-muted); font-size: 11px; line-height: 1; letter-spacing: 0.08em; text-transform: uppercase; }
 .tile-code b { font-size: var(--tile-number); line-height: 1; font-weight: 600; text-shadow: 0 1px 3px #000; }
 .tile-issue { position: absolute; top: 38px; right: var(--sp-1); }
 .issue-dot { display: grid; place-items: center; width: 22px; height: 22px; border-radius: 50%; font-size: var(--fs-small); font-weight: 600; color: var(--on-accent); }
+.issue-dot.issue-error { color: var(--on-danger); }
 .issue-dot.issue-error { background: var(--danger); }
 .issue-dot.issue-warning, .issue-dot.issue-info { background: var(--accent); }
 
 .steps { position: absolute; right: 4px; bottom: 4px; display: grid; }
 .step { width: var(--tap); height: var(--tap); display: grid; place-items: center; padding: 0; background: none; border: 0; }
-.step > span { width: 30px; height: 30px; display: grid; place-items: center; background: rgb(0 0 0 / 0.55); border: 1px solid var(--muted); border-radius: var(--radius-s); }
-.step:hover:not(:disabled) > span { border-color: var(--text); background: rgb(0 0 0 / 0.75); }
+.step > span { width: 30px; height: 30px; display: grid; place-items: center; background: rgb(0 0 0 / 0.55); color: var(--photo-text); border: 1px solid var(--photo-muted); border-radius: var(--radius-s); }
+.step:hover:not(:disabled) > span { border-color: var(--photo-text); background: rgb(0 0 0 / 0.75); }
 .step:active:not(:disabled) > span { background: var(--accent); border-color: var(--accent); color: var(--on-accent); }
 .step:disabled { cursor: not-allowed; }
 .step:disabled > span { opacity: 0.35; }
 
-.tile.burn .tile-main { border: 2px solid var(--accent); box-shadow: 0 0 18px rgb(255 181 71 / 0.4); }
+.tile.burn .tile-main { border: 2px solid var(--accent-strong); box-shadow: 0 0 18px var(--accent-glow); }
 .tile.unused .tile-main { background: transparent; border: 1px dashed var(--muted); }
+/* No photo behind an unused tile, so its badge and arrows use the page colours. */
+.tile.unused .tile-badge, .tile.unused .step > span { background: var(--surface); color: var(--text); border-color: var(--muted); }
+.tile.unused .step:hover:not(:disabled) > span { border-color: var(--text); background: var(--surface-2); }
 .tile-empty { position: absolute; inset: 0; display: grid; place-content: center; justify-items: center; color: var(--muted); }
 .tile-main:hover { border-color: var(--muted); }
 .tile-main:active { border-color: var(--text); }
-.tile.burn .tile-main:hover { border-color: var(--accent); }
+.tile.burn .tile-main:hover { border-color: var(--accent-strong); }
 .tile-empty b { font-size: 24px; font-weight: 400; }
 .return-line { display: none; }
 

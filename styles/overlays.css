@@ -11,7 +11,7 @@ dialog.dlg {
 }
 dialog.dlg[open] { display: flex; flex-direction: column; }
 dialog.dlg::backdrop { background: var(--scrim); }
-dialog.picker { width: min(640px, calc(100vw - 32px)); }
+dialog.picker { width: min(760px, calc(100vw - 32px)); }
 .dlg-head { display: flex; align-items: center; justify-content: space-between; gap: var(--sp-1); padding: var(--sp-1) var(--gutter) var(--sp-1) var(--sp-2); border-bottom: 1px solid var(--line); }
 .dlg-head h2 { font-size: var(--fs-display); line-height: var(--lh-display); letter-spacing: -0.01em; }
 .dlg-body { overflow-y: auto; padding: var(--sp-2); display: grid; grid-template-columns: minmax(0, 1fr); gap: var(--sp-2); min-width: 0; }
@@ -34,18 +34,40 @@ dialog.picker { width: min(640px, calc(100vw - 32px)); }
 .fields th { color: var(--muted); }
 .meta { color: var(--muted); font-size: var(--fs-small); font-family: var(--mono); }
 
-/* Mode picker */
-.pick-list { display: grid; gap: 4px; }
-.pick { display: flex; align-items: center; gap: var(--sp-2); width: 100%; min-height: 56px; padding: 4px var(--sp-1); text-align: left; background: none; border: 1px solid transparent; border-radius: var(--radius-s); }
-.pick:hover { background: var(--surface-2); }
-.pick:active { background: var(--line); }
-.pick[aria-current="true"] { border-color: var(--accent); background: var(--surface-2); }
-.pick-img { flex: none; width: 48px; height: 40px; object-fit: cover; object-position: center 65%; border-radius: 6px; }
-.pick-none { display: grid; place-items: center; border: 1px dashed var(--muted); color: var(--muted); }
-.pick-text { display: grid; min-width: 0; }
-.pick-text b { font-weight: 500; }
-.pick-detail { font-size: var(--fs-small); line-height: var(--lh-small); color: var(--muted); }
-.pick[aria-current="true"] b { color: var(--accent); }
+/* Mode picker: grid of photo cells, detail bar pinned at the bottom */
+.pick-grids { display: grid; gap: var(--sp-1); }
+.pick-heading { font-size: var(--fs-small); line-height: var(--lh-small); font-weight: 500; color: var(--muted); margin-top: var(--sp-1); }
+.pick-grid { display: grid; gap: var(--sp-1); }
+.pick-levels { grid-template-columns: repeat(8, minmax(0, 1fr)); }
+.pick-others { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+.pick { position: relative; overflow: hidden; min-width: 0; min-height: var(--tap); padding: 0; text-align: left; color: var(--photo-text); background: var(--photo-bg); border: 2px solid var(--line); border-radius: var(--radius-s); }
+.pick:hover, .pick:focus-visible { border-color: var(--muted); }
+.pick[aria-current="true"] { border-color: var(--accent-strong); }
+.pick-level { aspect-ratio: 1; }
+.pick-wide { min-height: 72px; }
+.pick-img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: center 65%; }
+.pick::after { content: ""; position: absolute; inset: 0; background: linear-gradient(to bottom, transparent 40%, rgb(0 0 0 / 0.75)); }
+/* Wide cells put two lines of text over the photo, and the afterburning photo is bright: darken more. */
+.pick-wide::after { background: linear-gradient(to bottom, rgb(0 0 0 / 0.15), rgb(0 0 0 / 0.85)); }
+.pick-num, .pick-power, .pick-text, .pick-plus { position: absolute; z-index: 1; text-shadow: 0 1px 3px #000; }
+.pick-num { top: var(--sp-1); left: var(--sp-1); font-size: var(--fs-title); line-height: var(--lh-title); font-weight: 600; }
+.pick-power { left: var(--sp-1); bottom: var(--sp-1); font-size: var(--fs-caption); line-height: var(--lh-caption); }
+.pick-text { display: grid; left: var(--sp-1); right: var(--sp-1); bottom: var(--sp-1); }
+.pick-text b { font-weight: 500; overflow-wrap: anywhere; }
+.pick-detail { font-size: var(--fs-caption); line-height: var(--lh-caption); color: var(--photo-muted); overflow-wrap: anywhere; }
+.pick-unused { border-style: dashed; color: var(--text); background: var(--surface-2); }
+.pick-unused::after { display: none; }
+.pick-unused .pick-text, .pick-unused .pick-plus { text-shadow: none; }
+.pick-unused .pick-text { color: var(--muted); }
+.pick-unused .pick-detail { color: var(--muted); }
+.pick-plus { top: var(--sp-1); right: var(--sp-1); color: var(--muted); font-size: var(--fs-title); }
+.pick[aria-current="true"] .pick-text b, .pick[aria-current="true"] .pick-num { color: var(--accent); }
+.pick-unused[aria-current="true"] .pick-text b { color: var(--accent-strong); }
+.pick-detailbar { position: sticky; bottom: calc(-1 * var(--sp-2)); margin: 0 calc(-1 * var(--sp-2)) calc(-1 * var(--sp-2)); padding: var(--sp-1) var(--sp-2); background: var(--surface); border-top: 1px solid var(--line); font-size: var(--fs-small); line-height: var(--lh-small); min-height: var(--tap); display: flex; align-items: center; z-index: 2; }
+@media (max-width: 767px) {
+  .pick-levels { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+  .pick-others { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
 .pick-signal { display: grid; gap: var(--sp-2); padding-top: var(--sp-2); border-top: 1px solid var(--line); }
 .signal-grid { display: grid; gap: var(--sp-1); }
 @media (min-width: 768px) { .signal-grid { grid-template-columns: 1fr 1fr; } }

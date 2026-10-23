@@ -1,4 +1,9 @@
-/* Design tokens (docs/design.md), reset, base type. Dark only. */
+/* Design tokens (docs/design.md "Tokens"), reset, base type.
+   :root holds the DARK palette as plain values: that is what browsers without light-dark() get (Safari < 17.5,
+   Chrome < 123) and it is the original look. Where light-dark() works, the @supports block below redeclares the
+   colours as light-dark(light, dark): the page then follows prefers-color-scheme, and <html data-theme="light|dark">
+   (set by src/ui/theme.js and the inline script in index.html) forces one. Any element can pin a scheme with
+   color-scheme: .program does, so the Program screen stays dark in both themes. */
 :root {
   color-scheme: dark;
   --bg: #0b0c0e;
@@ -7,15 +12,26 @@
   --line: #2a2e34;
   --text: #ece9e4;
   --muted: #8d9097;
+  /* Amber is a FILL (buttons, selected pills, numbers on dark photos). */
   --accent: #ffb547;
   --on-accent: #1a1205;
+  /* Amber used as text, border or focus ring on the page background: darker on light so it stays readable. */
+  --accent-strong: #ffb547;
+  --accent-glow: rgb(255 181 71 / 0.4);
   --danger: #ff6b6b;
+  /* Ink on a --danger fill (the "!" badge). */
+  --on-danger: #1a0606;
   --ok: #5bd68a;
+  /* Text and controls drawn over the (dark) beam photos stay light in both themes; the frame behind a photo stays dark. */
+  --photo-text: #ece9e4;
+  --photo-muted: #b4b7bd;
+  --photo-bg: #1a1d21;
   /* aliases used by the shared controls */
   --raised: var(--surface-2);
   --border: var(--line);
   --accent-ink: var(--on-accent);
   --scrim: rgb(0 0 0 / 0.65);
+  --shadow: rgb(0 0 0 / 0.5);
 
   --sp-1: 8px;
   --sp-2: 16px;
@@ -37,6 +53,26 @@
   /* height of the sticky bottom bar below 1200 px; toasts and page padding are derived from it */
   --bar-h: 64px;
 }
+@supports (color: light-dark(red, red)) {
+  :root {
+    color-scheme: light dark;
+    --bg: light-dark(#f6f4f0, #0b0c0e);
+    --surface: light-dark(#ffffff, #131518);
+    --surface-2: light-dark(#ebe8e1, #1a1d21);
+    --line: light-dark(#d4cfc5, #2a2e34);
+    --text: light-dark(#1b1a18, #ece9e4);
+    --muted: light-dark(#625e57, #8d9097);
+    --accent-strong: light-dark(#945400, #ffb547);
+    --accent-glow: light-dark(rgb(148 84 0 / 0.3), rgb(255 181 71 / 0.4));
+    --danger: light-dark(#c0272d, #ff6b6b);
+    --on-danger: light-dark(#ffffff, #1a0606);
+    --ok: light-dark(#17703d, #5bd68a);
+    --scrim: light-dark(rgb(27 26 24 / 0.45), rgb(0 0 0 / 0.65));
+    --shadow: light-dark(rgb(27 26 24 / 0.18), rgb(0 0 0 / 0.5));
+  }
+  html[data-theme="light"] { color-scheme: light; }
+  html[data-theme="dark"] { color-scheme: dark; }
+}
 @media (min-width: 768px) { :root { --gutter: 24px; --tile-number: 40px; } }
 
 *, *::before, *::after { box-sizing: border-box; }
@@ -53,7 +89,7 @@ h2 { font-size: var(--fs-title); line-height: var(--lh-title); letter-spacing: -
 h3 { font-size: var(--fs-body); line-height: var(--lh-body); }
 .mono { font-family: var(--mono); }
 .muted { color: var(--muted); }
-:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+:focus-visible { outline: 2px solid var(--accent-strong); outline-offset: 2px; }
 .sr { position: absolute; width: 1px; height: 1px; margin: -1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
 .icon { display: inline-flex; flex: none; }
 

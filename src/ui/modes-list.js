@@ -64,9 +64,21 @@ export function entryName(mode) {
   return mode.type === 'signal' ? 'Custom signal' : describeMode(mode);
 }
 
+/** One short line for the picker's wide cells and detail bar. */
 export function entryDetail(mode) {
+  if (!mode) return 'This slot is skipped';
   if (mode.type === 'level') return tileLabel(mode);
-  if (mode.type === 'afterburning') return '100 % · 30 W';
-  if (mode.type === 'sos') return 'Distress pattern per 46 CFR 161.013-7.';
-  return mode.type === 'signal' ? 'Choose colour and timing' : '';
+  if (mode.type === 'afterburning') return tileLines(mode)[1];
+  return {
+    moonlight: 'Dim red light', sos: 'Distress pattern', strobe: 'Fast flashing',
+    beacon: 'Slow red flash', signal: 'Choose colour and timing',
+  }[mode.type];
+}
+
+/** The full description for the picker's detail bar and accessible names: "Level 21 · 10 % · 3 W". */
+export function entryFull(mode) {
+  if (!mode) return 'Not used · this slot is skipped';
+  if (mode.type === 'level' || mode.type === 'afterburning' || mode.type === 'signal') return describeMode(mode);
+  if (mode.type === 'sos') return `${describeMode(mode)} · Distress pattern per 46 CFR 161.013-7`;
+  return `${entryName(mode)} · ${entryDetail(mode)}`;
 }

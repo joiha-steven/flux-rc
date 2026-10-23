@@ -13,8 +13,10 @@ who know that page feel at home.
 
 ## Principles
 
-- **Dark only.** People program in a dim room and the flashing square sits on black; the photo
-  tiles are designed for a dark page. Set `color-scheme: dark`. There is no light theme.
+- **Light and dark.** The page follows the browser (`prefers-color-scheme`); a topbar button
+  overrides it (see Theme). Tile photos are dark in both themes, so text drawn on them stays light.
+- **The Program screen is always dark**, in both themes: people hold the light up to a dark
+  screen in a dim room, and the flashing square sits on black. `.program` pins `color-scheme: dark`.
 - **One screen, top to bottom**, in the same order as the original.
 - **Plain words.** "Level 21 · 10 % · 3 W", "Starts in the last mode used". Raw field numbers only
   in Packet details.
@@ -23,17 +25,40 @@ who know that page feel at home.
 
 ## Tokens
 
-| Token | Value | Use |
-|-------|-------|-----|
-| `--bg` | `#0b0c0e` | page |
-| `--surface` | `#131518` | cards, bars |
-| `--surface-2` | `#1a1d21` | hover, pressed |
-| `--line` | `#2a2e34` | 1 px borders |
-| `--text` | `#ece9e4` | main text |
-| `--muted` | `#8d9097` | secondary text |
-| `--accent` | `#ffb547` | amber: wordmark, level numbers, selected, Program |
-| `--on-accent` | `#1a1205` | text on amber |
-| `--danger` | `#ff6b6b` | errors |
+Each colour is declared once as `light-dark(light, dark)` in `styles/tokens.css`.
+
+| Token | Light | Dark | Use |
+|-------|-------|------|-----|
+| `--bg` | `#f6f4f0` | `#0b0c0e` | page |
+| `--surface` | `#ffffff` | `#131518` | cards, bars |
+| `--surface-2` | `#ebe8e1` | `#1a1d21` | hover, pressed |
+| `--line` | `#d4cfc5` | `#2a2e34` | 1 px borders (decorative, not text) |
+| `--text` | `#1b1a18` | `#ece9e4` | main text |
+| `--muted` | `#625e57` | `#8d9097` | secondary text |
+| `--accent` | `#ffb547` | `#ffb547` | amber FILL: buttons, selected pills, numbers on photos |
+| `--on-accent` | `#1a1205` | `#1a1205` | text on amber |
+| `--accent-strong` | `#945400` | `#ffb547` | amber as text, border or focus ring on the page: wordmark, links, focus, selected card |
+| `--danger` | `#c0272d` | `#ff6b6b` | errors |
+| `--ok` | `#17703d` | `#5bd68a` | success |
+| `--scrim`, `--shadow`, `--accent-glow` | translucent ink | translucent black / amber | dialog backdrop, toast shadow, afterburning glow |
+| `--photo-text`, `--photo-muted` | `#ece9e4`, `#b4b7bd` | same | text and borders drawn on beam photos |
+
+Contrast (WCAG AA, 4.5:1 for text): light `--text` 15.8 on bg and 17.4 on surface, `--muted` 5.9 / 6.5
+(5.3 on surface-2), `--accent-strong` 5.4 / 6.0 (4.9 on surface-2); dark `--text` 16.2 / 15.1,
+`--muted` 6.1 / 5.7, `--accent` 11.1 / 10.4. Use `--accent` only as a fill with `--on-accent` ink;
+use `--accent-strong` wherever amber is text or an outline.
+
+Colours that stay literal on purpose: the flashing square (protocol), the Program screen, and
+gradients and text shadows over the beam photos.
+
+### Theme
+
+One icon button in the topbar (`#btn-theme`) cycles Auto, Light, Dark, Auto; the icon shows the
+current choice (half-filled circle, sun, moon) and the label says what a click does. The choice is
+stored in `localStorage` under `flux-rc:theme` ("light" or "dark"; missing means auto) and set as
+`<html data-theme>`. A small inline script in `<head>` applies it before the stylesheets paint, so
+there is no flash. If storage fails the toggle still works for the current page view.
+Logic: `src/ui/theme.js`.
 
 Radius 12 px on cards and tiles, 8 px on buttons. 8 px spacing grid. Content max width 1080 px,
 centred, 24 px gutters (16 px on phones).
@@ -122,9 +147,24 @@ one-cell modes." (or two-cell, or "Modes stay as they are on the light" when bot
 - Inline issues (from `validateConfig` by path) as a small red or amber badge on the tile; the full
   text appears in the issues strip above the footer.
 - Tapping the tile body opens the **mode picker**: dialog on desktop/tablet, bottom sheet on phone.
-  It lists every entry with a small beam thumbnail, number, % and power; the current one is
-  highlighted. Choosing "Custom signal" reveals its controls (colour, single/double, on time, off
-  time) inside the picker.
+  It is a **grid, not a list**, so the whole choice fits on one screen without scrolling (phone may
+  scroll a little):
+  - **Brightness levels** first: 32 square-ish cells, 8 columns on desktop/tablet (dialog about
+    760 px wide), 4 columns on phone. Each cell is a tiny beam photo (the `-thumb` file of its band,
+    with the same `brightness()` rule as the tiles) darkened at the bottom, the level number large
+    in Plum Mono top-left, and the power ("3 W", "180 mW") small at the bottom-left. The % is not
+    printed in the cell.
+  - **Other modes** below, under a small heading: Afterburning, Red moonlight, S.O.S., 10 Hz strobe,
+    Red beacon, Custom signal, and Not used (slots 2–4 only). Wider cells (4 per row desktop, 2 per
+    row phone) with their photo, name, and one short detail line ("100 % · 30 W", "Distress
+    pattern").
+  - The current choice has a 2 px amber border; hover/focus show a lighter border.
+  - A detail bar pinned at the bottom of the picker shows the hovered/focused/current entry in full:
+    "Level 21 · 10 % · 3 W". On touch it shows the current entry.
+  - Arrow keys move focus within the grid (roving focus), Enter/Space chooses, Escape closes.
+  - Choosing "Custom signal" reveals its controls (colour, single/double, on time, off time) under
+    the grid, inside the picker; choosing anything else closes the picker.
+  - Every cell has an accessible name with the full text ("Level 21, 10 %, 3 W").
 
 Desktop and tablet: small arrows between tiles and a thin return line under the row from tile 4
 back to tile 1 (as in the reference). Phone: no arrows; the badges show the order.

@@ -7,6 +7,7 @@ import { derive } from './derive.js';
 import { paintIssues, setIssueSource } from './issues.js';
 import { showToast } from './toast.js';
 import { openPresets, openSaved, shareLink } from './dialogs.js';
+import { mountThemeToggle } from './theme.js';
 import { createProgramScreen } from './program-screen.js';
 import { mountQuick } from './render/quick.js';
 import { mountGroups } from './render/groups.js';
@@ -91,5 +92,6 @@ window.addEventListener('hashchange', () => {
   showToast('Loaded the shared setup.', { label: 'Undo', onClick: () => store.replace(before) });
 });
 
+mountThemeToggle($('btn-theme'));
 $('btn-presets').addEventListener('click', () => openPresets(store));
 $('btn-saved').addEventListener('click', () => openSaved(store));

@@ -53,5 +53,5 @@ flux-rc builds the same animated GIF as the original programmer, byte for byte. 
 ## Status
 
 The encoder matches all ten GIFs recorded from the original, and the live page produces the same
-bytes. It has not yet been tried on a real flashlight. Advanced settings (thermal cutoff, output limits, PIN, switch timeout) are derived from
-vendor presets and have not been tested on a light.
+bytes, and it has programmed a real flashlight successfully. Advanced settings (thermal cutoff, output
+limits, PIN, switch timeout) are derived from vendor presets and have not been tested on a light yet.
