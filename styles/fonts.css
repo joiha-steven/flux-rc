@@ -1,0 +1,18 @@
+/* Plum Sans (from Inter) and Plum Mono (from JetBrains Mono), SIL Open Font License 1.1.
+   Built in the plum-fonts repo; only the Latin subsets are shipped because the UI is English. */
+
+@font-face {
+  font-family: "Plum Sans";
+  font-style: normal;
+  font-weight: 100 900;
+  font-display: swap;
+  src: url("../assets/fonts/plum-sans-latin.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: "Plum Mono";
+  font-style: normal;
+  font-weight: 400 700;
+  font-display: swap;
+  src: url("../assets/fonts/plum-mono-latin.woff2") format("woff2");
+}

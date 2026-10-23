@@ -79,7 +79,7 @@ Index is 0-based.
 | 11 | 6 | Single-cell output limit | highest allowed level number minus 1 (1–30) | inferred |
 | 12 | 6 | Dual-cell output limit | highest allowed level number minus 1 (1–31); 32 = no limit, afterburning allowed | inferred |
 | 13 | 8 | PIN | (d1−1)·64 + (d2−1)·8 + (d3−1); d1 in 1–4, d2 and d3 in 1–8 | inferred |
-| 14 | 8 | Bounce (tap) sensor | 1–254 = sensitivity, higher is more sensitive; 255 = sensor off | experiment |
+| 14 | 8 | Bounce sensor | 1–254 = sensitivity, higher is more sensitive; 255 = sensor off | experiment |
 
 NULL in any field means "keep what the light already has".
 

@@ -35,10 +35,28 @@ who know that page feel at home.
 | `--on-accent` | `#1a1205` | text on amber |
 | `--danger` | `#ff6b6b` | errors |
 
-Fonts: system sans for text; `ui-monospace, "SF Mono", Menlo, Consolas, monospace` for the
-wordmark, subtitles like "1 × 18650 Li-ion", %/W labels and level numbers. No web fonts.
 Radius 12 px on cards and tiles, 8 px on buttons. 8 px spacing grid. Content max width 1080 px,
 centred, 24 px gutters (16 px on phones).
+
+## Typography
+
+Fonts are self-hosted from `assets/fonts/` via `styles/fonts.css` (load it first):
+
+- **Plum Sans** (Inter-based) for all text. `font-family: "Plum Sans", system-ui, sans-serif`.
+- **Plum Mono** (JetBrains Mono-based) only where a number or code is the point: the wordmark,
+  level numbers and short codes on tiles, the %/W line on tiles, loop time, Packet details, PIN
+  digits. Not for subtitles or descriptions. Note its 400 weight already renders fairly heavy.
+
+Scale (px, line height): caption 12/16, small 13/18, body 15/22, title 18/24 (section headings),
+display 24/28 (dialog titles), tile number 40/1 desktop and 32/1 phone.
+Weights: 400 body, 500 labels and buttons, 600 headings. Nothing bolder.
+Letter spacing: -0.01em on 18 px and up; +0.02em on the wordmark; 0 elsewhere. No all-caps text
+except the tiny "LVL" (11 px, +0.08em, muted).
+Numbers use tabular figures (`font-variant-numeric: tabular-nums`) everywhere they can change.
+
+What makes a page look machine-made, and must be avoided: everything in the same size and weight,
+monospace used as decoration, centred text in cards, pills everywhere, uneven gaps. Use one left
+edge per section, consistent 8 px rhythm, and let size and weight (not colour) carry hierarchy.
 
 ## Assets (`assets/`)
 
@@ -114,13 +132,13 @@ back to tile 1 (as in the reference). Phone: no arrows; the badges show the orde
 ### Behaviour
 
 Four equal cards in a row (2 × 2 on phone): icon (inline SVG, 1.5 px line style), current state as
-the label ("Hybrid memory", "Li-ion protection on", "Battery stretch on", "Tap sensor: keep
+the label ("Hybrid memory", "Li-ion protection on", "Battery stretch on", "Bounce sensor: keep
 current"), chevron on the right. Tapping opens a small dialog/sheet with the choices:
 
 - Memory: No memory / Standard / Hybrid, each with its one-line explanation.
 - Li-ion protection: On / Off (Off warns "Only use protected cells").
 - Battery stretch: On / Off with the runtime-versus-constant-output explanation.
-- Tap sensor: Keep current / Off / Set, with the sensitivity slider (Low … High, Normal marked).
+- Bounce sensor: Keep current / Not in use / Set, with the sensitivity slider (Low … High, Normal marked).
 
 ### Footer
 
@@ -143,8 +161,9 @@ Advanced row stays in the page flow.
 Full-screen overlay.
 
 1. **Prepare**: `trail.webp` as a background, darkened to about 20 % brightness, with a card on top:
-   toggle "Electronic switch" / "Clicky switch" and the matching steps, a checklist (screen at full
-   brightness, dark room, light close to the square), buttons Start and Cancel.
+   toggle "Electronic switch" / "Clicky switch" and the matching steps, then three tips as plain
+   text with a small icon each (screen at full brightness, dark room, light close to the square).
+   The tips are not controls: no switches or checkboxes, nothing to tick. Buttons Start and Cancel.
    - Electronic switch: disconnect the battery, reconnect it while holding the button, keep
      holding; programming mode starts after about three seconds.
    - Clicky switch: enter the PIN (public PIN 222, or the one from your vendor) as short clicks
@@ -179,3 +198,50 @@ Widths 375, 768 and 1440. Both groups off; one group off; only slot 1 used; all 
 afterburning tile; a custom signal tile; an error (custom signal 250 ms on + 32 ms off) disabling
 Program; Advanced open; mode picker open; Saved empty and with a very long name; Program screen
 (both steps); no `localStorage`.
+
+## Wording (checked against the original programmer)
+
+Use the original's terms so people who know lux-rc recognise every setting:
+
+| Setting | Name in flux-rc | Notes to show |
+|---------|-----------------|---------------|
+| Field 14 | **Bounce sensor** (not "tap sensor") | Options: Keep current, Not in use ("The bounce switch is not active"), Set sensitivity (Low 50 … High 100, Normal about 85). |
+| One-cell group | One cell | "The 371D light engine limits the peak battery current to about 5 A, so one-cell output is normally capped at 17 W (level 28). Vendors can change this." |
+| Two-cell group | Two cells in series | "Higher levels draw more current. Make sure your cells can deliver it; too much current can make a cell fail or catch fire." |
+| Field 11 | One-cell output limit | Levels 29–31: "Overboost: these levels may not run stable." Factory default 28. |
+| Field 12 | Two-cell output limit | No limit: "All modes allowed with two cells, including afterburning." |
+| Field 10 | Thermal cutoff | No limit: "The light engine can reach 120 °C, which is extremely dangerous for any lithium cell." Say "light engine", not "driver". |
+| Field 13 | Programming PIN | The PIN entered with a clicky switch before programming. Keep current = "Leave the PIN as it is". |
+| Battery stretch | Battery stretch | On: "Greatly extends runtime and battery life." Off: "Shorter runtime, but constant output." |
+| Li-ion protection | Lithium-ion protection | Off: "Use this only with protected cells." |
+| S.O.S. | S.O.S. | In the picker: "Distress pattern per 46 CFR 161.013-7." |
+| Custom signal | Custom signal | Red or white, single or ×2, on 64 ms or 1/4 s, off 32 ms, 1/4 s, 1 s or 3 s. |
+
+Program screen, extra guidance from the original:
+
+- Electronic switch: "Disconnect the battery and wait a moment so the driver resets. Press and
+  hold the button while you reconnect the battery. Don't release it: programming mode starts in
+  about three seconds."
+- Clicky switch: "Enter the PIN as short clicks with a one-second gap between digits. After the
+  last digit, wait one second, then switch the light on. A dim red light means the PIN was
+  accepted."
+- After the steps: "Programming takes 10–20 seconds and the red light goes off when it's done.
+  If it doesn't, try again; a second attempt is sometimes needed."
+- Tips (plain text with icons, not controls): screen brightness at maximum; daylight or bright
+  room light can overexpose the sensor, so find a dark place; hold the light as close to the square
+  as possible.
+
+## Performance
+
+The page must feel instant on a phone on a mobile network. No build step, so:
+
+- `<link rel="modulepreload">` in `index.html` for every module the page imports at startup, so
+  they download in parallel instead of one import level at a time.
+- `<link rel="preload" as="font" type="font/woff2" crossorigin>` for both font files.
+- Tile `<img>`: explicit `width`/`height` (no layout shift), `decoding="async"`, and
+  `fetchpriority="high"` only for the first group's four tiles. The mode picker uses the
+  `beam-*-thumb.webp` files (96 px wide), not the full tiles.
+- `trail.webp` loads only when the Program screen opens.
+- No work on the main thread at startup beyond rendering the current config; build the GIF only
+  when it is needed (Program, Download GIF, Packet details, loop time may use frame durations
+  without building the GIF bytes).

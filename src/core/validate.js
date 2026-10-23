@@ -48,7 +48,7 @@ export function validateConfig(config) {
   if (config.dual.enabled && config.dual.cells === 'cr123a') issues.push(...cr123aIssues(config));
   if (config.thermal.action === 'none') {
     issues.push(issue('warning', 'no-thermal-limit',
-      'With no thermal limit the driver can reach 120 °C.', 'thermal'));
+      'With no thermal limit the light engine can reach 120 °C, which is extremely dangerous for any lithium cell.', 'thermal'));
   }
   if (!config.protection) {
     issues.push(issue('warning', 'protection-off',
