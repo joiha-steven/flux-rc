@@ -10,6 +10,8 @@ square programs it.
 
 It is one static web page: no account, no server, nothing leaves your browser.
 
+**Use it here: https://joiha-steven.github.io/flux-rc/** (GitHub Pages, deployed from `main`).
+
 ## Run it locally
 
 ```bash
@@ -50,6 +52,6 @@ flux-rc builds the same animated GIF as the original programmer, byte for byte. 
 
 ## Status
 
-The encoder matches all ten GIFs recorded from the original. It has not yet been tried on a real
-flashlight. Advanced settings (thermal cutoff, output limits, PIN, switch timeout) are derived from
+The encoder matches all ten GIFs recorded from the original, and the live page produces the same
+bytes. It has not yet been tried on a real flashlight. Advanced settings (thermal cutoff, output limits, PIN, switch timeout) are derived from
 vendor presets and have not been tested on a light.
