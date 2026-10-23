@@ -15,3 +15,6 @@ node_modules/
 coverage/
 *.log
 /tmp/
+
+# Original generated artwork (large, non-English file names); optimised copies live in assets/
+assets/raw/
