@@ -96,7 +96,7 @@ edge per section, consistent 8 px rhythm, and let size and weight (not colour) c
 | `beam-strobe.webp` | 10 Hz strobe, S.O.S., white custom signals |
 | `beam-beacon.webp` | Red beacon, red custom signals |
 | `battery-1s-li-ion.webp`, `battery-2s-li-ion.webp`, `battery-2s-cr123a.webp` | Group headers (transparent) |
-| `trail.webp` | Background of the Program "Prepare" step, heavily dimmed |
+| `trail.webp` | Background of Program steps 1–3, heavily dimmed |
 
 Within one beam band, neighbouring levels must still look different: apply a CSS
 `filter: brightness()` from about 0.6 (lowest level of the band) to 1.0 (highest). Tile photos are
@@ -198,21 +198,68 @@ Advanced row stays in the page flow.
 
 ## Program screen
 
-Full-screen overlay.
+Full-screen overlay (`#program`), always dark, a step-by-step flow. Each step finishes before the
+next one appears. A small step indicator sits on top: 1 Switch · 2 Get ready · 3 Enter PIN ·
+4 Program (on phones only the current step shows its label). Every step has Back except step 1,
+which has Cancel; Escape closes from anywhere and stops a running PIN. Steps 1–3 are a card on
+`trail.webp` darkened to about 20 %; step 4 is pure black. An `aria-live` region announces step
+changes and the final cue, not every pulse.
+Code: `src/ui/program-screen.js` (shell: open/close, wake lock, fullscreen, GIF URL),
+`src/ui/program-steps.js` (steps 1–3 and the tailcap view), `src/ui/program-run.js` (the PIN run
+and step 4), `src/ui/pin-rhythm.js` (the schedule, pure), `src/ui/beeper.js` (Web Audio).
 
-1. **Prepare**: `trail.webp` as a background, darkened to about 20 % brightness, with a card on top:
-   toggle "Electronic switch" / "Clicky switch" and the matching steps, then three tips as plain
-   text with a small icon each (screen at full brightness, dark room, light close to the square).
-   The tips are not controls: no switches or checkboxes, nothing to tick. Buttons Start and Cancel.
-   - Electronic switch: disconnect the battery, reconnect it while holding the button, keep
-     holding; programming mode starts after about three seconds.
-   - Clicky switch: enter the PIN (public PIN 222, or the one from your vendor) as short clicks
-     with a one-second pause between digits, wait one second, switch on. A dim red light means the
-     PIN was accepted.
-2. **Flashing**: pure black, the GIF centred at 300 × 300 CSS px (shrink only if the viewport is
-   smaller), small dim text above ("Hold the light against the square. It takes 10–20 seconds; the
-   red light goes off when it is done."), dim Restart and Done below. Request fullscreen and a
-   screen wake lock on Start; release both on Done or Escape.
+1. **Switch**: "Which switch does your light have?" Two option cards, each with a line drawing,
+   the name and one line: **Mechanical (McClicky)** (rubber cap, a click is a quick half-press) and
+   **E-switch (MOFF)** (flat metal button that cuts the power while pressed, so it works inverted:
+   held down at rest, a click is a quick release). The choice is stored in `localStorage` under
+   `flux-rc:switch` and preselected next time; the step is still shown.
+2. **Get ready**: tips as plain text with an icon (not controls): screen brightness to maximum,
+   dark room, hold the light right against the screen, and "Light off: nothing pressed"
+   (McClicky) or "Hold the button down so the light is off" (MOFF). The "I'm ready" tap is the user
+   gesture that requests fullscreen and the screen wake lock and unlocks audio (iOS needs this).
+3. **Enter PIN**: the PIN large as digit groups (2 · 2 · 2), PIN choice 222 / 112 / Custom (custom
+   is validated by `isValidPin` in `src/core/config.js`: d1 1–4, d2 and d3 1–8, not 4-8-8), speed
+   Normal / Slow, a Sound switch (on by default, `flux-rc:sound`), a tip for reverse clickies and the
+   hint that a PIN just changed in Advanced only applies after this programming. **Start** runs the
+   PIN metronome: a 3-2-1 count-in with a low beep each second, then one pulse per click: a big circle
+   lights up, the action word shows (PRESS for McClicky, RELEASE for MOFF), a short high beep plays
+   and Android vibrates. Progress shows digit and click. After the last digit "Wait", then the final
+   cue "Switch on and leave it on" (McClicky) or "Release and leave it" (MOFF) with a long beep,
+   and the screen moves straight to step 4. **Stop** aborts. Users follow the beeps, not the light:
+   it may not flash during the clicks. With reduced motion the circle changes colour only (no scale
+   or glow). Under the buttons a small link "PIN not working? Try the tailcap method" opens the
+   **tailcap view** (for an electronic button on the driver, battery always connected): unscrew the
+   tailcap a little and wait, press and hold the button, screw the tailcap back on while holding, a
+   dim red light means programming mode; one big button "Dim red light is on" starts step 4 at once.
+4. **Program**: the GIF centred at 300 × 300 CSS px (shrinks on small viewports), the final cue
+   above it in dim text, and below it (never covering it) "Dim red light? Keep holding the light on
+   the square." with "I see the red light" and "No red light, try again" (back to step 3, or to the
+   tailcap view on that path). After "I see the red light": "Keep holding until the red light goes
+   off (10–20 s)" with "It went off: done" (success view: "Programmed. Switch the light off and on to
+   try your modes." and Close) and "Still red" (troubleshooting: brightness, closer, darker, a
+   second attempt is sometimes needed; Try again goes back to step 3).
+
+### PIN timing
+
+The light waits only about 5–6 s in programming mode, and the signal loops every ~19 s starting
+with 3 s of green lead, so the GIF must start at frame 0 right after the light enters programming
+mode. A fresh blob URL restarts the GIF at frame 0; it is assigned `GIF_START_DELAY_MS` (300 ms) after
+the final cue. Beeps are scheduled on the AudioContext clock and the visuals and the GIF start read
+the same clock (or `performance.now()` when sound is off or unavailable). On the audio clock the
+visuals and the GIF start are shifted by `AudioContext.outputLatency` (when 0–500 ms), so they match
+what is heard over Bluetooth. Start waits up to 500 ms for audio to resume; if sound is on but audio
+does not run, step 3 says "Sound isn't available. Follow the circle instead." and the run continues.
+A run never continues with a broken rhythm: if the audio clock stops or the page is hidden it
+returns to the PIN setup with "Interrupted. Start again when you're ready.", and if any event is
+shown more than 150 ms late (`isTooLate` in `pin-rhythm.js`) with "Timing slipped. Start again."
+Timing (manual limits in brackets):
+
+| | Normal | Slow | Limit |
+|--|--|--|--|
+| Click on-time | 200 ms | 300 ms | 64–499 ms |
+| Off between clicks of a digit | 250 ms | 300 ms | ≤ 300 ms (≥ 500 ms is a digit gap) |
+| Off between digits | 1000 ms | 1150 ms | 500–1250 ms (longer wipes the digits) |
+| Wait after the last digit | 1000 ms | 1000 ms | about 1 s |
 
 ## Presets and saved configs
 
@@ -257,19 +304,15 @@ Use the original's terms so people who know lux-rc recognise every setting:
 | S.O.S. | S.O.S. | In the picker: "Distress pattern per 46 CFR 161.013-7." |
 | Custom signal | Custom signal | Red or white, single or ×2, on 64 ms or 1/4 s, off 32 ms, 1/4 s, 1 s or 3 s. |
 
-Program screen, extra guidance from the original:
+Program screen wording:
 
-- Electronic switch: "Disconnect the battery and wait a moment so the driver resets. Press and
-  hold the button while you reconnect the battery. Don't release it: programming mode starts in
-  about three seconds."
-- Clicky switch: "Enter the PIN as short clicks with a one-second gap between digits. After the
-  last digit, wait one second, then switch the light on. A dim red light means the PIN was
-  accepted."
-- After the steps: "Programming takes 10–20 seconds and the red light goes off when it's done.
-  If it doesn't, try again; a second attempt is sometimes needed."
+- Switch names: "Mechanical (McClicky)" and "E-switch (MOFF)". Action words: PRESS and RELEASE.
+  Final cues: "Switch on and leave it on" and "Release and leave it".
+- After the red light: "Keep holding until the red light goes off (10–20 s)". If it stays red: a
+  second attempt is sometimes needed.
 - Tips (plain text with icons, not controls): screen brightness at maximum; daylight or bright
-  room light can overexpose the sensor, so find a dark place; hold the light as close to the square
-  as possible.
+  room light can overexpose the sensor, so find a dark room; hold the light right against the
+  screen.
 
 ## Performance
 

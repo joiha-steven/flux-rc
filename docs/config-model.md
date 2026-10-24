@@ -33,7 +33,7 @@ Numeric settings are stored as **raw field values**, so encoding is a direct cop
   thermal:       { action: 'keep', value: 13 },   // 'keep' | 'none' | 'set'; value 1–60
   singleLimit:   { action: 'keep', value: 27 },   // 'keep' | 'set'; value 1–30
   dualLimit:     { action: 'keep', value: 31 },   // 'keep' | 'none' | 'set'; value 1–31
-  pin:           { action: 'keep', digits: [2, 2, 2] },  // 'keep' | 'set'; d1 1–4, d2 1–8, d3 1–8
+  pin:           { action: 'keep', digits: [2, 2, 2] },  // 'keep' | 'set'; d1 1–4, d2 1–8, d3 1–8, not 4-8-8 (isValidPin)
 }
 ```
 

@@ -77,3 +77,22 @@ export function deleteSaved(id) {
   const { items } = listSaved();
   return writeSaved(items.filter((item) => item.id !== id));
 }
+
+/** A small string preference (e.g. flux-rc:switch). Returns fallback when storage fails. */
+export function readPref(key, fallback) {
+  try {
+    const value = localStorage.getItem(key);
+    return value === null ? fallback : value;
+  } catch (error) {
+    console.warn(`flux-rc: could not read ${key}`, error);
+    return fallback;
+  }
+}
+
+export function writePref(key, value) {
+  try {
+    localStorage.setItem(key, String(value));
+  } catch (error) {
+    console.warn(`flux-rc: could not save ${key}`, error);
+  }
+}

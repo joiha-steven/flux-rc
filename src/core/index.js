@@ -1,4 +1,4 @@
-export { defaultConfig, normalizeConfig, ConfigError } from './config.js';
+export { defaultConfig, normalizeConfig, ConfigError, isValidPin } from './config.js';
 export { configToFields, FIELD_NAMES } from './fields.js';
 export { encodeFrames, checksum, ProtocolError } from './protocol.js';
 export { framesToGif } from './gif.js';

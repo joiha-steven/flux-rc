@@ -1,5 +1,6 @@
 // The config object: defaults and normalisation. See docs/config-model.md.
 import { cleanMode } from './modes.js';
+import { pinField } from './scales.js';
 
 /** Thrown when input cannot be turned into a config at all. */
 export class ConfigError extends Error {
@@ -26,6 +27,17 @@ const SETTINGS = {
   dualLimit: { actions: ['keep', 'none', 'set'], min: 1, max: 31, value: 31 },
 };
 const PIN_MAX = [4, 8, 8];
+
+/**
+ * True when digits is a PIN the driver accepts: three integers, d1 1-4, d2 and d3 1-8, and not
+ * 4-8-8 (field value 255 means "keep current"). The one place these rules live.
+ * @param {unknown} digits
+ */
+export function isValidPin(digits) {
+  return Array.isArray(digits) && digits.length === PIN_MAX.length
+    && digits.every((d, i) => Number.isInteger(d) && d >= 1 && d <= PIN_MAX[i])
+    && pinField(digits) !== 255;
+}
 
 /** @returns {object} a fresh default config */
 export function defaultConfig() {

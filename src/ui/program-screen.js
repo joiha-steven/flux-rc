@@ -1,37 +1,43 @@
-// Full-screen programming overlay: Prepare step, then the flashing GIF.
+// Full-screen programming overlay: the shell. It opens and closes, holds the wake lock and
+// fullscreen, owns the GIF blob URL and the beeper, and switches between the step views in
+// program-steps.js (1 Switch, 2 Get ready, 3 Enter PIN, tailcap) and program-run.js (the PIN run,
+// 4 Program, success, still red). See docs/design.md, "Program screen".
 import { h } from './dom.js';
-import { segmented } from './controls.js';
-import { icon } from './icons.js';
 import { hideToasts } from './toast.js';
+import { readPref } from './storage.js';
+import { createBeeper } from './beeper.js';
+import { SWITCHES, SWITCH_KEY, SOUND_KEY, switchStep, readyStep, pinStep, tailcapStep } from './program-steps.js';
+import { runPin, programStep, successView, stillRedView } from './program-run.js';
 
-// Plain tips, not controls: nothing here can be ticked.
-const TIPS = [
-  ['sun', 'Set the screen brightness to maximum.'],
-  ['moon', 'Find a dark place: daylight or bright room light can overexpose the sensor.'],
-  ['closer', 'Hold the light as close to the square as possible.'],
-];
-const STEPS = {
-  electronic: [
-    'Disconnect the battery and wait a moment so the driver resets.',
-    'Press and hold the button while you reconnect the battery.',
-    'Don\'t release it: programming mode starts in about three seconds.',
-  ],
-  clicky: [
-    'Enter the PIN as short clicks with a one-second gap between digits. The public PIN is 222; use the one from your vendor if you have it.',
-    'After the last digit, wait one second, then switch the light on.',
-    'A dim red light means the PIN was accepted.',
-  ],
+const STEP_LABELS = ['Switch', 'Get ready', 'Enter PIN', 'Program'];
+const VIEWS = {
+  switch: switchStep, ready: readyStep, pin: pinStep, tailcap: tailcapStep,
+  run: runPin, program: programStep, success: successView, stillRed: stillRedView,
 };
-const AFTER_STEPS = 'Programming takes 10–20 seconds and the red light goes off when it\'s done. If it doesn\'t, try again; a second attempt is sometimes needed.';
 
 export function createProgramScreen(root, appRoot) {
   let gifBytes = null;
   let url = null;
   let wakeLock = null;
+  let wantWakeLock = false;
   let enteredFullscreen = false;
   let opener = null;
   let epoch = 0; // bumped on every open and close, so a request that resolves late knows it is stale
-  let kind = 'electronic';
+  let leave = []; // cleanups of the current view (timers, animation frames, scheduled beeps)
+  const stage = h('div', { class: 'program-stage' });
+  const live = h('p', { class: 'sr', 'aria-live': 'polite' });
+  const beeper = createBeeper();
+
+  const storedSwitch = readPref(SWITCH_KEY, null);
+  // Kept while the page is open, so a second Program run starts where the last one ended.
+  const state = {
+    switchType: SWITCHES[storedSwitch] ? storedSwitch : null,
+    pinChoice: '222',
+    customPin: '',
+    speed: 'normal',
+    sound: readPref(SOUND_KEY, '1') !== '0',
+    method: 'pin',
+  };
 
   const revoke = () => { if (url) URL.revokeObjectURL(url); url = null; };
   const newUrl = () => {
@@ -44,7 +50,7 @@ export function createProgramScreen(root, appRoot) {
   async function acquireWakeLock() {
     const mine = epoch;
     try {
-      if (!navigator.wakeLock?.request) return;
+      if (!navigator.wakeLock?.request || wakeLock) return;
       const lock = await navigator.wakeLock.request('screen');
       if (mine !== epoch) { Promise.resolve(lock.release?.()).catch((e) => console.warn('flux-rc: wake lock release failed', e)); return; } // closed while waiting
       wakeLock = lock;
@@ -54,7 +60,7 @@ export function createProgramScreen(root, appRoot) {
   async function enterFullscreen() {
     const mine = epoch;
     try {
-      if (!root.requestFullscreen) return;
+      if (!root.requestFullscreen || document.fullscreenElement) return;
       await root.requestFullscreen();
       if (mine !== epoch) { // closed while waiting
         if (document.fullscreenElement) await document.exitFullscreen();
@@ -64,13 +70,22 @@ export function createProgramScreen(root, appRoot) {
     } catch (error) { console.warn('flux-rc: fullscreen refused', error); }
   }
   function release() {
+    wantWakeLock = false;
     try { wakeLock?.release?.(); } catch (error) { console.warn('flux-rc: wake lock release failed', error); }
     wakeLock = null;
     if (enteredFullscreen && document.fullscreenElement) document.exitFullscreen?.().catch((e) => console.warn('flux-rc: exit fullscreen failed', e));
     enteredFullscreen = false;
   }
+  function runLeave() {
+    const fns = leave; leave = [];
+    for (const fn of fns) {
+      try { fn(); } catch (error) { console.error('flux-rc: program view cleanup failed', error); }
+    }
+  }
   function close() {
     epoch += 1;
+    runLeave();
+    beeper.stop();
     release();
     revoke();
     root.hidden = true;
@@ -85,49 +100,52 @@ export function createProgramScreen(root, appRoot) {
   function onKey(e) {
     if (e.key === 'Escape') { e.preventDefault(); close(); return; }
     if (e.key !== 'Tab') return;
-    const items = [...root.querySelectorAll('button, input, [tabindex]')].filter((n) => !n.disabled);
+    const items = [...root.querySelectorAll('button, input, [tabindex]')].filter((n) => !n.disabled && n.offsetParent !== null);
     if (!items.length) return;
     const first = items[0]; const last = items[items.length - 1];
     if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
     else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
   }
-  const onVisible = () => { if (document.visibilityState === 'visible' && root.classList.contains('flashing') && !wakeLock) acquireWakeLock(); };
+  const onVisible = () => { if (document.visibilityState === 'visible' && wantWakeLock && !wakeLock) acquireWakeLock(); };
   const onFullscreen = () => { if (enteredFullscreen && !document.fullscreenElement) close(); };
 
-  function showPrepare() {
-    root.classList.remove('flashing');
-    root.classList.add('prepare');
-    root.replaceChildren(h('div', { class: 'program-inner' }, h('div', { class: 'program-panel' },
-      h('h2', {}, 'Get the light ready'),
-      segmented({
-        key: 'prog-kind', label: 'Switch type', value: kind,
-        options: [{ value: 'electronic', label: 'Electronic switch' }, { value: 'clicky', label: 'Clicky switch' }],
-        onChange: (v) => { kind = v; showPrepare(); root.querySelector(`[data-k="prog-kind:${v}"]`)?.focus(); },
-      }),
-      h('ol', {}, STEPS[kind].map((s) => h('li', {}, s))),
-      h('p', { class: 'hint' }, AFTER_STEPS),
-      h('div', { class: 'program-tip-group' },
-        h('h3', {}, 'Before you start'),
-        h('ul', { class: 'program-tips' }, TIPS.map(([name, text]) => h('li', {}, icon(name, 18), h('span', {}, text))))),
-      h('div', { class: 'program-buttons' },
-        h('button', { type: 'button', class: 'btn btn-primary', 'data-start': '', onclick: start }, 'Start'),
-        h('button', { type: 'button', class: 'btn', onclick: close }, 'Cancel')))));
-    root.querySelector('[data-start]')?.focus();
+  function stepIndicator(current) {
+    return h('ol', { class: 'program-progress', 'aria-label': 'Steps' }, STEP_LABELS.map((label, i) =>
+      h('li', { class: i + 1 < current ? 'done' : '', 'aria-current': i + 1 === current ? 'step' : null },
+        h('span', { class: 'step-num mono' }, i + 1), h('span', { class: 'step-label' }, label))));
   }
 
-  async function start() {
-    enterFullscreen(); acquireWakeLock();
-    const img = h('img', { class: 'flash-img', alt: 'Flashing square that programs the light', src: newUrl() });
-    root.classList.remove('prepare');
-    root.classList.add('flashing');
-    root.replaceChildren(h('div', { class: 'program-inner' },
-      h('p', { class: 'flash-hint' }, 'Hold the light against the square. It takes 10–20 seconds; the red light goes off when it is done. If it doesn\'t, press Restart and try again.'),
-      img,
-      h('div', { class: 'program-buttons' },
-        h('button', { type: 'button', class: 'btn', onclick: () => { img.src = newUrl(); } }, 'Restart'),
-        h('button', { type: 'button', class: 'btn', 'data-done': '', onclick: close }, 'Done'))));
-    root.querySelector('[data-done]')?.focus();
-  }
+  /** What every view calls. */
+  const ctx = {
+    state,
+    beeper,
+    close,
+    newGifUrl: newUrl,
+    go(name, options) {
+      runLeave();
+      VIEWS[name](ctx, options);
+    },
+    /** The tap on "I'm ready" (or the tailcap button): browsers allow these only from a gesture. */
+    ready() {
+      wantWakeLock = true;
+      enterFullscreen();
+      acquireWakeLock();
+      if (state.sound) beeper.unlock();
+    },
+    onLeave(fn) { leave.push(fn); },
+    announce(text) { live.textContent = ''; requestAnimationFrame(() => { live.textContent = text; }); },
+    /** { step, title?, body, focus?, flashing?, announce? }. Prepare views sit in a card on the photo. */
+    render({ step, title, body, focus, flashing = false, announce }) {
+      root.classList.toggle('flashing', flashing);
+      root.classList.toggle('prepare', !flashing);
+      const heading = title && h('h2', { tabindex: '-1' }, title);
+      stage.replaceChildren(h('div', { class: 'program-inner' },
+        stepIndicator(step),
+        flashing ? body : h('div', { class: 'program-panel' }, heading, body)));
+      ctx.announce(announce || `Step ${step} of 4: ${title || STEP_LABELS[step - 1]}`);
+      (focus && stage.querySelector(focus) || heading || stage.querySelector('button'))?.focus({ preventScroll: true });
+    },
+  };
 
   return {
     open(program) {
@@ -137,10 +155,11 @@ export function createProgramScreen(root, appRoot) {
       hideToasts();
       appRoot.inert = true;
       root.hidden = false;
+      root.replaceChildren(stage, live);
       document.addEventListener('keydown', onKey);
       document.addEventListener('visibilitychange', onVisible);
       document.addEventListener('fullscreenchange', onFullscreen);
-      showPrepare();
+      ctx.go('switch');
     },
   };
 }
