@@ -15,6 +15,7 @@ file names, test names. No exceptions.
 - No external requests at runtime: no CDNs, web fonts, analytics or trackers.
 - `src/core/` has no DOM access and is fully covered by tests.
 - Keep files small (aim for under 300 lines). Split by responsibility.
+- User-visible text lives in locales/en.js; never hard-code UI strings.
 
 ## The protocol is fixed by recordings
 

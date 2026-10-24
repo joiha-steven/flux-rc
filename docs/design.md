@@ -5,7 +5,8 @@ browser.
 
 **Visual reference: [`design-reference.jpg`](design-reference.jpg).** Match its look: layout,
 spacing, type, tile photos, colours. Its numbers are placeholders and partly wrong: real levels are
-1–32 and every %/W label must come from `LEVELS` / `describeMode` in `src/core/`.
+1–32 and every %/W number must come from `LEVELS` / `AFTERBURNING` in `src/core/` (the page builds the
+labels with `modeLabel` in `src/ui/mode-text.js`, which matches core's `describeMode` in English).
 
 The structure deliberately follows the original lux-rc programmer (battery group, row of four mode
 tiles with up/down arrows, row of option tiles, locked advanced section, Program button), so people
@@ -96,7 +97,6 @@ edge per section, consistent 8 px rhythm, and let size and weight (not colour) c
 | `beam-strobe.webp` | 10 Hz strobe, S.O.S., white custom signals |
 | `beam-beacon.webp` | Red beacon, red custom signals |
 | `battery-1s-li-ion.webp`, `battery-2s-li-ion.webp`, `battery-2s-cr123a.webp` | Group headers (transparent) |
-| `trail.webp` | Background of Program steps 1–3, heavily dimmed |
 
 Within one beam band, neighbouring levels must still look different: apply a CSS
 `filter: brightness()` from about 0.6 (lowest level of the band) to 1.0 (highest). Tile photos are
@@ -202,9 +202,9 @@ Full-screen overlay (`#program`), always dark, a step-by-step flow. Each step fi
 next one appears. A small step indicator sits on top: 1 Switch · 2 Get ready · 3 Enter PIN ·
 4 Program (on phones only the current step shows its label). Every step has Back except step 1,
 which has Cancel; Escape closes from anywhere and stops a running PIN. Steps 1–3 are a card on
-`trail.webp` darkened to about 20 %; step 4 is pure black. An `aria-live` region announces step
+a faint dot grid (CSS only, no image); step 4 is pure black. An `aria-live` region announces step
 changes and the final cue, not every pulse.
-Code: `src/ui/program-screen.js` (shell: open/close, wake lock, fullscreen, GIF URL),
+Code: `src/ui/program-screen.js` (shell: open/close, wake lock, GIF URL),
 `src/ui/program-steps.js` (steps 1–3 and the tailcap view), `src/ui/program-run.js` (the PIN run
 and step 4), `src/ui/pin-rhythm.js` (the schedule, pure), `src/ui/beeper.js` (Web Audio).
 
@@ -216,7 +216,8 @@ and step 4), `src/ui/pin-rhythm.js` (the schedule, pure), `src/ui/beeper.js` (We
 2. **Get ready**: tips as plain text with an icon (not controls): screen brightness to maximum,
    dark room, hold the light right against the screen, and "Light off: nothing pressed"
    (McClicky) or "Hold the button down so the light is off" (MOFF). The "I'm ready" tap is the user
-   gesture that requests fullscreen and the screen wake lock and unlocks audio (iOS needs this).
+   gesture that requests the screen wake lock and unlocks audio (iOS needs this). No fullscreen:
+   switching to fullscreen on that tap surprised people.
 3. **Enter PIN**: the PIN large as digit groups (2 · 2 · 2), PIN choice 222 / 112 / Custom (custom
    is validated by `isValidPin` in `src/core/config.js`: d1 1–4, d2 and d3 1–8, not 4-8-8), speed
    Normal / Slow, a Sound switch (on by default, `flux-rc:sound`), a tip for reverse clickies and the
@@ -288,6 +289,11 @@ Program; Advanced open; mode picker open; Saved empty and with a very long name;
 
 ## Wording (checked against the original programmer)
 
+The exact text of every string lives in `locales/en.js`, the source of truth; code asks for it by
+key with `t()` (`src/ui/i18n.js`), and `locales/README.md` explains translating. The table below is
+the guidance behind those strings, not a copy of them: when you change wording, change
+`locales/en.js` and keep to these rules.
+
 Use the original's terms so people who know lux-rc recognise every setting:
 
 | Setting | Name in flux-rc | Notes to show |
@@ -324,7 +330,6 @@ The page must feel instant on a phone on a mobile network. No build step, so:
 - Tile `<img>`: explicit `width`/`height` (no layout shift), `decoding="async"`, and
   `fetchpriority="high"` only for the first group's four tiles. The mode picker uses the
   `beam-*-thumb.webp` files (96 px wide), not the full tiles.
-- `trail.webp` loads only when the Program screen opens.
 - No work on the main thread at startup beyond rendering the current config; build the GIF only
   when it is needed (Program, Download GIF, Packet details, loop time may use frame durations
   without building the GIF bytes).

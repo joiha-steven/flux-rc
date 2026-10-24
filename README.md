@@ -38,6 +38,7 @@ Uses the built-in Node test runner (Node 20 or newer). No dependencies to instal
 | `src/core/` | Protocol: config to fields, fields to frames, frames to GIF, validation. No DOM. |
 | `src/data/` | Built-in presets |
 | `src/ui/` | Page logic: rendering, state, storage, program screen |
+| `locales/` | Every user-visible string; `en.js` is the source, see `locales/README.md` |
 | `test/` | Node tests; `test/fixtures/` holds GIFs recorded from the original programmer |
 | `docs/protocol.md` | The optical protocol, reverse engineered and verified |
 | `docs/config-model.md` | The config object the UI edits |

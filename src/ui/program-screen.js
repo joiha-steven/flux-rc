@@ -1,5 +1,4 @@
-// Full-screen programming overlay: the shell. It opens and closes, holds the wake lock and
-// fullscreen, owns the GIF blob URL and the beeper, and switches between the step views in
+// Full-screen programming overlay: the shell. It opens and closes, holds the wake lock, owns the GIF blob URL and the beeper, and switches between the step views in
 // program-steps.js (1 Switch, 2 Get ready, 3 Enter PIN, tailcap) and program-run.js (the PIN run,
 // 4 Program, success, still red). See docs/design.md, "Program screen".
 import { h } from './dom.js';
@@ -8,8 +7,9 @@ import { readPref } from './storage.js';
 import { createBeeper } from './beeper.js';
 import { SWITCHES, SWITCH_KEY, SOUND_KEY, switchStep, readyStep, pinStep, tailcapStep } from './program-steps.js';
 import { runPin, programStep, successView, stillRedView } from './program-run.js';
+import { t } from './i18n.js';
 
-const STEP_LABELS = ['Switch', 'Get ready', 'Enter PIN', 'Program'];
+const STEP_KEYS = ['program.step.switch', 'program.step.ready', 'program.step.pin', 'program.step.program'];
 const VIEWS = {
   switch: switchStep, ready: readyStep, pin: pinStep, tailcap: tailcapStep,
   run: runPin, program: programStep, success: successView, stillRed: stillRedView,
@@ -20,7 +20,6 @@ export function createProgramScreen(root, appRoot) {
   let url = null;
   let wakeLock = null;
   let wantWakeLock = false;
-  let enteredFullscreen = false;
   let opener = null;
   let epoch = 0; // bumped on every open and close, so a request that resolves late knows it is stale
   let leave = []; // cleanups of the current view (timers, animation frames, scheduled beeps)
@@ -57,24 +56,10 @@ export function createProgramScreen(root, appRoot) {
       lock.addEventListener?.('release', () => { if (wakeLock === lock) wakeLock = null; });
     } catch (error) { console.warn('flux-rc: wake lock refused', error); }
   }
-  async function enterFullscreen() {
-    const mine = epoch;
-    try {
-      if (!root.requestFullscreen || document.fullscreenElement) return;
-      await root.requestFullscreen();
-      if (mine !== epoch) { // closed while waiting
-        if (document.fullscreenElement) await document.exitFullscreen();
-        return;
-      }
-      enteredFullscreen = true;
-    } catch (error) { console.warn('flux-rc: fullscreen refused', error); }
-  }
   function release() {
     wantWakeLock = false;
     try { wakeLock?.release?.(); } catch (error) { console.warn('flux-rc: wake lock release failed', error); }
     wakeLock = null;
-    if (enteredFullscreen && document.fullscreenElement) document.exitFullscreen?.().catch((e) => console.warn('flux-rc: exit fullscreen failed', e));
-    enteredFullscreen = false;
   }
   function runLeave() {
     const fns = leave; leave = [];
@@ -94,7 +79,6 @@ export function createProgramScreen(root, appRoot) {
     appRoot.inert = false;
     document.removeEventListener('keydown', onKey);
     document.removeEventListener('visibilitychange', onVisible);
-    document.removeEventListener('fullscreenchange', onFullscreen);
     opener?.focus?.();
   }
   function onKey(e) {
@@ -107,12 +91,11 @@ export function createProgramScreen(root, appRoot) {
     else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
   }
   const onVisible = () => { if (document.visibilityState === 'visible' && wantWakeLock && !wakeLock) acquireWakeLock(); };
-  const onFullscreen = () => { if (enteredFullscreen && !document.fullscreenElement) close(); };
 
   function stepIndicator(current) {
-    return h('ol', { class: 'program-progress', 'aria-label': 'Steps' }, STEP_LABELS.map((label, i) =>
+    return h('ol', { class: 'program-progress', 'aria-label': t('program.steps') }, STEP_KEYS.map((key, i) =>
       h('li', { class: i + 1 < current ? 'done' : '', 'aria-current': i + 1 === current ? 'step' : null },
-        h('span', { class: 'step-num mono' }, i + 1), h('span', { class: 'step-label' }, label))));
+        h('span', { class: 'step-num mono' }, i + 1), h('span', { class: 'step-label' }, t(key)))));
   }
 
   /** What every view calls. */
@@ -128,13 +111,12 @@ export function createProgramScreen(root, appRoot) {
     /** The tap on "I'm ready" (or the tailcap button): browsers allow these only from a gesture. */
     ready() {
       wantWakeLock = true;
-      enterFullscreen();
       acquireWakeLock();
       if (state.sound) beeper.unlock();
     },
     onLeave(fn) { leave.push(fn); },
     announce(text) { live.textContent = ''; requestAnimationFrame(() => { live.textContent = text; }); },
-    /** { step, title?, body, focus?, flashing?, announce? }. Prepare views sit in a card on the photo. */
+    /** { step, title?, body, focus?, flashing?, announce? }. Prepare views sit in a card on the dotted background. */
     render({ step, title, body, focus, flashing = false, announce }) {
       root.classList.toggle('flashing', flashing);
       root.classList.toggle('prepare', !flashing);
@@ -142,7 +124,7 @@ export function createProgramScreen(root, appRoot) {
       stage.replaceChildren(h('div', { class: 'program-inner' },
         stepIndicator(step),
         flashing ? body : h('div', { class: 'program-panel' }, heading, body)));
-      ctx.announce(announce || `Step ${step} of 4: ${title || STEP_LABELS[step - 1]}`);
+      ctx.announce(announce || t('program.stepAnnounce', { step, total: STEP_KEYS.length, title: title || t(STEP_KEYS[step - 1]) }));
       (focus && stage.querySelector(focus) || heading || stage.querySelector('button'))?.focus({ preventScroll: true });
     },
   };
@@ -158,7 +140,6 @@ export function createProgramScreen(root, appRoot) {
       root.replaceChildren(stage, live);
       document.addEventListener('keydown', onKey);
       document.addEventListener('visibilitychange', onVisible);
-      document.addEventListener('fullscreenchange', onFullscreen);
       ctx.go('switch');
     },
   };

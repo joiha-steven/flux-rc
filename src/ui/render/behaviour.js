@@ -4,46 +4,39 @@ import { segmented, slider } from '../controls.js';
 import { openDialog } from '../dialog.js';
 import { icon } from '../icons.js';
 import { scales } from '../../core/index.js';
+import { t } from '../i18n.js';
 
-const MEMORY = [
-  { value: 'none', label: 'No memory', desc: 'Always starts in mode 1' },
-  { value: 'standard', label: 'Standard', desc: 'Starts in the last mode used' },
-  { value: 'hybrid', label: 'Hybrid', desc: 'Starts in the last mode; cycling restarts from mode 1' },
+// Choices as functions, so the text is looked up when a dialog is built.
+const choices = (area, values) => values.map((value) => ({ value, label: t(`behaviour.${area}.${value}`), desc: t(`behaviour.${area}.${value}.desc`) }));
+const onOff = (area) => [
+  { value: true, label: t('behaviour.on'), desc: t(`behaviour.${area}.on.desc`) },
+  { value: false, label: t('behaviour.off'), desc: t(`behaviour.${area}.off.desc`) },
 ];
-const PROTECTION = [
-  { value: true, label: 'On', desc: 'Stops the light before the cell is over-discharged.' },
-  { value: false, label: 'Off', desc: 'Use this only with protected cells.' },
-];
-const STRETCH = [
-  { value: true, label: 'On', desc: 'Greatly extends runtime and battery life.' },
-  { value: false, label: 'Off', desc: 'Shorter runtime, but constant output.' },
-];
-const BOUNCE = [
-  { value: 'keep', label: 'Keep current', desc: 'Leave the sensor as it is' },
-  { value: 'off', label: 'Not in use', desc: 'The bounce switch is not active' },
-  { value: 'set', label: 'Set sensitivity', desc: 'Low is 50, high is 100; normal is about 85' },
-];
+const MEMORY = () => choices('memory', ['none', 'standard', 'hybrid']);
+const PROTECTION = () => onOff('protection');
+const STRETCH = () => onOff('stretch');
+const BOUNCE = () => choices('bounce', ['keep', 'off', 'set']);
 const NORMAL_BOUNCE = 179;
-const memoryName = (v) => ({ none: 'No memory', standard: 'Standard memory', hybrid: 'Hybrid memory' })[v];
-const sensitivity = (v) => `Sensitivity ${Math.round(scales.bounceSensitivity(v))}${v === NORMAL_BOUNCE ? ' (normal)' : ''}`;
-const bounceLabel = (b) => (b.action === 'keep' ? 'Bounce sensor: keep current'
-  : b.action === 'off' ? 'Bounce sensor: not in use'
-    : `Bounce sensor: sensitivity ${Math.round(scales.bounceSensitivity(b.value))}`);
+const memoryName = (v) => t(`behaviour.memory.card.${v}`);
+const sensitivity = (v) => t(v === NORMAL_BOUNCE ? 'behaviour.bounce.sensitivityNormal' : 'behaviour.bounce.sensitivity', { n: Math.round(scales.bounceSensitivity(v)) });
+const bounceLabel = (b) => (b.action === 'keep' ? t('behaviour.bounce.cardKeep')
+  : b.action === 'off' ? t('behaviour.bounce.cardOff')
+    : t('behaviour.bounce.cardSet', { n: Math.round(scales.bounceSensitivity(b.value)) }));
 
 function dialogs(store) {
   const set = (fn, meta) => store.update(fn, meta);
   return {
-    memory: ['Memory', (c) => [segmented({ key: 'memory', label: 'Memory', variant: 'cards', options: MEMORY, value: c.memory, onChange: (v) => set((n) => { n.memory = v; }) })]],
-    protection: ['Lithium-ion protection', (c) => [
-      segmented({ key: 'protection', label: 'Lithium-ion protection', variant: 'cards', value: c.protection, options: PROTECTION, onChange: (v) => set((n) => { n.protection = v; }) }),
+    memory: [t('behaviour.memory.title'), (c) => [segmented({ key: 'memory', label: t('behaviour.memory.title'), variant: 'cards', options: MEMORY(), value: c.memory, onChange: (v) => set((n) => { n.memory = v; }) })]],
+    protection: [t('behaviour.protection.title'), (c) => [
+      segmented({ key: 'protection', label: t('behaviour.protection.title'), variant: 'cards', value: c.protection, options: PROTECTION(), onChange: (v) => set((n) => { n.protection = v; }) }),
       issueSlot('options')]],
-    stretch: ['Battery stretch', (c) => [
-      segmented({ key: 'stretch', label: 'Battery stretch', variant: 'cards', value: c.stretch, options: STRETCH, onChange: (v) => set((n) => { n.stretch = v; }) }),
+    stretch: [t('behaviour.stretch.title'), (c) => [
+      segmented({ key: 'stretch', label: t('behaviour.stretch.title'), variant: 'cards', value: c.stretch, options: STRETCH(), onChange: (v) => set((n) => { n.stretch = v; }) }),
       issueSlot('options')]],
-    bounce: ['Bounce sensor', (c) => [
-      segmented({ key: 'bounce', label: 'Bounce sensor', variant: 'cards', value: c.bounce.action, options: BOUNCE, onChange: (v) => set((n) => { n.bounce.action = v; }) }),
+    bounce: [t('behaviour.bounce.title'), (c) => [
+      segmented({ key: 'bounce', label: t('behaviour.bounce.title'), variant: 'cards', value: c.bounce.action, options: BOUNCE(), onChange: (v) => set((n) => { n.bounce.action = v; }) }),
       c.bounce.action === 'set' && slider({
-        key: 'bounce-value', label: 'Bounce sensitivity', min: 1, max: 254, value: c.bounce.value, ticks: [NORMAL_BOUNCE], format: sensitivity, ends: ['Low · 50', 'High · 100'],
+        key: 'bounce-value', label: t('behaviour.bounce.slider'), min: 1, max: 254, value: c.bounce.value, ticks: [NORMAL_BOUNCE], format: sensitivity, ends: [t('behaviour.bounce.low', { n: 50 }), t('behaviour.bounce.high', { n: 100 })],
         onInput: (v, meta) => set((n) => { n.bounce.value = v; }, meta),
       }),
       issueSlot('bounce')]],
@@ -54,8 +47,8 @@ export function mountBehaviour(root, store) {
   const defs = dialogs(store);
   const cards = (c) => [
     ['memory', 'memory', memoryName(c.memory)],
-    ['protection', 'shield', `Li-ion protection ${c.protection ? 'on' : 'off'}`],
-    ['stretch', 'bars', `Battery stretch ${c.stretch ? 'on' : 'off'}`],
+    ['protection', 'shield', t(c.protection ? 'behaviour.protection.cardOn' : 'behaviour.protection.cardOff')],
+    ['stretch', 'bars', t(c.stretch ? 'behaviour.stretch.cardOn' : 'behaviour.stretch.cardOff')],
     ['bounce', 'bounce', bounceLabel(c.bounce)],
   ];
   mountSection(root, store, (c) => [h('div', { class: 'options' }, cards(c).map(([id, ic, label]) =>

@@ -3,6 +3,8 @@ import { h } from '../dom.js';
 import { openDialog } from '../dialog.js';
 import { segmented } from '../controls.js';
 import { LEVELS } from '../../core/index.js';
+import { t } from '../i18n.js';
+import { durationText } from '../mode-text.js';
 import { ENTRIES, entryIndex, entryMode, beam, entryName, entryDetail, entryFull } from '../modes-list.js';
 
 function signalControls(store, key, i, mode) {
@@ -11,10 +13,10 @@ function signalControls(store, key, i, mode) {
     onChange: (v) => store.update((n) => { n[key].modes[i][field] = v; }),
   });
   return h('div', { class: 'signal-grid' },
-    seg('color', 'Colour', [{ value: 'red', label: 'Red' }, { value: 'white', label: 'White' }]),
-    seg('double', 'Flashes', [{ value: false, label: 'Single' }, { value: true, label: 'Double' }]),
-    seg('onMs', 'On time', [{ value: 64, label: '64 ms' }, { value: 250, label: '1/4 s' }]),
-    seg('offMs', 'Off time', [{ value: 32, label: '32 ms' }, { value: 250, label: '1/4 s' }, { value: 1000, label: '1 s' }, { value: 3000, label: '3 s' }]));
+    seg('color', t('picker.colour'), [{ value: 'red', label: t('picker.colour.red') }, { value: 'white', label: t('picker.colour.white') }]),
+    seg('double', t('picker.flashes'), [{ value: false, label: t('picker.flashes.single') }, { value: true, label: t('picker.flashes.double') }]),
+    seg('onMs', t('picker.onTime'), [{ value: 64, label: durationText(64) }, { value: 250, label: t('picker.quarterSecond') }]),
+    seg('offMs', t('picker.offTime'), [{ value: 32, label: durationText(32) }, { value: 250, label: t('picker.quarterSecond') }, { value: 1000, label: durationText(1000) }, { value: 3000, label: durationText(3000) }]));
 }
 
 const OTHER_ORDER = [34, 1, 35, 36, 37, 38, 0]; // ENTRIES indexes: afterburning, moonlight, S.O.S., strobe, beacon, signal, not used
@@ -28,7 +30,7 @@ function cell(index, current, slotMode, onPick) {
   const text = entryFull(mode);
   const inner = level
     ? [h('b', { class: 'pick-num mono' }, mode.level), h('span', { class: 'pick-power mono' }, LEVELS[mode.level - 1].power)]
-    : [h('span', { class: 'pick-text' }, h('b', {}, mode ? entryName(mode) : 'Not used'), h('span', { class: 'pick-detail' }, entryDetail(mode)))];
+    : [h('span', { class: 'pick-text' }, h('b', {}, mode ? entryName(mode) : t('mode.notUsed')), h('span', { class: 'pick-detail' }, entryDetail(mode)))];
   return h('button', {
     type: 'button', class: `pick ${level ? 'pick-level' : 'pick-wide'} ${mode ? '' : 'pick-unused'}`, 'aria-current': index === current ? 'true' : null,
     'aria-label': text.replaceAll(' · ', ', '), 'data-k': `pick:${index}`, 'data-text': text, tabindex: -1, onclick: () => onPick(index),
@@ -73,7 +75,7 @@ function detailBar(root, bar) {
 }
 
 export function openPicker(store, key, i) {
-  const title = `Mode ${i + 1} · ${key === 'single' ? 'One cell' : 'Two cells'}`;
+  const title = t(`picker.title.${key}`, { n: i + 1 });
   const dlg = openDialog(title, (render, d) => {
     const mode = store.get()[key].modes[i];
     const current = entryIndex(mode);
@@ -82,18 +84,18 @@ export function openPicker(store, key, i) {
       if (ENTRIES[index]?.type === 'signal') render(); else d.close();
     };
     const bar = h('div', { class: 'pick-detailbar', 'aria-hidden': 'true' });
-    const levels = h('div', { class: 'pick-grid pick-levels', role: 'group', 'aria-label': 'Brightness levels' }, LEVEL_INDEXES.map((x) => cell(x, current, mode, pick)));
-    const others = h('div', { class: 'pick-grid pick-others', role: 'group', 'aria-label': 'Other modes' },
+    const levels = h('div', { class: 'pick-grid pick-levels', role: 'group', 'aria-label': t('picker.levels') }, LEVEL_INDEXES.map((x) => cell(x, current, mode, pick)));
+    const others = h('div', { class: 'pick-grid pick-others', role: 'group', 'aria-label': t('picker.others') },
       OTHER_ORDER.filter((x) => x !== 0 || i > 0).map((x) => cell(x, current, mode, pick)));
-    const grids = h('div', { class: 'pick-grids' }, levels, h('h3', { class: 'pick-heading' }, 'Other modes'), others);
+    const grids = h('div', { class: 'pick-grids' }, levels, h('h3', { class: 'pick-heading' }, t('picker.others')), others);
     (grids.querySelector('[aria-current="true"]') ?? grids.querySelector('.pick')).tabIndex = 0;
     arrowKeys(grids);
     detailBar(grids, bar);
     return [
       grids,
-      mode?.type === 'signal' && h('div', { class: 'pick-signal' }, h('h3', { class: 'card-title' }, 'Custom signal'), signalControls(store, key, i, mode),
+      mode?.type === 'signal' && h('div', { class: 'pick-signal' }, h('h3', { class: 'card-title' }, t('picker.signal')), signalControls(store, key, i, mode),
         h('div', { class: 'issues', 'data-issues': `${key}.modes.${i}` }),
-        h('button', { type: 'button', class: 'btn btn-primary', onclick: () => d.close() }, 'Done')),
+        h('button', { type: 'button', class: 'btn btn-primary', onclick: () => d.close() }, t('common.done'))),
       bar,
     ];
   }, { className: 'picker', initialFocus: '.pick[tabindex="0"]' });

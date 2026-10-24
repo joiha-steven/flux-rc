@@ -1,10 +1,10 @@
 export { defaultConfig, normalizeConfig, ConfigError, isValidPin } from './config.js';
-export { configToFields, FIELD_NAMES } from './fields.js';
+export { configToFields, FIELD_NAMES, FIELD_IDS } from './fields.js';
 export { encodeFrames, checksum, ProtocolError } from './protocol.js';
 export { framesToGif } from './gif.js';
 export { buildProgram } from './program.js';
 export { validateConfig } from './validate.js';
 export { parseSource } from './source.js';
 export { modeCode, describeMode } from './modes.js';
-export { LEVELS } from './levels.js';
+export { LEVELS, AFTERBURNING } from './levels.js';
 export { scales } from './scales.js';

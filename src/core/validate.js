@@ -1,4 +1,6 @@
 // Problems the original programmer reports. See docs/protocol.md section 8.
+// Each issue has a stable `code`; the UI shows it translated (locales: "issue." + code) and
+// `message` is the English text, kept for core's own use and tests.
 import { isUnsupportedSignal } from './modes.js';
 import { pinField } from './scales.js';
 

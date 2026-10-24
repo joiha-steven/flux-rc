@@ -1,8 +1,7 @@
-/* Programming screen: always dark. Steps 1-3 sit in a card on a dimmed trail photo, step 4 is a
+/* Programming screen: always dark. Steps 1-3 sit in a card on a faint dot grid, step 4 is a
    black screen with the GIF. */
 .program { position: fixed; inset: 0; z-index: 100; background: #000; color: #c9c9c9; overflow-y: auto; color-scheme: dark; --text: #c9c9c9; --muted: #8d8d8d; --raised: #1a1a1a; --border: #2e2e2e; --line: #2e2e2e; }
-/* The photo is only requested once .prepare is set, i.e. when the screen opens. */
-.program.prepare { background: linear-gradient(rgb(0 0 0 / 0.8), rgb(0 0 0 / 0.8)), url("../assets/trail.webp") center / cover #000; }
+.program.prepare { background: radial-gradient(rgb(255 255 255 / 0.08) 1px, transparent 1.5px) 0 0 / 20px 20px, #0b0b0b; }
 .program-stage { min-height: 100%; display: grid; }
 .program-inner { min-height: 100%; display: grid; align-content: center; justify-items: center; gap: var(--sp-2); padding: var(--sp-3) var(--sp-2); }
 .program h2 { font-size: var(--fs-display); line-height: var(--lh-display); letter-spacing: -0.01em; }

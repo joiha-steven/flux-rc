@@ -3,6 +3,7 @@
 import { h, keepFocus } from './dom.js';
 import { icon } from './icons.js';
 import { repaint } from './issues.js';
+import { t } from './i18n.js';
 
 let count = 0;
 
@@ -12,7 +13,7 @@ export function openDialog(title, buildBody, { initialFocus, className = '' } = 
   const body = h('div', { class: 'dlg-body' });
   const dlg = h('dialog', { class: `dlg ${className}`, 'aria-labelledby': titleId, 'aria-modal': 'true' },
     h('div', { class: 'dlg-head' }, h('h2', { id: titleId }, title),
-      h('button', { type: 'button', class: 'btn btn-ghost btn-icon', 'aria-label': 'Close', onclick: () => dlg.close() }, icon('close'))),
+      h('button', { type: 'button', class: 'btn btn-ghost btn-icon', 'aria-label': t('common.close'), onclick: () => dlg.close() }, icon('close'))),
     body);
   dlg.addEventListener('close', () => dlg.remove());
   dlg.addEventListener('click', (e) => { if (e.target === dlg) dlg.close(); });

@@ -2,7 +2,16 @@
 import { modeCode } from './modes.js';
 import { pinField } from './scales.js';
 
-/** Short names of the 15 fields, in protocol order. */
+/**
+ * Stable ids of the 15 fields, in protocol order. The UI shows them translated
+ * (locales: "field." + id); FIELD_NAMES below is the English text.
+ */
+export const FIELD_IDS = [
+  'single1', 'single2', 'single3', 'single4', 'dual1', 'dual2', 'dual3', 'dual4',
+  'options', 'switchTimeout', 'thermal', 'singleLimit', 'dualLimit', 'pin', 'bounce',
+];
+
+/** Short English names of the 15 fields, in protocol order. */
 export const FIELD_NAMES = [
   'One-cell mode 1', 'One-cell mode 2', 'One-cell mode 3', 'One-cell mode 4',
   'Two-cell mode 1', 'Two-cell mode 2', 'Two-cell mode 3', 'Two-cell mode 4',

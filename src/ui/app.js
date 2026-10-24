@@ -14,10 +14,12 @@ import { mountGroups } from './render/groups.js';
 import { mountBehaviour } from './render/behaviour.js';
 import { mountAdvanced } from './render/advanced.js';
 import { mountFooter } from './render/footer.js';
+import { t, applyStatic } from './i18n.js';
 
 const $ = (id) => document.getElementById(id);
 
-const BAD_LINK = 'This link could not be read';
+// index.html carries English as the no-JS fallback; put the current locale's text in first.
+applyStatic();
 
 /** Reads and strips a #c= share link. Returns { config } or { error }, or null when there is none. */
 function takeShare() {
@@ -79,17 +81,17 @@ document.documentElement.setAttribute('data-ready', '');
 // A config that came from a share link is saved straight away: the #c= part is already gone from
 // the address bar, so without this a reload would bring back the previous config.
 if (firstShare?.config) autosave(firstShare.config);
-if (firstShare?.error) showToast(BAD_LINK);
+if (firstShare?.error) showToast(t('toast.badLink'));
 
 // Pasting a share link into an open tab only changes the hash.
 window.addEventListener('hashchange', () => {
   const shared = takeShare();
   if (!shared) return;
-  if (shared.error) { showToast(BAD_LINK); return; }
+  if (shared.error) { showToast(t('toast.badLink')); return; }
   const before = store.get();
   store.replace(shared.config);
   autosave(shared.config);
-  showToast('Loaded the shared setup.', { label: 'Undo', onClick: () => store.replace(before) });
+  showToast(t('toast.sharedLoaded'), { label: t('common.undo'), onClick: () => store.replace(before) });
 });
 
 mountThemeToggle($('btn-theme'));

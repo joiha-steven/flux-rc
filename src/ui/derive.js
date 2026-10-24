@@ -2,6 +2,7 @@
 // The program mirrors buildProgram() from core, but its GIF is built only when something reads
 // `program.gif` (Program screen, Download GIF); loop time and packet details need only the frames.
 import { configToFields, checksum, encodeFrames, framesToGif, validateConfig } from '../core/index.js';
+import { t } from './i18n.js';
 
 const cache = new WeakMap();
 
@@ -28,7 +29,7 @@ export function derive(config) {
     program = lazyProgram(config, issues);
   } catch (error) {
     console.error('flux-rc: could not build the program', error);
-    issues = [{ severity: 'error', code: 'internal', message: 'Something went wrong building the signal.', path: '' }];
+    issues = [{ severity: 'error', code: 'internal', message: t('issue.internal'), path: '' }];
   }
   const errors = issues.filter((i) => i.severity === 'error');
   const result = { program, issues, errors, canProgram: Boolean(program) && errors.length === 0 };

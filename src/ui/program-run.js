@@ -2,7 +2,8 @@
 // Beeps, flashes and the GIF start all read one clock (beeper.startClock), so they stay in sync.
 import { h } from './dom.js';
 import { buildPinSchedule, isTooLate } from './pin-rhythm.js';
-import { SWITCHES, currentPin } from './program-steps.js';
+import { switchText, currentPin } from './program-steps.js';
+import { t } from './i18n.js';
 
 /**
  * Delay from the final "switch on" cue to the GIF starting at frame 0. The signal opens with 3 s of
@@ -32,36 +33,37 @@ const GIF_BACKSTOP_MS = 200;
 /** Gap between pressing Start and the first count-in beat, so no beep is scheduled in the past. */
 const CLOCK_LEAD_MS = 150;
 
-export const NOTICE_INTERRUPTED = 'Interrupted. Start again when you\'re ready.';
-export const NOTICE_SLIPPED = 'Timing slipped. Start again.';
+/** Locale keys of the notices shown on the PIN step when a run stops. */
+export const NOTICE_INTERRUPTED = 'program.pin.interrupted';
+export const NOTICE_SLIPPED = 'program.pin.slipped';
 
 export function runPin(ctx) {
   const { state } = ctx;
-  const s = SWITCHES[state.switchType];
+  const type = state.switchType;
   const digits = currentPin(state);
   if (!digits) { ctx.go('pin'); return; }
   const { events, finalAtMs } = buildPinSchedule(digits, state.speed);
 
   const number = h('span', { class: 'pulse-number mono' });
   const circle = h('div', { class: 'pulse-circle', 'aria-hidden': 'true' }, number);
-  const word = h('p', { class: 'pulse-word' }, 'Get ready');
-  const progress = h('p', { class: 'pulse-progress' }, `PIN ${digits.join(' · ')}`);
+  const word = h('p', { class: 'pulse-word' }, t('program.run.getReady'));
+  const progress = h('p', { class: 'pulse-progress' }, t('program.pinValue', { pin: digits.join(' · ') }));
   const note = h('p', { class: 'hint pulse-note', role: 'status' });
-  const stop = h('button', { type: 'button', class: 'btn', 'data-stop': '', onclick: () => ctx.go('pin') }, 'Stop');
+  const stop = h('button', { type: 'button', class: 'btn', 'data-stop': '', onclick: () => ctx.go('pin') }, t('program.run.stop'));
 
   ctx.render({
     step: 3,
-    title: state.sound ? 'Follow the beeps' : 'Follow the circle',
+    title: t(state.sound ? 'program.run.titleBeeps' : 'program.run.titleCircle'),
     body: [h('div', { class: 'pulse-stage' }, circle, word, progress, note), h('div', { class: 'program-buttons' }, stop)],
     focus: '[data-stop]',
-    announce: `Entering PIN ${digits.join(' ')}. Count-in, then ${s.action.toLowerCase()} at each ${state.sound ? 'beep' : 'flash'}.`,
+    announce: t(state.sound ? 'program.run.announceBeep' : 'program.run.announceFlash', { pin: digits.join(' '), verb: switchText(type, 'verb') }),
   });
 
   let left = false;
   let handedOff = false;
   let cancel = () => {};
   let unwatch = () => {};
-  const abort = (notice) => { if (!left) ctx.go('pin', { notice }); };
+  const abort = (noticeKey) => { if (!left) ctx.go('pin', { notice: t(noticeKey) }); };
   const onHidden = () => { if (document.visibilityState === 'hidden') abort(NOTICE_INTERRUPTED); };
   document.addEventListener('visibilitychange', onHidden);
   ctx.onLeave(() => {
@@ -76,9 +78,9 @@ export function runPin(ctx) {
   audioReady.then((audioOk) => {
     if (left) return;
     if (state.sound && !audioOk) {
-      note.textContent = 'Sound isn\'t available. Follow the circle instead.';
+      note.textContent = t('program.run.noSound');
       const heading = circle.closest('.program-panel')?.querySelector('h2');
-      if (heading) heading.textContent = 'Follow the circle';
+      if (heading) heading.textContent = t('program.run.titleCircle');
     }
     begin();
   });
@@ -90,14 +92,14 @@ export function runPin(ctx) {
     } else if (e.kind === 'on') {
       circle.className = 'pulse-circle lit';
       number.textContent = '';
-      word.textContent = s.action;
-      progress.textContent = `Digit ${e.digit} of ${e.digits} · click ${e.click} of ${e.clicks}`;
+      word.textContent = switchText(type, 'action');
+      progress.textContent = t('program.run.progress', { digit: e.digit, digits: e.digits, click: e.click, clicks: e.clicks });
       try { navigator.vibrate?.(e.durationMs); } catch (error) { console.warn('flux-rc: vibrate failed', error); }
     } else if (e.kind === 'off') {
       circle.className = 'pulse-circle';
     } else if (e.kind === 'wait') {
-      word.textContent = 'Wait';
-      progress.textContent = 'PIN entered. Wait one second.';
+      word.textContent = t('program.run.wait');
+      progress.textContent = t('program.run.waitHint');
     }
   }
 
@@ -124,7 +126,7 @@ export function runPin(ctx) {
       }
       if (now >= finalAtMs) {
         handedOff = true; // keep the long final beep playing into step 4
-        ctx.go('program', { from: 'pin', clock, gifAtMs: finalAtMs + GIF_START_DELAY_MS, cue: s.final });
+        ctx.go('program', { from: 'pin', clock, gifAtMs: finalAtMs + GIF_START_DELAY_MS, cue: switchText(type, 'final') });
         return;
       }
       cancel = waitUntil(clock, events[next].atMs, tick);
@@ -137,7 +139,7 @@ export function runPin(ctx) {
 export function programStep(ctx, options = {}) {
   const { clock, gifAtMs, cue } = options;
   const img = h('img', { class: 'flash-img', alt: '' });
-  const hint = h('p', { class: 'flash-hint' }, 'Dim red light? Keep holding the light on the square.');
+  const hint = h('p', { class: 'flash-hint' }, t('program.flash.hint'));
   const buttons = h('div', { class: 'program-buttons' });
   ctx.state.method = options.from === 'tailcap' ? 'tailcap' : 'pin';
   const tryAgain = () => ctx.go(ctx.state.method);
@@ -145,15 +147,15 @@ export function programStep(ctx, options = {}) {
 
   function waiting() {
     buttons.replaceChildren(
-      btn('I see the red light', confirmed, { 'data-seen': '' }),
-      btn('No red light, try again', tryAgain),
-      btn('Back', tryAgain));
+      btn(t('program.flash.seen'), confirmed, { 'data-seen': '' }),
+      btn(t('program.flash.tryAgain'), tryAgain),
+      btn(t('common.back'), tryAgain));
   }
   function confirmed() {
-    hint.textContent = 'Keep holding until the red light goes off (10–20 s).';
+    hint.textContent = t('program.flash.keepHolding');
     buttons.replaceChildren(
-      btn('It went off: done', () => ctx.go('success'), { 'data-done': '' }),
-      btn('Still red', () => ctx.go('stillRed')));
+      btn(t('program.flash.wentOff'), () => ctx.go('success'), { 'data-done': '' }),
+      btn(t('program.flash.stillRed'), () => ctx.go('stillRed')));
     ctx.announce(hint.textContent);
     buttons.querySelector('[data-done]').focus();
   }
@@ -162,15 +164,15 @@ export function programStep(ctx, options = {}) {
   ctx.render({
     step: 4,
     flashing: true,
-    body: [h('p', { class: 'flash-cue' }, cue || 'Programming'), img, hint, buttons],
+    body: [h('p', { class: 'flash-cue' }, cue || t('program.flash.cue')), img, hint, buttons],
     focus: '[data-seen]',
-    announce: cue ? `${cue}. ${hint.textContent}` : hint.textContent,
+    announce: cue ? t('program.flash.announce', { cue, hint: hint.textContent }) : hint.textContent,
   });
 
   // A fresh blob URL makes the GIF start at frame 0, i.e. at the start of the green lead.
   const startGif = () => {
     img.src = ctx.newGifUrl();
-    img.alt = 'Flashing square that programs the light';
+    img.alt = t('program.flash.alt');
   };
   if (!clock) { startGif(); return; }
   // Normally the run's clock starts the GIF. If that clock stops (audio suspended right after the
@@ -185,30 +187,26 @@ export function programStep(ctx, options = {}) {
 export function successView(ctx) {
   ctx.render({
     step: 4,
-    title: 'Programmed',
+    title: t('program.success.title'),
     body: [
-      h('p', {}, 'Programmed. Switch the light off and on to try your modes.'),
-      h('div', { class: 'program-buttons' }, h('button', { type: 'button', class: 'btn btn-primary', 'data-close': '', onclick: ctx.close }, 'Close')),
+      h('p', {}, t('program.success.text')),
+      h('div', { class: 'program-buttons' }, h('button', { type: 'button', class: 'btn btn-primary', 'data-close': '', onclick: ctx.close }, t('common.close'))),
     ],
     focus: '[data-close]',
-    announce: 'Programmed.',
+    announce: t('program.success.announce'),
   });
 }
 
 export function stillRedView(ctx) {
   ctx.render({
     step: 4,
-    title: 'Still red?',
+    title: t('program.stillRed.title'),
     body: [
-      h('p', {}, 'The light did not read the whole signal. Try again:'),
-      h('ul', { class: 'program-list' },
-        h('li', {}, 'Set the screen brightness to maximum.'),
-        h('li', {}, 'Hold the light closer, right against the square.'),
-        h('li', {}, 'Make the room darker.'),
-        h('li', {}, 'A second attempt is sometimes needed.')),
+      h('p', {}, t('program.stillRed.text')),
+      h('ul', { class: 'program-list' }, ['brightness', 'closer', 'darker', 'second'].map((tip) => h('li', {}, t(`program.stillRed.${tip}`)))),
       h('div', { class: 'program-buttons' },
-        h('button', { type: 'button', class: 'btn btn-primary', 'data-again': '', onclick: () => ctx.go(ctx.state.method || 'pin') }, 'Try again'),
-        h('button', { type: 'button', class: 'btn', onclick: ctx.close }, 'Close')),
+        h('button', { type: 'button', class: 'btn btn-primary', 'data-again': '', onclick: () => ctx.go(ctx.state.method || 'pin') }, t('program.stillRed.again')),
+        h('button', { type: 'button', class: 'btn', onclick: ctx.close }, t('common.close'))),
     ],
     focus: '[data-again]',
   });

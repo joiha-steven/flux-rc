@@ -1,15 +1,11 @@
 // Light / dark theme choice. "auto" follows the device; "light" and "dark" force one via <html data-theme>.
 // The inline script in index.html reads the same storage key before first paint, so keep the two in sync.
 import { icon } from './icons.js';
+import { t } from './i18n.js';
 
 export const THEME_KEY = 'flux-rc:theme';
 const ORDER = ['auto', 'light', 'dark'];
 
-const DESCRIBE = {
-  auto: 'Theme: auto (follows your device)',
-  light: 'Theme: light',
-  dark: 'Theme: dark',
-};
 // Page background per resolved scheme; keep equal to --bg in styles/tokens.css and the theme-color metas in index.html.
 const THEME_BG = { light: '#f6f4f0', dark: '#0b0c0e' };
 const ICON = { auto: 'themeAuto', light: 'sun', dark: 'moon' };
@@ -33,7 +29,7 @@ export function resolveTheme(choice, prefersDark) {
 /** Screen-reader label and tooltip: current state and what a click does. */
 export function themeLabel(choice) {
   const current = parseTheme(choice);
-  return `${DESCRIBE[current]}. Switch to ${nextTheme(current)}`;
+  return t('theme.label', { current: t(`theme.current.${current}`), next: t(`theme.next.${nextTheme(current)}`) });
 }
 
 /** Colour for the browser bar: the resolved theme's page background. */

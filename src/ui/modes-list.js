@@ -1,11 +1,11 @@
 // The ordered list of everything a mode slot can be, plus labels and artwork for each entry.
-import { LEVELS, describeMode } from '../core/index.js';
+import { t } from './i18n.js';
+import { modeName, modeDetail, modeLabel } from './mode-text.js';
 
 const BANDS = [
   { file: 'beam-low', from: 1, to: 12 }, { file: 'beam-medium', from: 13, to: 20 },
   { file: 'beam-high', from: 21, to: 26 }, { file: 'beam-max', from: 27, to: 32 },
 ];
-const SPECIAL_CODE = { afterburning: 'AB', moonlight: 'RM', sos: 'SOS', strobe: 'STB', beacon: 'BCN', signal: 'SIG' };
 const SIGNAL_DEFAULT = { type: 'signal', color: 'red', double: false, onMs: 64, offMs: 1000 };
 
 /** Order used by the up/down chevrons and the picker. null = "Not used" (slots 2–4 only). */
@@ -40,45 +40,37 @@ export function beam(mode) {
   return { src: `${base}${file}.webp`, thumb: `${base}${file}-thumb.webp`, shade: '1' };
 }
 
-export const signalName = (m) => `Signal · ${m.color}${m.double ? ' ×2' : ''}`;
+export const signalName = (m) => t(m.double ? 'mode.signalShortDouble' : 'mode.signalShort', { color: t(`mode.color.${m.color}`) });
 
 /** "0.4 % · 120 mW" for levels, a short name for special modes. */
 export function tileLabel(mode) {
-  if (mode.type === 'level') { const l = LEVELS[mode.level - 1]; return `${l.percent} % · ${l.power}`; }
-  if (mode.type === 'afterburning') return describeMode(mode).replace(' · ', ' ');
-  return mode.type === 'signal' ? signalName(mode) : describeMode(mode);
+  if (mode.type === 'level') return modeDetail(mode);
+  if (mode.type === 'afterburning') return t('mode.afterburningTile', { name: modeName(mode), detail: modeDetail(mode) });
+  return mode.type === 'signal' ? signalName(mode) : modeLabel(mode);
 }
 
 /** Tile top label as lines, so a long name never runs into the slot badge: "Afterburning" / "100 % · 30 W". */
 export function tileLines(mode) {
-  if (mode.type === 'afterburning') return ['Afterburning', describeMode(mode).split(' · ').slice(1).join(' · ')];
+  if (mode.type === 'afterburning') return [modeName(mode), modeDetail(mode)];
   return [tileLabel(mode)];
 }
 
-export const tileCode = (mode) => (mode.type === 'level' ? String(mode.level) : SPECIAL_CODE[mode.type]);
+export const tileCode = (mode) => (mode.type === 'level' ? String(mode.level) : t(`mode.code.${mode.type}`));
 
 /** Plain-words name for the picker and accessible names: "Level 19", "Red moonlight". */
-export function entryName(mode) {
-  if (mode.type === 'level') return `Level ${mode.level}`;
-  if (mode.type === 'afterburning') return 'Afterburning';
-  return mode.type === 'signal' ? 'Custom signal' : describeMode(mode);
-}
+export const entryName = (mode) => modeName(mode);
 
 /** One short line for the picker's wide cells and detail bar. */
 export function entryDetail(mode) {
-  if (!mode) return 'This slot is skipped';
-  if (mode.type === 'level') return tileLabel(mode);
-  if (mode.type === 'afterburning') return tileLines(mode)[1];
-  return {
-    moonlight: 'Dim red light', sos: 'Distress pattern', strobe: 'Fast flashing',
-    beacon: 'Slow red flash', signal: 'Choose colour and timing',
-  }[mode.type];
+  if (!mode) return t('mode.skipped');
+  if (mode.type === 'level' || mode.type === 'afterburning') return modeDetail(mode);
+  return t(`mode.detail.${mode.type}`);
 }
 
 /** The full description for the picker's detail bar and accessible names: "Level 21 · 10 % · 3 W". */
 export function entryFull(mode) {
-  if (!mode) return 'Not used · this slot is skipped';
-  if (mode.type === 'level' || mode.type === 'afterburning' || mode.type === 'signal') return describeMode(mode);
-  if (mode.type === 'sos') return `${describeMode(mode)} · Distress pattern per 46 CFR 161.013-7`;
-  return `${entryName(mode)} · ${entryDetail(mode)}`;
+  if (!mode) return t('mode.notUsedFull');
+  if (mode.type === 'level' || mode.type === 'afterburning' || mode.type === 'signal') return modeLabel(mode);
+  if (mode.type === 'sos') return t('mode.sosFull', { name: modeLabel(mode) });
+  return t('mode.withDetail', { name: entryName(mode), detail: entryDetail(mode) });
 }

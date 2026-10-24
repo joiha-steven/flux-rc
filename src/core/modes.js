@@ -87,7 +87,8 @@ export function cleanMode(input) {
 }
 
 /**
- * Short human label for a mode.
+ * Short English label for a mode. The page shows src/ui/mode-text.js modeLabel() instead, which
+ * builds the same text from the locale.
  * @param {object} mode
  * @returns {string}
  */
