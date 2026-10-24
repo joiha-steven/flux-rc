@@ -45,6 +45,10 @@ export default {
   'theme.switchToLight': 'Switch to light theme',
   'theme.switchToDark': 'Switch to dark theme',
 
+  // Language button in the topbar and its menu. The menu lists each language in its own name (not translated).
+  'lang.label': 'Language',
+  'lang.current': 'Language: {name}',
+
   // Toasts
   'toast.badLink': 'This link could not be read',
   'toast.sharedLoaded': 'Loaded the shared setup.',
