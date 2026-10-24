@@ -12,6 +12,12 @@ programming mode, hold it against the screen, and the flashing square programs i
 
 It is one static web page: no account, no server code, no analytics, nothing leaves your browser.
 
+![flux-rc on desktop and phone](docs/screenshots/1-hero.jpg)
+
+| PIN guide | Mode picker | Languages |
+|---|---|---|
+| ![The PIN guide: setup, a beep, the hold](docs/screenshots/2-pin.jpg) | ![The mode picker with every level and its power](docs/screenshots/3-picker.jpg) | ![The page in Vietnamese, German, Japanese and Chinese](docs/screenshots/4-languages.jpg) |
+
 ## What it does
 
 - **Modes**: four modes for one 3.7 V Li-ion cell and four for two cells in series (or 2 × CR123A),
@@ -67,6 +73,7 @@ revalidates, code caches for 10 minutes, images and fonts for a week). The old G
 | `docs/protocol.md` | The optical protocol, reverse engineered and verified |
 | `docs/config-model.md` | The config object the UI edits |
 | `docs/design.md` | UI layout and behaviour |
+| `docs/screenshots/` | Images for this README (not deployed) |
 | `wrangler.jsonc`, `.assetsignore`, `_headers` | Cloudflare deploy settings |
 
 ## How it works
