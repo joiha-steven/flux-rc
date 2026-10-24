@@ -14,8 +14,8 @@ who know that page feel at home.
 
 ## Principles
 
-- **Light and dark.** Dark is the default for everyone; the page ignores the device's
-  colour-scheme setting. A topbar button switches to light and back (see Theme). Tile photos are dark in both themes, so text drawn on them stays light.
+- **Light and dark.** The page follows the browser's colour-scheme setting at first; a topbar
+  button flips to the other theme and remembers it (see Theme). Tile photos are dark in both themes, so text drawn on them stays light.
 - **The Program screen is always dark**, in both themes: people hold the light up to a dark
   screen in a dim room, and the flashing square sits on black. `.program` pins `color-scheme: dark`.
 - **One screen, top to bottom**, in the same order as the original.
@@ -76,9 +76,11 @@ gradients and text shadows over the beam photos.
 
 One icon button in the topbar (`#btn-theme`) toggles Dark and Light. The icon shows what a click
 does, like the label: a sun in dark ("Switch to light theme"), a moon in light ("Switch to dark
-theme"). The choice is stored in `localStorage` under `flux-rc:theme` ("light" or "dark"; anything
-else, including an old "auto", means dark) and set as `<html data-theme>`. A small inline script in
-`<head>` applies a stored "light" before the stylesheets paint, so there is no flash. A single
+theme"). The first visit follows the browser's colour-scheme setting (and keeps following it if it
+changes). A click flips to the other theme and stores it in `localStorage` under `flux-rc:theme`
+("light" or "dark"); from then on the stored choice wins. Anything else stored, including an old
+"auto", counts as no choice. The theme is set as `<html data-theme>`. A small inline script in
+`<head>` applies light (stored, or from the browser) before the stylesheets paint, so there is no flash. A single
 `theme-color` meta is dark and `theme.js` switches it to the light background. If storage fails the
 toggle still works for the current page view.
 Logic: `src/ui/theme.js`.

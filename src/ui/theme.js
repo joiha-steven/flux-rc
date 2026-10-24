@@ -1,5 +1,5 @@
-// Light / dark theme. The site is dark by default and ignores the device setting; the topbar button toggles
-// light <-> dark via <html data-theme>. The inline script in index.html reads the same storage key before first paint, so keep the two in sync.
+// Light / dark theme. The site follows the browser's colour-scheme setting until the topbar button is clicked;
+// a click flips light <-> dark via <html data-theme> and remembers that choice. The inline script in index.html reads the same storage key before first paint, so keep the two in sync.
 import { icon } from './icons.js';
 import { t } from './i18n.js';
 
@@ -10,9 +10,18 @@ const THEME_BG = { light: '#e6e3dc', dark: '#20211f' };
 // The icon shows what a click switches to, matching the label.
 const ICON = { dark: 'sun', light: 'moon' };
 
-/** Only "light" means light. Missing, damaged, hand-edited or an old "auto" all mean dark. */
-export function parseTheme(raw) {
-  return raw === 'light' ? 'light' : 'dark';
+/** A stored "light" or "dark" wins. Anything else (missing, damaged, an old "auto") follows the browser. */
+export function parseTheme(raw, systemLight = false) {
+  if (raw === 'light' || raw === 'dark') return raw;
+  return systemLight ? 'light' : 'dark';
+}
+
+function systemPrefersLight() {
+  try {
+    return typeof matchMedia === 'function' && matchMedia('(prefers-color-scheme: light)').matches;
+  } catch {
+    return false;
+  }
 }
 
 export function nextTheme(choice) {
@@ -38,13 +47,19 @@ export function themeSupported() {
   }
 }
 
-export function loadTheme() {
+/** The stored choice, or null when there is none (or storage fails). */
+function loadStoredTheme() {
   try {
-    return parseTheme(localStorage.getItem(THEME_KEY));
+    const raw = localStorage.getItem(THEME_KEY);
+    return raw === 'light' || raw === 'dark' ? raw : null;
   } catch (error) {
     console.warn('flux-rc: could not read the theme choice', error);
-    return 'dark';
+    return null;
   }
+}
+
+export function loadTheme() {
+  return parseTheme(loadStoredTheme(), systemPrefersLight());
 }
 
 function saveTheme(choice) {
@@ -68,6 +83,7 @@ export function mountThemeToggle(button) {
   // Without light-dark() the page is always dark, so the browser bar should be too.
   if (!themeSupported()) { button.hidden = true; applyThemeColor('dark'); return; }
   let choice = loadTheme();
+  let clicked = loadStoredTheme() !== null;
   const paint = () => {
     applyTheme(choice);
     applyThemeColor(choice);
@@ -79,8 +95,19 @@ export function mountThemeToggle(button) {
   };
   button.addEventListener('click', () => {
     choice = nextTheme(choice);
+    clicked = true;
     saveTheme(choice);
     paint();
   });
+  // Until the visitor picks a theme, keep following the browser when its setting changes.
+  try {
+    matchMedia('(prefers-color-scheme: light)').addEventListener('change', (event) => {
+      if (clicked) return;
+      choice = event.matches ? 'light' : 'dark';
+      paint();
+    });
+  } catch (error) {
+    console.warn('flux-rc: could not watch the browser colour scheme', error);
+  }
   paint();
 }

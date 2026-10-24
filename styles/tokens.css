@@ -1,11 +1,11 @@
 /* Design tokens (docs/design.md "Tokens"), reset, base type.
-   One material system, two finishes: a matte graphite instrument (dark, the default) and a warm off-white one (light).
+   One material system, two finishes: a matte graphite instrument (dark) and a warm off-white one (light).
    Three depths, told apart by lightness first and by a short top-lit shadow second:
    shell (--bg) < panel (--surface) < raised key (--key); recessed windows (--well) sit below the shell.
    :root holds the DARK palette as plain values: that is what browsers without light-dark() get (Safari < 17.5,
    Chrome < 123). Where light-dark() works, the @supports block below redeclares the colours as light-dark(light, dark):
    the page stays dark unless <html data-theme="light"> (set by src/ui/theme.js and the inline script in index.html)
-   switches it. It never follows prefers-color-scheme. Any element can pin a scheme with color-scheme: .program does,
+   switches it; those scripts pick light from a saved choice or, failing that, prefers-color-scheme. Any element can pin a scheme with color-scheme: .program does,
    so the Program screen stays dark in both themes. */
 :root {
   color-scheme: dark;

@@ -8,9 +8,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="color-scheme" content="dark light">
   <meta name="theme-color" content="#20211f">
-  <!-- Apply a saved theme choice before the stylesheets paint, so there is no flash. Same key as src/ui/theme.js. -->
+  <!-- Apply the theme (saved choice, else the browser setting) before the stylesheets paint, so there is no flash. Same rule and key as src/ui/theme.js. -->
   <script>
-    try { var t = localStorage.getItem('flux-rc:theme'); if (t === 'light' && CSS.supports('color', 'light-dark(red, red)')) document.documentElement.setAttribute('data-theme', t); } catch (e) {}
+    try { var t = localStorage.getItem('flux-rc:theme'); if (t !== 'light' && t !== 'dark') t = matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark'; if (t === 'light' && CSS.supports('color', 'light-dark(red, red)')) document.documentElement.setAttribute('data-theme', t); } catch (e) {}
   </script>
   <!-- Start downloading a stored non-English locale in parallel with the app. Same key and codes as src/ui/i18n.js; a bad value is ignored there. -->
   <script>

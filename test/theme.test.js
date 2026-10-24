@@ -8,6 +8,15 @@ test('parseTheme keeps light and treats everything else, including an old "auto"
   for (const raw of [null, undefined, '', 'auto', 'LIGHT', 'blue', 5]) assert.equal(parseTheme(raw), 'dark');
 });
 
+test('parseTheme follows the browser when nothing valid is stored, and a stored choice wins', () => {
+  for (const raw of [null, undefined, '', 'auto', 'blue']) {
+    assert.equal(parseTheme(raw, true), 'light');
+    assert.equal(parseTheme(raw, false), 'dark');
+  }
+  assert.equal(parseTheme('dark', true), 'dark');
+  assert.equal(parseTheme('light', false), 'light');
+});
+
 test('nextTheme toggles dark <-> light and treats garbage as dark', () => {
   assert.equal(nextTheme('dark'), 'light');
   assert.equal(nextTheme('light'), 'dark');

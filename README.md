@@ -26,7 +26,7 @@ It is one static web page: no account, no server code, no analytics, nothing lea
   of its loop, inside the few seconds the light waits in programming mode. Lights with a
   button-port e-switch can use the tailcap method instead.
 - **Saved setups and share links**, stored in the browser.
-- **Dark theme by default**, with a button for a light theme.
+- **Dark and light themes**: follows the browser at first, and one button flips to the other.
 
 ## Run it locally
 
