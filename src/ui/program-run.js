@@ -6,12 +6,13 @@ import { switchText, currentPin } from './program-steps.js';
 import { t } from './i18n.js';
 
 /**
- * Delay from the final "switch on" cue to the GIF starting at frame 0. The signal opens with 3 s of
- * green lead, so starting a little late costs nothing, while starting early would waste lead on a
- * light that is still switching on: people need a moment to react to the cue, and the driver needs
- * a moment to boot into programming mode.
+ * Delay from the final "switch on" cue to the GIF starting at frame 0. 2 s of it is a breather the
+ * owner asked for, so the jump from clicking to flashing doesn't catch people off guard (step 4
+ * counts it down); the other 300 ms covers reacting to the cue and the driver booting. The light
+ * waits only about 5–6 s in programming mode, so the green lead must begin well inside that: keep
+ * this under about 3 s.
  */
-export const GIF_START_DELAY_MS = 300;
+export const GIF_START_DELAY_MS = 2300;
 
 /**
  * Calls fn once clock.elapsed() reaches atMs. A timer rather than animation frames, because frames
@@ -151,7 +152,9 @@ export function programStep(ctx, options = {}) {
       btn(t('program.flash.tryAgain'), tryAgain),
       btn(t('common.back'), tryAgain));
   }
+  let isConfirmed = false;
   function confirmed() {
+    isConfirmed = true;
     hint.textContent = t('program.flash.keepHolding');
     buttons.replaceChildren(
       btn(t('program.flash.wentOff'), () => ctx.go('success'), { 'data-done': '' }),
@@ -178,10 +181,23 @@ export function programStep(ctx, options = {}) {
   // Normally the run's clock starts the GIF. If that clock stops (audio suspended right after the
   // cue) a plain timer starts it anyway, slightly late, rather than leaving the square black.
   let started = false;
-  const startOnce = () => { if (!started) { started = true; startGif(); } };
+  const hintText = hint.textContent;
+  const countdown = () => {
+    const seconds = Math.ceil((gifAtMs - clock.elapsed()) / 1000);
+    if (!started && !isConfirmed && seconds > 0) hint.textContent = t('program.flash.startsIn', { seconds });
+  };
+  const ticker = setInterval(countdown, 200);
+  countdown();
+  const startOnce = () => {
+    if (started) return;
+    started = true;
+    clearInterval(ticker);
+    if (!isConfirmed) hint.textContent = hintText;
+    startGif();
+  };
   const cancelClock = waitUntil(clock, gifAtMs, startOnce);
   const backstop = setTimeout(startOnce, Math.max(0, gifAtMs - clock.elapsed()) + GIF_BACKSTOP_MS);
-  ctx.onLeave(() => { cancelClock(); clearTimeout(backstop); });
+  ctx.onLeave(() => { cancelClock(); clearTimeout(backstop); clearInterval(ticker); });
 }
 
 export function successView(ctx) {

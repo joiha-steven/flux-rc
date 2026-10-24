@@ -392,6 +392,7 @@ export default {
   // Program step 4: the flashing square and what follows
   'program.flash.cue': 'Programming',
   'program.flash.hint': 'Dim red light? Keep holding the light on the square.',
+  'program.flash.startsIn': 'Flashing starts in {seconds} s. Keep the light on the square.',
   'program.flash.alt': 'Flashing square that programs the light',
   'program.flash.announce': '{cue}. {hint}',
   'program.flash.seen': 'I see the red light',

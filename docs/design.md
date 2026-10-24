@@ -244,8 +244,10 @@ and step 4), `src/ui/pin-rhythm.js` (the schedule, pure), `src/ui/beeper.js` (We
 
 The light waits only about 5–6 s in programming mode, and the signal loops every ~19 s starting
 with 3 s of green lead, so the GIF must start at frame 0 right after the light enters programming
-mode. A fresh blob URL restarts the GIF at frame 0; it is assigned `GIF_START_DELAY_MS` (300 ms) after
-the final cue. Beeps are scheduled on the AudioContext clock and the visuals and the GIF start read
+mode. A fresh blob URL restarts the GIF at frame 0; it is assigned `GIF_START_DELAY_MS` (2.3 s) after
+the final cue: a 2 s breather, counted down under the square ("Flashing starts in 2 s"), plus
+300 ms to react and for the driver to boot. Keep it under about 3 s so the lead starts well inside
+the light's wait. Beeps are scheduled on the AudioContext clock and the visuals and the GIF start read
 the same clock (or `performance.now()` when sound is off or unavailable). On the audio clock the
 visuals and the GIF start are shifted by `AudioContext.outputLatency` (when 0–500 ms), so they match
 what is heard over Bluetooth. Start waits up to 500 ms for audio to resume; if sound is on but audio
