@@ -1,6 +1,15 @@
 # Cloudflare static-asset response headers (https://developers.cloudflare.com/workers/static-assets/headers/).
-# HTML, JS and CSS keep the default revalidation: file names carry no version, so a long cache could
-# mix old and new modules after a deploy. Images and fonts rarely change, so they cache for a week.
+# File names carry no version, so caches stay short where files change with each deploy:
+# - HTML: default revalidation, so a new deploy is picked up on the next load.
+# - JS, CSS, text: 10 minutes, same as GitHub Pages served them. A repeat visit then needs no
+#   request at all; right after a deploy a visitor may run the old modules for up to 10 minutes.
+# - Images and fonts rarely change: one week.
+/src/*
+  Cache-Control: public, max-age=600
+/styles/*
+  Cache-Control: public, max-age=600
+/locales/*
+  Cache-Control: public, max-age=600
 /assets/*
   Cache-Control: public, max-age=604800
 /*
