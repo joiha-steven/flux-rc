@@ -1,0 +1,8 @@
+# Cloudflare Pages response headers (https://developers.cloudflare.com/pages/configuration/headers/).
+# HTML, JS and CSS keep the default revalidation: file names carry no version, so a long cache could
+# mix old and new modules after a deploy. Images and fonts rarely change, so they cache for a week.
+/assets/*
+  Cache-Control: public, max-age=604800
+/*
+  X-Content-Type-Options: nosniff
+  Referrer-Policy: no-referrer
