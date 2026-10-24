@@ -28,6 +28,7 @@ function cell(index, current, slotMode, onPick) {
   const art = beam(mode);
   const level = mode?.type === 'level';
   const text = entryFull(mode);
+  // Text sits on solid plates (see overlays.css) so it reads on every photo; the picked cell also gets a check, so it is not colour only.
   const inner = level
     ? [h('b', { class: 'pick-num mono' }, mode.level), h('span', { class: 'pick-level-text' }, h('span', { class: 'pick-power' }, LEVELS[mode.level - 1].power), h('span', { class: 'pick-percent' }, modePercent(mode)))]
     : [h('span', { class: 'pick-text' }, h('b', {}, mode ? entryName(mode) : t('mode.notUsed')), h('span', { class: 'pick-detail' }, entryDetail(mode)))];
@@ -36,7 +37,8 @@ function cell(index, current, slotMode, onPick) {
     'aria-label': text.replaceAll(' · ', ', '), 'data-k': `pick:${index}`, 'data-text': text, tabindex: -1, onclick: () => onPick(index),
   }, art && h('img', { class: 'pick-img', src: art.thumb, alt: '', width: 96, height: 116, decoding: 'async', style: `filter: brightness(${art.shade})` }),
   !art && h('span', { class: 'pick-plus', 'aria-hidden': 'true' }, '+'),
-  ...inner);
+  ...inner,
+  index === current && h('span', { class: 'pick-check', 'aria-hidden': 'true' }));
 }
 
 /** Roving focus: arrows move to the nearest cell in that direction (works across the two grids). */

@@ -40,31 +40,34 @@ dialog.picker { width: min(760px, calc(100vw - 32px)); }
 .pick-grid { display: grid; gap: var(--sp-1); }
 .pick-levels { grid-template-columns: repeat(8, minmax(0, 1fr)); }
 .pick-others { grid-template-columns: repeat(4, minmax(0, 1fr)); }
-.pick { position: relative; overflow: hidden; min-width: 0; min-height: var(--tap); padding: 0; text-align: left; color: var(--photo-text); background: var(--photo-bg); border: 2px solid var(--line); border-radius: var(--radius-s); }
-.pick:hover, .pick:focus-visible { border-color: var(--muted); }
+.pick { position: relative; overflow: hidden; min-width: 0; min-height: var(--tap); padding: 0; text-align: left; color: var(--photo-text); background: var(--photo-bg); background-clip: padding-box; border: 2px solid transparent; border-radius: var(--radius-s); }
+.pick:hover, .pick:focus-visible { border-color: var(--key-edge); }
 .pick[aria-current="true"] { border-color: var(--accent-strong); }
 .pick-level { aspect-ratio: 1; }
 .pick-wide { min-height: 72px; }
 .pick-img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: center 65%; }
-.pick::after { content: ""; position: absolute; inset: 0; background: linear-gradient(to bottom, transparent 40%, rgb(0 0 0 / 0.75)); }
-/* Wide cells put two lines of text over the photo, and the afterburning photo is bright: darken more. */
-.pick-wide::after { background: linear-gradient(to bottom, rgb(0 0 0 / 0.15), rgb(0 0 0 / 0.85)); }
-.pick-num, .pick-level-text, .pick-text, .pick-plus { position: absolute; z-index: 1; text-shadow: 0 1px 3px #000; }
-.pick-num { top: var(--sp-1); left: var(--sp-1); font-size: var(--fs-title); line-height: var(--lh-title); font-weight: 600; }
-.pick-level-text { display: grid; left: var(--sp-1); right: var(--sp-1); bottom: var(--sp-1); }
+/* Text sits on solid plates: the level number top-left, power (and percent) bottom-left, in the same place in every cell. */
+.pick-num, .pick-level-text, .pick-text { position: absolute; z-index: 1; background: var(--plate); border-radius: var(--radius-plate); }
+.pick-num { top: 6px; left: 6px; min-width: 24px; padding: 2px 5px; text-align: center; font-size: var(--fs-body); line-height: 18px; font-weight: 600; font-variant-numeric: tabular-nums; }
+.pick-level-text { display: grid; left: 6px; bottom: 6px; max-width: calc(100% - 12px); padding: 2px 5px; }
 .pick-power { font-size: 13px; line-height: 16px; font-weight: 600; }
 .pick-percent { font-size: 11px; line-height: 14px; font-weight: 500; color: var(--photo-muted); }
-.pick-text { display: grid; left: var(--sp-1); right: var(--sp-1); bottom: var(--sp-1); }
+.pick-text { display: grid; left: 6px; bottom: 6px; max-width: calc(100% - 12px); padding: 3px 6px; }
 .pick-text b { font-size: 13px; line-height: 18px; font-weight: 600; overflow-wrap: anywhere; }
 .pick-detail { font-size: var(--fs-caption); line-height: var(--lh-caption); color: var(--photo-muted); overflow-wrap: anywhere; }
-.pick-unused { border-style: dashed; color: var(--text); background: var(--surface-2); }
-.pick-unused::after { display: none; }
-.pick-unused .pick-text, .pick-unused .pick-plus { text-shadow: none; }
-.pick-unused .pick-text { color: var(--muted); }
+/* Not used: no photo, an empty well with quiet text instead of plates. */
+.pick-unused { color: var(--text); background: var(--well); }
+.pick-unused .pick-text { background: none; padding: 3px 4px; color: var(--muted); }
 .pick-unused .pick-detail { color: var(--muted); }
-.pick-plus { top: var(--sp-1); right: var(--sp-1); color: var(--muted); font-size: var(--fs-title); }
-.pick[aria-current="true"] .pick-text b, .pick[aria-current="true"] .pick-num { color: var(--accent); }
-.pick-unused[aria-current="true"] .pick-text b { color: var(--accent-strong); }
+.pick-plus { position: absolute; z-index: 1; top: 6px; right: 6px; color: var(--muted); font-size: var(--fs-title); line-height: 18px; }
+.pick-unused[aria-current="true"] .pick-plus { display: none; }
+/* Check on the picked cell: amber plate, dark check drawn with two borders. */
+.pick-check { position: absolute; z-index: 1; top: 6px; right: 6px; width: 18px; height: 18px; background: var(--accent); border-radius: var(--radius-plate); }
+.pick-check::after { content: ""; position: absolute; left: 6px; top: 3px; width: 4px; height: 8px; border: solid var(--on-accent); border-width: 0 2px 2px 0; transform: rotate(45deg); }
+/* Open with a short fade and a 4 px rise; none under reduced motion. */
+@keyframes pick-in { from { opacity: 0; transform: translateY(4px); } }
+dialog.picker[open] { animation: pick-in 160ms ease-out; }
+@media (prefers-reduced-motion: reduce) { dialog.picker[open] { animation: none; } }
 .pick-detailbar { position: sticky; bottom: calc(-1 * var(--sp-2)); margin: 0 calc(-1 * var(--sp-2)) calc(-1 * var(--sp-2)); padding: var(--sp-1) var(--sp-2); background: var(--surface); border-top: 1px solid var(--line); font-size: var(--fs-small); line-height: var(--lh-small); min-height: var(--tap); display: flex; align-items: center; z-index: 2; }
 @media (max-width: 767px) {
   .pick-levels { grid-template-columns: repeat(4, minmax(0, 1fr)); }
