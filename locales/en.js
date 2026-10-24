@@ -118,7 +118,9 @@ export default {
   'mode.detail': '{percent} % · {power}',
   'mode.withDetail': '{name} · {detail}',
   'mode.afterburning': 'Afterburning',
-  'mode.afterburningTile': '{name} {detail}',
+  // Tile and picker labels: the percent is written tight ("0.03%"), unlike the spaced "{percent} %" above.
+  'mode.percentTight': '{percent}%',
+  'mode.detailTight': '{percent}% · {power}',
   'mode.moonlight': 'Red moonlight',
   'mode.sos': 'S.O.S.',
   'mode.strobe': '10 Hz strobe',

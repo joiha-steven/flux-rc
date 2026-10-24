@@ -72,8 +72,8 @@ Fonts are self-hosted from `assets/fonts/` via `styles/fonts.css` (load it first
 
 - **Plum Sans** (Inter-based) for all text. `font-family: "Plum Sans", system-ui, sans-serif`.
 - **Plum Mono** (JetBrains Mono-based) only where a number or code is the point: the wordmark,
-  level numbers and short codes on tiles, the %/W line on tiles, loop time, Packet details, PIN
-  digits. Not for subtitles or descriptions. Note its 400 weight already renders fairly heavy.
+  level numbers and short codes on tiles, loop time, Packet details, PIN
+  digits. The tile label (power, percent) and the picker's power and percent are Plum Sans, not mono. Not for subtitles or descriptions. Note its 400 weight already renders fairly heavy.
 
 Scale (px, line height): caption 12/16, small 13/18, body 15/22, title 18/24 (section headings),
 display 24/28 (dialog titles), tile number 40/1 desktop and 32/1 phone.
@@ -137,9 +137,14 @@ one-cell modes." (or two-cell, or "Modes stay as they are on the light" when bot
 **Mode tile** (aspect about 1.3 : 1 on desktop/tablet, 1 : 1 on phone):
 
 - Beam photo filling the tile, with a dark gradient at top and bottom for legible text.
-- Top left, monospace: "0.4 % · 120 mW" (or the special mode's name, e.g. "Afterburning 100 % ·
-  30 W", "Red moonlight", "10 Hz strobe", "S.O.S.", "Red beacon", "Signal · white ×2").
-- Top right: slot number badge 1–4 (small square, border).
+- Top left, two lines in Plum Sans: line 1 is the power ("8.3 mW", "17 W"), 15/20, weight 600,
+  -0.01em, `--photo-text`; line 2 is the percent written tight ("0.03%"), 12/16, weight 500,
+  `--photo-muted`, tabular figures. Special modes show their name as line 1 in the same style and
+  no line 2 ("Red moonlight", "10 Hz strobe", "S.O.S.", "Red beacon", "Signal · white"); afterburning
+  shows "Afterburning" over "100% · 30 W". Text comes from `tileText()` in `src/ui/modes-list.js`.
+  The top shade is dark enough (about 0.7 at label height) that line 2 stays above 4.5:1 on the
+  brightest photo (afterburning, measured 5.0:1 worst case).
+- Top right: slot number badge 1–4 (30 × 30 px square, 15 px weight 600, 6 px radius, border). The label's right edge leaves 8 px to the badge; the issue dot sits under it.
 - Bottom left: small "LVL" then the level number large, amber, monospace. Special modes show a
   short code instead: AB, RM, SOS, STB, BCN, SIG.
 - Right edge: up and down chevron buttons (visually 28–32 px, hit area at least 44 × 44 px). Up =
@@ -155,11 +160,12 @@ one-cell modes." (or two-cell, or "Modes stay as they are on the light" when bot
   - **Brightness levels** first: 32 square-ish cells, 8 columns on desktop/tablet (dialog about
     760 px wide), 4 columns on phone. Each cell is a tiny beam photo (the `-thumb` file of its band,
     with the same `brightness()` rule as the tiles) darkened at the bottom, the level number large
-    in Plum Mono top-left, and the power ("3 W", "180 mW") small at the bottom-left. The % is not
-    printed in the cell.
+    in Plum Mono top-left, and bottom-left the power ("3 W", "180 mW") in Plum Sans 13 px weight 600
+    over the tight percent ("10%") in 11 px muted. Both lines fit in the 79 px phone cell (measured
+    5 px between number and power).
   - **Other modes** below, under a small heading: Afterburning, Red moonlight, S.O.S., 10 Hz strobe,
     Red beacon, Custom signal, and Not used (slots 2–4 only). Wider cells (4 per row desktop, 2 per
-    row phone) with their photo, name, and one short detail line ("100 % · 30 W", "Distress
+    row phone) with their photo, name (Plum Sans 13 px, weight 600), and one short detail line ("100 % · 30 W", "Distress
     pattern").
   - The current choice has a 2 px amber border; hover/focus show a lighter border.
   - A detail bar pinned at the bottom of the picker shows the hovered/focused/current entry in full:

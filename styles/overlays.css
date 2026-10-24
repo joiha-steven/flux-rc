@@ -49,11 +49,13 @@ dialog.picker { width: min(760px, calc(100vw - 32px)); }
 .pick::after { content: ""; position: absolute; inset: 0; background: linear-gradient(to bottom, transparent 40%, rgb(0 0 0 / 0.75)); }
 /* Wide cells put two lines of text over the photo, and the afterburning photo is bright: darken more. */
 .pick-wide::after { background: linear-gradient(to bottom, rgb(0 0 0 / 0.15), rgb(0 0 0 / 0.85)); }
-.pick-num, .pick-power, .pick-text, .pick-plus { position: absolute; z-index: 1; text-shadow: 0 1px 3px #000; }
+.pick-num, .pick-level-text, .pick-text, .pick-plus { position: absolute; z-index: 1; text-shadow: 0 1px 3px #000; }
 .pick-num { top: var(--sp-1); left: var(--sp-1); font-size: var(--fs-title); line-height: var(--lh-title); font-weight: 600; }
-.pick-power { left: var(--sp-1); bottom: var(--sp-1); font-size: var(--fs-caption); line-height: var(--lh-caption); }
+.pick-level-text { display: grid; left: var(--sp-1); right: var(--sp-1); bottom: var(--sp-1); }
+.pick-power { font-size: 13px; line-height: 16px; font-weight: 600; }
+.pick-percent { font-size: 11px; line-height: 14px; font-weight: 500; color: var(--photo-muted); }
 .pick-text { display: grid; left: var(--sp-1); right: var(--sp-1); bottom: var(--sp-1); }
-.pick-text b { font-weight: 500; overflow-wrap: anywhere; }
+.pick-text b { font-size: 13px; line-height: 18px; font-weight: 600; overflow-wrap: anywhere; }
 .pick-detail { font-size: var(--fs-caption); line-height: var(--lh-caption); color: var(--photo-muted); overflow-wrap: anywhere; }
 .pick-unused { border-style: dashed; color: var(--text); background: var(--surface-2); }
 .pick-unused::after { display: none; }

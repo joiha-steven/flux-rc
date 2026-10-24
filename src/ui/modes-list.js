@@ -1,6 +1,7 @@
 // The ordered list of everything a mode slot can be, plus labels and artwork for each entry.
 import { t } from './i18n.js';
-import { modeName, modeDetail, modeLabel } from './mode-text.js';
+import { LEVELS } from '../core/index.js';
+import { modeName, modeDetail, modeLabel, modePercent, afterburningTileDetail } from './mode-text.js';
 
 const BANDS = [
   { file: 'beam-low', from: 1, to: 12 }, { file: 'beam-medium', from: 13, to: 20 },
@@ -42,17 +43,14 @@ export function beam(mode) {
 
 export const signalName = (m) => t(m.double ? 'mode.signalShortDouble' : 'mode.signalShort', { color: t(`mode.color.${m.color}`) });
 
-/** "0.4 % · 120 mW" for levels, a short name for special modes. */
-export function tileLabel(mode) {
-  if (mode.type === 'level') return modeDetail(mode);
-  if (mode.type === 'afterburning') return t('mode.afterburningTile', { name: modeName(mode), detail: modeDetail(mode) });
-  return mode.type === 'signal' ? signalName(mode) : modeLabel(mode);
-}
-
-/** Tile top label as lines, so a long name never runs into the slot badge: "Afterburning" / "100 % · 30 W". */
-export function tileLines(mode) {
-  if (mode.type === 'afterburning') return [modeName(mode), modeDetail(mode)];
-  return [tileLabel(mode)];
+/**
+ * Tile top-left text as two lines. A level shows its power, then the tight percent ("8.3 mW" / "0.03%");
+ * afterburning shows its name, then "100% · 30 W"; other modes show their name only (secondary is null).
+ */
+export function tileText(mode) {
+  if (mode.type === 'level') return { primary: LEVELS[mode.level - 1].power, secondary: modePercent(mode) };
+  if (mode.type === 'afterburning') return { primary: modeName(mode), secondary: afterburningTileDetail() };
+  return { primary: mode.type === 'signal' ? signalName(mode) : modeLabel(mode), secondary: null };
 }
 
 export const tileCode = (mode) => (mode.type === 'level' ? String(mode.level) : t(`mode.code.${mode.type}`));

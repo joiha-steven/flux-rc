@@ -13,6 +13,16 @@ export function modeDetail(mode) {
   return t('mode.detail', { percent, power });
 }
 
+/** Percent written tight for tiles and picker cells: "0.03%". */
+export function modePercent(mode) {
+  return t('mode.percentTight', { percent: LEVELS[mode.level - 1].percent });
+}
+
+/** "100% · 30 W": the afterburning second line on a tile. */
+export function afterburningTileDetail() {
+  return t('mode.detailTight', { percent: AFTERBURNING.percent, power: AFTERBURNING.power });
+}
+
 /** Name alone: "Level 21", "Afterburning", "Red moonlight", "Custom signal". */
 export function modeName(mode) {
   if (mode.type === 'level') return t('mode.level', { level: mode.level });
