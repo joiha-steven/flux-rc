@@ -21,3 +21,6 @@ assets/raw/
 
 # Local editor/agent config with machine paths
 .claude/
+
+# wrangler local cache
+.wrangler/
