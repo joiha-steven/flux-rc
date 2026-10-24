@@ -139,3 +139,10 @@ html:lang(zh-Hans) {
   --font: "Plum Sans", "PingFang SC", "Hiragino Sans GB", "Noto Sans SC", "Microsoft YaHei", sans-serif;
   --mono: "Plum Mono", "PingFang SC", "Hiragino Sans GB", "Noto Sans SC", "Microsoft YaHei", ui-monospace, monospace;
 }
+
+/* Line breaking for longer translated text. Japanese breaks between phrases, not inside a word (auto-phrase,
+   ignored by browsers that lack it); both CJK languages keep closing punctuation off the start of a line. */
+html:lang(ja), html:lang(zh-Hans) { line-break: strict; }
+html:lang(ja) { word-break: auto-phrase; }
+/* German compounds in the small uppercase option labels hyphenate instead of breaking mid-word. */
+html:lang(de) .option-label { hyphens: auto; }

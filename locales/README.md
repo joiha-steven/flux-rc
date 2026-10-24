@@ -65,9 +65,9 @@ before any module loads.
 
 ## Known gaps for the first translation
 
-- The mode picker builds each cell's screen-reader name by replacing the English separator
-  `' · '` with `', '` (`src/ui/render/picker.js`). A locale with a different separator in
-  `mode.withDetail` or `mode.detail` should get a key for this instead.
+- `a11y.listSeparator` joins spoken lists. The mode picker still builds each cell's screen-reader
+  name by replacing the English `' · '` in `mode.withDetail` / `mode.detail` with it, so a locale that
+  uses another separator in those strings would need that changed in `src/ui/render/picker.js`.
 - `src/data/presets.js` and `src/data/quick-presets.js` import `src/ui/i18n.js` for preset names.
 
 ## Test

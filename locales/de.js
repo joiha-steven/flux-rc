@@ -415,4 +415,6 @@ export default {
   'program.stillRed.darker': 'Mach den Raum dunkler.',
   'program.stillRed.second': 'Manchmal braucht es einen zweiten Versuch.',
   'program.stillRed.again': 'Nochmal',
+  // Screen-reader only: joins items in spoken lists (mode picker cell names, the rhythm description).
+  'a11y.listSeparator': ', ',
 };

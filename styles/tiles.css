@@ -56,7 +56,7 @@
   padding: 4px 6px;
   background: var(--plate);
   border-radius: var(--radius-plate);
-  overflow-wrap: break-word;
+  overflow-wrap: anywhere;
 }
 .tile-primary { font-size: 15px; line-height: 20px; font-weight: 600; letter-spacing: -0.01em; color: var(--photo-text); }
 .tile-secondary { font-size: 12px; line-height: 16px; font-weight: 500; color: var(--photo-muted); font-variant-numeric: tabular-nums; }

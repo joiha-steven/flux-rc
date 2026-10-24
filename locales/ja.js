@@ -68,11 +68,11 @@ export default {
   'vendorPreset.fl33-v4-factory.name': 'FL33 v4 Factory Prog',
   'vendorPreset.fl33-v4-factory.description': '1セル：レベル 1、6、11、16。2セル：レベル 21、26、ターボ。メモリー機能は標準、保護とランタイム延長はオン、詳細設定は変更しません。',
   'vendorPreset.minion-factory.name': 'MINION Factory Prog',
-  'vendorPreset.minion-factory.description': '赤色ムーンライト、レベル 6 と 18、そして両セル構成ともターボ。さらに切替受付時間 1.5 s、温度上限50 °C、出力制限は両方レベル 28、振動センサー、PIN 1-1-2 を設定します。',
+  'vendorPreset.minion-factory.description': '赤色月光、レベル 6 と 18、そして両セル構成ともターボ。さらに切替受付時間 1.5 s、温度上限50 °C、出力制限は両方レベル 28、振動センサー、PIN 1-1-2 を設定します。',
   'vendorPreset.oem-mark.name': 'OEM_Mark',
-  'vendorPreset.oem-mark.description': '1セル：赤色ムーンライト、レベル 7、11、15。2セル：レベル 19、23、26、ターボ。メモリー機能はオフ、保護とランタイム延長はオン、詳細設定は変更しません。',
+  'vendorPreset.oem-mark.description': '1セル：赤色月光、レベル 7、11、15。2セル：レベル 19、23、26、ターボ。メモリー機能はオフ、保護とランタイム延長はオン、詳細設定は変更しません。',
   'vendorPreset.oveready-factory.name': 'OVEREADY Factory Prog',
-  'vendorPreset.oveready-factory.description': '赤色ムーンライトのあと、レベル 14、21、28（1セル）または16、24、ターボ（2セル）。さらに切替受付時間 0.7 s、温度上限65 °C を設定し、振動センサーをオフにして、PIN 2-2-2 を設定します。',
+  'vendorPreset.oveready-factory.description': '赤色月光のあと、レベル 14、21、28（1セル）または16、24、ターボ（2セル）。さらに切替受付時間 0.7 s、温度上限65 °C を設定し、振動センサーをオフにして、PIN 2-2-2 を設定します。',
   'vendorPreset.pin-112.name': 'Set programming PIN to 112',
   'vendorPreset.pin-112.description': 'プログラミング PIN を 1-1-2 に設定します。あわせてメモリー機能をオフ、保護とランタイム延長をオンにします。モードとその他の設定は変更しません。',
   'vendorPreset.thermal-50c.name': 'Temperature Limit 50C',
@@ -124,7 +124,7 @@ export default {
   // Tile and picker labels: the percent is written tight ("0.03%"), unlike the spaced "{percent} %" above.
   'mode.percentTight': '{percent}%',
   'mode.detailTight': '{percent}% · {power}',
-  'mode.moonlight': '赤色ムーンライト',
+  'mode.moonlight': '赤色月光',
   'mode.sos': 'SOS',
   'mode.strobe': '10 Hz ストロボ',
   'mode.beacon': '赤色ビーコン',
@@ -414,4 +414,6 @@ export default {
   'program.stillRed.darker': '部屋をもっと暗くします。',
   'program.stillRed.second': '2回目でうまくいくこともあります。',
   'program.stillRed.again': 'もう一度',
+  // Screen-reader only: joins items in spoken lists (mode picker cell names, the rhythm description).
+  'a11y.listSeparator': '、',
 };

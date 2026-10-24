@@ -414,4 +414,6 @@ export default {
   'program.stillRed.darker': 'Cho phòng tối hơn.',
   'program.stillRed.second': 'Nhiều khi phải nạp lần hai mới ăn.',
   'program.stillRed.again': 'Thử lại',
+  // Screen-reader only: joins items in spoken lists (mode picker cell names, the rhythm description).
+  'a11y.listSeparator': ', ',
 };

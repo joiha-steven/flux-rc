@@ -2,6 +2,8 @@
 .page { max-width: 1080px; margin: 0 auto; padding-left: var(--gutter); padding-right: var(--gutter); }
 .topbar-inner { display: flex; align-items: center; justify-content: space-between; gap: var(--sp-2); padding-top: var(--sp-3); padding-bottom: var(--sp-3); }
 .brand { min-width: 0; }
+/* On phones the brand/actions gap is one step smaller so the wider 日本語 language key still leaves the wordmark its full width. */
+@media (max-width: 420px) { .topbar-inner { gap: var(--sp-1); } }
 .wordmark { white-space: nowrap; font: 600 28px/32px var(--mono); letter-spacing: 0.02em; color: var(--accent-strong); }
 .tagline { color: var(--muted); font-size: var(--fs-small); line-height: var(--lh-small); }
 .topbar-actions { display: flex; gap: var(--sp-1); flex: none; }
@@ -88,7 +90,7 @@
 .adv-toggle .muted { font-weight: 400; }
 .footer-actions { position: relative; display: flex; align-items: center; gap: var(--sp-1); flex: none; }
 .loop { display: grid; margin-right: var(--sp-1); color: var(--muted); font-size: var(--fs-small); line-height: var(--lh-small); }
-.loop > span:first-child { display: flex; align-items: center; gap: var(--sp-1); }
+.loop > span:first-child { display: flex; flex-wrap: wrap; align-items: center; column-gap: var(--sp-1); }
 /* The loop time sits in a small recessed number window. */
 .loop b { padding: 4px 10px; border: 1px solid var(--well-edge); border-radius: var(--radius-s); background: var(--well); box-shadow: var(--well-shade); font: 500 var(--fs-body)/var(--lh-small) var(--mono); font-variant-numeric: tabular-nums; color: var(--text); white-space: nowrap; }
 .loop-error { color: var(--danger); font-size: var(--fs-caption); line-height: var(--lh-caption); }
