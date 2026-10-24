@@ -6,6 +6,7 @@
 .group-title { flex: 1; min-width: 140px; }
 .group-title h2 { line-height: var(--lh-title); }
 .sub { color: var(--muted); font-size: var(--fs-small); line-height: var(--lh-small); }
+.sub-sizes { display: block; }
 .group-note { color: var(--muted); font-size: var(--fs-small); line-height: var(--lh-small); max-width: 70ch; }
 .group-controls { display: flex; align-items: center; gap: var(--sp-2); flex-wrap: wrap; }
 .group-controls .switch { min-height: var(--tap); align-items: center; }

@@ -10,9 +10,11 @@ import { LEVELS } from '../../core/index.js';
 // Text is looked up per render (locale keys "groups.single.*" / "groups.dual.*").
 const GROUPS = {
   single: {
-    sub: () => t('groups.single.sub'), img: () => 'battery-1s-li-ion' },
+    sub: () => t('groups.single.sub'), sizes: () => t('groups.liIonSizes'), img: () => 'battery-1s-li-ion' },
   dual: {
     sub: (c) => t(c.dual.cells === 'cr123a' ? 'groups.dual.subCr123a' : 'groups.dual.subLiIon'),
+    // The driver cares about cell voltage, not size: list common 3.7 V sizes on their own line.
+    sizes: (c) => (c.dual.cells === 'cr123a' ? null : t('groups.liIonSizes')),
     img: (c) => (c.dual.cells === 'cr123a' ? 'battery-2s-cr123a' : 'battery-2s-li-ion'),
   },
 };
@@ -63,7 +65,7 @@ function group(store, c, key) {
   const other = key === 'single' ? c.dual : c.single;
   const head = h('div', { class: 'group-head' },
     h('img', { class: 'battery', src: `assets/${g.img(c)}.webp`, alt: '', width: 80, height: 24 }),
-    h('div', { class: 'group-title' }, h('h2', {}, t(`groups.${key}.title`)), h('p', { class: 'sub' }, g.sub(c))),
+    h('div', { class: 'group-title' }, h('h2', {}, t(`groups.${key}.title`)), h('p', { class: 'sub' }, g.sub(c), g.sizes?.(c) && h('span', { class: 'sub-sizes' }, g.sizes(c)))),
     h('div', { class: 'group-controls' },
       key === 'dual' && data.enabled && segmented({
         key: 'dual-cells', label: t('groups.cellType'), hideLabel: true, value: data.cells,

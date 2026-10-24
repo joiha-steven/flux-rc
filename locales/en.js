@@ -42,13 +42,8 @@ export default {
   'unit.celsius': '{n} °C',
 
   // Theme button (aria-label and tooltip): "{current}. Switch to {next}"
-  'theme.label': '{current}. Switch to {next}',
-  'theme.current.auto': 'Theme: auto (follows your device)',
-  'theme.current.light': 'Theme: light',
-  'theme.current.dark': 'Theme: dark',
-  'theme.next.auto': 'auto',
-  'theme.next.light': 'light',
-  'theme.next.dark': 'dark',
+  'theme.switchToLight': 'Switch to light theme',
+  'theme.switchToDark': 'Switch to dark theme',
 
   // Toasts
   'toast.badLink': 'This link could not be read',
@@ -157,12 +152,13 @@ export default {
   // Mode groups
   'groups.single.title': 'One cell',
   'groups.single.note': 'The 371D light engine limits the peak battery current to about 5 A, so one-cell output is normally capped at 17 W (level 28). Vendors can change this.',
-  'groups.single.sub': '1 × 18650 Li-ion',
+  'groups.single.sub': '1 × 3.7 V Li-ion',
+  'groups.liIonSizes': '18650, 18350, 21700…',
   'groups.single.use': 'Use one cell',
   'groups.single.offCopies': 'Not used. This set copies the two-cell modes.',
   'groups.dual.title': 'Two cells in series',
   'groups.dual.note': 'Higher levels draw more current. Make sure your cells can deliver it; too much current can make a cell fail or catch fire.',
-  'groups.dual.subLiIon': '2 × 18650 Li-ion (series)',
+  'groups.dual.subLiIon': '2 × 3.7 V Li-ion in series',
   'groups.dual.subCr123a': '2 × CR123A (series)',
   'groups.dual.use': 'Use two cells in series',
   'groups.dual.offCopies': 'Not used. This set copies the one-cell modes.',

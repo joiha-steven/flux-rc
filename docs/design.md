@@ -14,8 +14,8 @@ who know that page feel at home.
 
 ## Principles
 
-- **Light and dark.** The page follows the browser (`prefers-color-scheme`); a topbar button
-  overrides it (see Theme). Tile photos are dark in both themes, so text drawn on them stays light.
+- **Light and dark.** Dark is the default for everyone; the page ignores the device's
+  colour-scheme setting. A topbar button switches to light and back (see Theme). Tile photos are dark in both themes, so text drawn on them stays light.
 - **The Program screen is always dark**, in both themes: people hold the light up to a dark
   screen in a dim room, and the flashing square sits on black. `.program` pins `color-scheme: dark`.
 - **One screen, top to bottom**, in the same order as the original.
@@ -54,11 +54,13 @@ gradients and text shadows over the beam photos.
 
 ### Theme
 
-One icon button in the topbar (`#btn-theme`) cycles Auto, Light, Dark, Auto; the icon shows the
-current choice (half-filled circle, sun, moon) and the label says what a click does. The choice is
-stored in `localStorage` under `flux-rc:theme` ("light" or "dark"; missing means auto) and set as
-`<html data-theme>`. A small inline script in `<head>` applies it before the stylesheets paint, so
-there is no flash. If storage fails the toggle still works for the current page view.
+One icon button in the topbar (`#btn-theme`) toggles Dark and Light. The icon shows what a click
+does, like the label: a sun in dark ("Switch to light theme"), a moon in light ("Switch to dark
+theme"). The choice is stored in `localStorage` under `flux-rc:theme` ("light" or "dark"; anything
+else, including an old "auto", means dark) and set as `<html data-theme>`. A small inline script in
+`<head>` applies a stored "light" before the stylesheets paint, so there is no flash. A single
+`theme-color` meta is dark and `theme.js` switches it to the light background. If storage fails the
+toggle still works for the current page view.
 Logic: `src/ui/theme.js`.
 
 Radius 12 px on cards and tiles, 8 px on buttons. 8 px spacing grid. Content max width 1080 px,
@@ -124,8 +126,9 @@ the row, one muted line: the description of the selected quick preset (or nothin
 
 ### Mode groups ("One cell", "Two cells in series")
 
-Header row: battery image (about 80 × 24 px), title, monospace subtitle ("1 × 18650 Li-ion",
-"2 × 18650 Li-ion (series)" or "2 × CR123A (series)"). Right side: a switch "Use" and, for two
+Header row: battery image (about 80 × 24 px), title, monospace subtitle ("1 × 3.7 V Li-ion",
+"2 × 3.7 V Li-ion in series" or "2 × CR123A (series)"; for Li-ion a second line lists common sizes,
+"18650, 18350, 21700…", because the driver cares about the cell voltage, not the size). Right side: a switch "Use" and, for two
 cells, a segmented control "2 × Li-ion" / "2 × CR123A".
 
 When a group is off, replace its tiles with one muted line: "Not used. This set copies the

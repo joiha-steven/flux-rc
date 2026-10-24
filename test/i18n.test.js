@@ -63,8 +63,6 @@ test('every computed key used under src/ exists in locales/en.js for all its val
   const COMPUTED = {
     'issue.${issue.code}': [...coreIssues.map((i) => `issue.${i.code}`), 'issue.internal'],
     'issue.severity.${RANK[issue.severity] ? issue.severity : \'info\'}': each(['error', 'warning', 'info'], (s) => `issue.severity.${s}`),
-    'theme.current.${current}': each(['auto', 'light', 'dark'], (s) => `theme.current.${s}`),
-    'theme.next.${nextTheme(current)}': each(['auto', 'light', 'dark'], (s) => `theme.next.${s}`),
     'mode.color.${m.color}': ['mode.color.red', 'mode.color.white'],
     'mode.color.${mode.color}': ['mode.color.red', 'mode.color.white'],
     'mode.code.${mode.type}': each(modeTypes, (s) => `mode.code.${s}`),

@@ -6,12 +6,11 @@
   <script>if (location.hostname === 'joiha-steven.github.io') location.replace('https://flux-rc.stevensdesk.com/' + location.search + location.hash);</script>
   <link rel="canonical" href="https://flux-rc.stevensdesk.com/">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="color-scheme" content="light dark">
-  <meta name="theme-color" content="#f6f4f0" media="(prefers-color-scheme: light)">
-  <meta name="theme-color" content="#0b0c0e" media="(prefers-color-scheme: dark)">
+  <meta name="color-scheme" content="dark light">
+  <meta name="theme-color" content="#0b0c0e">
   <!-- Apply a saved theme choice before the stylesheets paint, so there is no flash. Same key as src/ui/theme.js. -->
   <script>
-    try { var t = localStorage.getItem('flux-rc:theme'); if ((t === 'light' || t === 'dark') && CSS.supports('color', 'light-dark(red, red)')) document.documentElement.setAttribute('data-theme', t); } catch (e) {}
+    try { var t = localStorage.getItem('flux-rc:theme'); if (t === 'light' && CSS.supports('color', 'light-dark(red, red)')) document.documentElement.setAttribute('data-theme', t); } catch (e) {}
   </script>
   <!-- Text marked data-i18n / data-i18n-attr is English as the no-JS fallback; src/ui/i18n.js applyStatic() fills it from locales/. test/i18n.test.js keeps it equal to locales/en.js. -->
   <title data-i18n="meta.title">flux-rc — NXS R1 optical programmer</title>
@@ -99,7 +98,7 @@
         <p class="tagline" data-i18n="topbar.tagline">NXS R1 optical programmer</p>
       </div>
       <div class="topbar-actions">
-        <button type="button" class="btn btn-outline btn-icon" id="btn-theme" aria-label="Theme: auto (follows your device). Switch to light" title="Theme: auto (follows your device). Switch to light"></button>
+        <button type="button" class="btn btn-outline btn-icon" id="btn-theme" aria-label="Switch to light theme" title="Switch to light theme"></button>
         <button type="button" class="btn btn-outline" id="btn-presets" aria-label="Presets" data-i18n-attr="aria-label:topbar.presets">
           <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M4 7h10M18 7h2M4 17h2M10 17h10"/><circle cx="16" cy="7" r="2"/><circle cx="8" cy="17" r="2"/></svg>
           <span class="btn-label" data-i18n="topbar.presets">Presets</span>

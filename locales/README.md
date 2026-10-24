@@ -35,7 +35,7 @@ Some text is put together from several keys, so check the pieces read well side 
 
 - Mode labels: `mode.withDetail` joins `mode.level` (or `mode.afterburning`) with `mode.detail`;
   `mode.signalFull` joins the colour, flashes (`single` / `double`) and two durations.
-- `theme.label` joins `theme.current.*` with `theme.next.*` (the next choice, lower case).
+- `theme.switchToLight` / `theme.switchToDark` name what the theme button does when clicked.
 - `program.run.announceBeep` / `announceFlash` use `program.switch.*.verb` (press / release).
 - `footer.blocked` and `footer.downloadOff` end with an issue message (`issue.*`);
   `footer.blockedUnknown` is the lower-case fallback for that slot.

@@ -1,8 +1,8 @@
 /* Design tokens (docs/design.md "Tokens"), reset, base type.
    :root holds the DARK palette as plain values: that is what browsers without light-dark() get (Safari < 17.5,
    Chrome < 123) and it is the original look. Where light-dark() works, the @supports block below redeclares the
-   colours as light-dark(light, dark): the page then follows prefers-color-scheme, and <html data-theme="light|dark">
-   (set by src/ui/theme.js and the inline script in index.html) forces one. Any element can pin a scheme with
+   colours as light-dark(light, dark): the page stays dark unless <html data-theme="light">
+   (set by src/ui/theme.js and the inline script in index.html) switches it. It never follows prefers-color-scheme. Any element can pin a scheme with
    color-scheme: .program does, so the Program screen stays dark in both themes. */
 :root {
   color-scheme: dark;
@@ -55,7 +55,7 @@
 }
 @supports (color: light-dark(red, red)) {
   :root {
-    color-scheme: light dark;
+    color-scheme: dark;
     --bg: light-dark(#f6f4f0, #0b0c0e);
     --surface: light-dark(#ffffff, #131518);
     --surface-2: light-dark(#ebe8e1, #1a1d21);
@@ -71,7 +71,6 @@
     --shadow: light-dark(rgb(27 26 24 / 0.18), rgb(0 0 0 / 0.5));
   }
   html[data-theme="light"] { color-scheme: light; }
-  html[data-theme="dark"] { color-scheme: dark; }
 }
 @media (min-width: 768px) { :root { --gutter: 24px; --tile-number: 40px; } }
 
