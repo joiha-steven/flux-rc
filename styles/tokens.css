@@ -1,34 +1,52 @@
 /* Design tokens (docs/design.md "Tokens"), reset, base type.
+   One material system, two finishes: a matte graphite instrument (dark, the default) and a warm off-white one (light).
+   Three depths, told apart by lightness first and by a short top-lit shadow second:
+   shell (--bg) < panel (--surface) < raised key (--key); recessed windows (--well) sit below the shell.
    :root holds the DARK palette as plain values: that is what browsers without light-dark() get (Safari < 17.5,
-   Chrome < 123) and it is the original look. Where light-dark() works, the @supports block below redeclares the
-   colours as light-dark(light, dark): the page stays dark unless <html data-theme="light">
-   (set by src/ui/theme.js and the inline script in index.html) switches it. It never follows prefers-color-scheme. Any element can pin a scheme with
-   color-scheme: .program does, so the Program screen stays dark in both themes. */
+   Chrome < 123). Where light-dark() works, the @supports block below redeclares the colours as light-dark(light, dark):
+   the page stays dark unless <html data-theme="light"> (set by src/ui/theme.js and the inline script in index.html)
+   switches it. It never follows prefers-color-scheme. Any element can pin a scheme with color-scheme: .program does,
+   so the Program screen stays dark in both themes. */
 :root {
   color-scheme: dark;
-  --bg: #0b0c0e;
-  --surface: #131518;
-  --surface-2: #1a1d21;
-  --line: #2a2e34;
-  --text: #ece9e4;
-  --muted: #8d9097;
-  /* Amber is a FILL (buttons, selected pills, numbers on dark photos). */
-  --accent: #ffb547;
+  --bg: #20211f;
+  --surface: #272825;
+  --surface-2: #2d2e2b;
+  --line: #3a3b37;
+  --text: #e8e6de;
+  --muted: #a4a197;
+  /* Raised key: face, hover face, edge, the 1 px highlight on its top edge and its short drop shadow. */
+  --key: #30312e;
+  --key-hover: #373834;
+  --key-edge: #454641;
+  --key-hi: rgb(255 255 255 / 0.07);
+  --drop-1: rgb(0 0 0 / 0.55);
+  --drop-2: rgb(0 0 0 / 0.25);
+  --key-drop: 0 1px 0 var(--drop-1), 0 2px 3px var(--drop-2);
+  /* Recessed window: photo frames, number windows, switch tracks, inactive areas. */
+  --well: #151613;
+  --well-edge: #0c0d0b;
+  --well-shade: inset 0 1px 2px rgb(0 0 0 / 0.55);
+  /* Amber is a FILL (Program, the switch's active zone, small state marks, the check on a picked level). */
+  --accent: #eba43b;
   --on-accent: #1a1205;
-  /* Amber used as text, border or focus ring on the page background: darker on light so it stays readable. */
-  --accent-strong: #ffb547;
-  --accent-glow: rgb(255 181 71 / 0.4);
+  /* The amber key's darker lower edge. */
+  --accent-edge: #a8701f;
+  /* Amber used as text, border or focus ring on the page: darker on light so it stays readable. */
+  --accent-strong: #eba43b;
+  --accent-glow: rgb(235 164 59 / 0.4);
   --danger: #ff6b6b;
   /* Ink on a --danger fill (the "!" badge). */
   --on-danger: #1a0606;
   --ok: #5bd68a;
-  /* Text and controls drawn over the (dark) beam photos stay light in both themes; the frame behind a photo stays dark. */
-  --photo-text: #ece9e4;
-  --photo-muted: #b4b7bd;
-  --photo-bg: #1a1d21;
+  /* Text drawn over the (dark) beam photos and on the solid plates laid over them stays light in both themes. */
+  --photo-text: #e8e6de;
+  --photo-muted: #b4b1a8;
+  --photo-bg: #151613;
+  --plate: rgb(21 22 19 / 0.86);
   /* aliases used by the shared controls */
-  --raised: var(--surface-2);
-  --border: var(--line);
+  --raised: var(--key);
+  --border: var(--key-edge);
   --accent-ink: var(--on-accent);
   --scrim: rgb(0 0 0 / 0.65);
   --shadow: rgb(0 0 0 / 0.5);
@@ -37,10 +55,15 @@
   --sp-2: 16px;
   --sp-3: 24px;
   --sp-4: 32px;
+  /* Radius by function: panels and cards 12, windows and keys 8, keys inside a cluster 6, printed plates 4. */
   --radius: 12px;
   --radius-s: 8px;
+  --radius-xs: 6px;
+  --radius-plate: 4px;
   --tap: 44px;
   --gutter: 16px;
+  /* Press: a key sinks at most 1 px. */
+  --press: 0.1s;
   --font: "Plum Sans", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
   --mono: "Plum Mono", ui-monospace, "SF Mono", Menlo, Consolas, monospace;
   /* type scale (docs/design.md "Typography"): size / line height */
@@ -56,19 +79,29 @@
 @supports (color: light-dark(red, red)) {
   :root {
     color-scheme: dark;
-    --bg: light-dark(#f6f4f0, #0b0c0e);
-    --surface: light-dark(#ffffff, #131518);
-    --surface-2: light-dark(#ebe8e1, #1a1d21);
-    --line: light-dark(#d4cfc5, #2a2e34);
-    --text: light-dark(#1b1a18, #ece9e4);
-    --muted: light-dark(#625e57, #8d9097);
-    --accent-strong: light-dark(#945400, #ffb547);
-    --accent-glow: light-dark(rgb(148 84 0 / 0.3), rgb(255 181 71 / 0.4));
+    --bg: light-dark(#e6e3dc, #20211f);
+    --surface: light-dark(#efede7, #272825);
+    --surface-2: light-dark(#e8e5de, #2d2e2b);
+    --line: light-dark(#cdc9bf, #3a3b37);
+    --text: light-dark(#1d1c19, #e8e6de);
+    --muted: light-dark(#5c5850, #a4a197);
+    --key: light-dark(#f9f8f4, #30312e);
+    --key-hover: light-dark(#ffffff, #373834);
+    --key-edge: light-dark(#c4bfb4, #454641);
+    --key-hi: light-dark(rgb(255 255 255 / 0.9), rgb(255 255 255 / 0.07));
+    --drop-1: light-dark(rgb(70 60 45 / 0.22), rgb(0 0 0 / 0.55));
+    --drop-2: light-dark(rgb(70 60 45 / 0.12), rgb(0 0 0 / 0.25));
+    --well: light-dark(#d9d5cc, #151613);
+    --well-edge: light-dark(#bdb8ad, #0c0d0b);
+    --well-shade: inset 0 1px 2px light-dark(rgb(70 60 45 / 0.22), rgb(0 0 0 / 0.55));
+    --accent-edge: light-dark(#b07a28, #a8701f);
+    --accent-strong: light-dark(#844b00, #eba43b);
+    --accent-glow: light-dark(rgb(132 75 0 / 0.3), rgb(235 164 59 / 0.4));
     --danger: light-dark(#c0272d, #ff6b6b);
     --on-danger: light-dark(#ffffff, #1a0606);
     --ok: light-dark(#17703d, #5bd68a);
-    --scrim: light-dark(rgb(27 26 24 / 0.45), rgb(0 0 0 / 0.65));
-    --shadow: light-dark(rgb(27 26 24 / 0.18), rgb(0 0 0 / 0.5));
+    --scrim: light-dark(rgb(29 28 25 / 0.45), rgb(0 0 0 / 0.65));
+    --shadow: light-dark(rgb(29 28 25 / 0.18), rgb(0 0 0 / 0.5));
   }
   html[data-theme="light"] { color-scheme: light; }
 }

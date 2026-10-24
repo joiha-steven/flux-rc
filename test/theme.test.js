@@ -22,10 +22,10 @@ test('themeLabel says what a click switches to', () => {
 });
 
 test('themeColor gives the theme background for the browser bar', () => {
-  assert.equal(themeColor('light'), '#f6f4f0');
-  assert.equal(themeColor('dark'), '#0b0c0e');
-  assert.equal(themeColor('auto'), '#0b0c0e');
-  assert.equal(themeColor(undefined), '#0b0c0e');
+  assert.equal(themeColor('light'), '#e6e3dc');
+  assert.equal(themeColor('dark'), '#20211f');
+  assert.equal(themeColor('auto'), '#20211f');
+  assert.equal(themeColor(undefined), '#20211f');
 });
 
 test('themeSupported is false when CSS.supports is missing or throws', () => {

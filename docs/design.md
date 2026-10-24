@@ -30,23 +30,43 @@ Each colour is declared once as `light-dark(light, dark)` in `styles/tokens.css`
 
 | Token | Light | Dark | Use |
 |-------|-------|------|-----|
-| `--bg` | `#f6f4f0` | `#0b0c0e` | page |
-| `--surface` | `#ffffff` | `#131518` | cards, bars |
-| `--surface-2` | `#ebe8e1` | `#1a1d21` | hover, pressed |
-| `--line` | `#d4cfc5` | `#2a2e34` | 1 px borders (decorative, not text) |
-| `--text` | `#1b1a18` | `#ece9e4` | main text |
-| `--muted` | `#625e57` | `#8d9097` | secondary text |
-| `--accent` | `#ffb547` | `#ffb547` | amber FILL: buttons, selected pills, numbers on photos |
+| `--bg` | `#e6e3dc` | `#20211f` | shell (page) |
+| `--surface` | `#efede7` | `#272825` | panels: footer bar, Advanced panel, dialogs, tile cards |
+| `--surface-2` | `#e8e5de` | `#2d2e2b` | list items, hover on flat controls, the selected preset face |
+| `--line` | `#cdc9bf` | `#3a3b37` | 1 px borders on panels (decorative, not text) |
+| `--text` | `#1d1c19` | `#e8e6de` | main text |
+| `--muted` | `#5c5850` | `#a4a197` | secondary text, device labels |
+| `--key`, `--key-hover`, `--key-edge` | `#f9f8f4`, `#ffffff`, `#c4bfb4` | `#30312e`, `#373834`, `#454641` | raised key: face, hover face, 1 px rim |
+| `--key-hi`, `--key-drop` | white 0.9 / warm shadow | white 0.07 / black | key's top highlight and short drop shadow; pressed = drop gone |
+| `--well`, `--well-edge`, `--well-shade` | `#d9d5cc`, `#bdb8ad` | `#151613`, `#0c0d0b` | recessed window: switch track, segmented track, number readouts, text inputs, photo window |
+| `--accent` | `#eba43b` | `#eba43b` | amber FILL only: Program key, the lit zone of the Use switch, small state marks (selected preset bar, On dot) |
+| `--accent-edge` | `#b07a28` | `#a8701f` | lower rim of the amber key and rim of the On dot |
 | `--on-accent` | `#1a1205` | `#1a1205` | text on amber |
-| `--accent-strong` | `#945400` | `#ffb547` | amber as text, border or focus ring on the page: wordmark, links, focus, selected card |
+| `--accent-strong` | `#844b00` | `#eba43b` | amber as text, border or focus ring: wordmark, focus, checked option card, segmented bar |
 | `--danger` | `#c0272d` | `#ff6b6b` | errors |
 | `--ok` | `#17703d` | `#5bd68a` | success |
-| `--scrim`, `--shadow`, `--accent-glow` | translucent ink | translucent black / amber | dialog backdrop, toast shadow, afterburning glow |
-| `--photo-text`, `--photo-muted` | `#ece9e4`, `#b4b7bd` | same | text and borders drawn on beam photos |
+| `--scrim`, `--shadow`, `--accent-glow` | translucent ink | translucent black / amber | dialog backdrop, dialog/toast/menu shadow, afterburning rim |
+| `--photo-text`, `--photo-muted`, `--plate` | light ink | same | text and plates drawn on beam photos |
 
-Contrast (WCAG AA, 4.5:1 for text): light `--text` 15.8 on bg and 17.4 on surface, `--muted` 5.9 / 6.5
-(5.3 on surface-2), `--accent-strong` 5.4 / 6.0 (4.9 on surface-2); dark `--text` 16.2 / 15.1,
-`--muted` 6.1 / 5.7, `--accent` 11.1 / 10.4. Use `--accent` only as a fill with `--on-accent` ink;
+Material: three depths, told apart by lightness first and a short top-lit shadow second: shell
+`--bg` < panel `--surface` < raised key `--key`; recessed windows use `--well`. A raised key has
+`--key` face, `--key-edge` rim, `inset 0 1px 0 --key-hi` and `--key-drop`; hover only lightens the
+face; pressed sinks 1 px and loses the drop shadow (`--press`, 0.1 s). The Program key is the one
+amber key. No glow, no hover lift, no gradients.
+
+Shared controls (`styles/controls.css`): the Use switch is a recessed 44 x 24 track with a raised
+round thumb; when on, the thumb sits right and an amber bar lights the exposed left part (position
+tells on from off, not just colour). A segmented control is a recessed track whose checked option
+is a raised key face in bold with a 2 px `--accent-strong` bar. Option cards in dialogs are raised
+keys; the checked one gets a 2 px `--accent-strong` border and a check mark. Text inputs are
+recessed windows, selects are raised keys, list items sit on `--surface-2`, toasts and menus are
+raised surfaces with a soft shadow, dialogs are panels with a soft shadow.
+
+Contrast (WCAG AA, 4.5:1 for text; measured in the browser from the resolved tokens):
+`--muted` on `--key` 6.7 light / 5.1 dark, on `--surface` 6.1 / 5.7, on `--bg` 5.5 / 6.3, on
+`--well` 4.8 / 7.0, on `--surface-2` 5.6 / 5.3, on `--key-hover` 7.1 / 4.6. `--text` on `--key`
+16.0 / 10.5, on `--well` 11.6 / 14.5. `--on-accent` on `--accent` 8.8. `--accent-strong` on
+`--surface` 6.0 / 7.0, on `--key` 6.6 / 6.2. Use `--accent` only as a fill with `--on-accent` ink;
 use `--accent-strong` wherever amber is text or an outline.
 
 Colours that stay literal on purpose: the flashing square (protocol), the Program screen, and
@@ -63,7 +83,8 @@ else, including an old "auto", means dark) and set as `<html data-theme>`. A sma
 toggle still works for the current page view.
 Logic: `src/ui/theme.js`.
 
-Radius 12 px on cards and tiles, 8 px on buttons. 8 px spacing grid. Content max width 1080 px,
+Radius by function: 12 px on panels and cards (`--radius`), 8 px on keys and windows (`--radius-s`),
+6 px on keys inside a cluster (`--radius-xs`), 4 px on printed plates (`--radius-plate`). 8 px spacing grid. Content max width 1080 px,
 centred, 24 px gutters (16 px on phones).
 
 ## Typography
@@ -79,7 +100,9 @@ Scale (px, line height): caption 12/16, small 13/18, body 15/22, title 18/24 (se
 display 24/28 (dialog titles), tile number 40/1 desktop and 32/1 phone.
 Weights: 400 body, 500 labels and buttons, 600 headings. Nothing bolder.
 Letter spacing: -0.01em on 18 px and up; +0.02em on the wordmark; 0 elsewhere. No all-caps text
-except the tiny "LVL" (11 px, +0.08em, muted).
+except device labels: "LVL" on tiles and the Behaviour card labels (MEMORY, LI-ION PROTECTION, ...).
+They are 11-12 px, weight 500, +0.08em, `--muted`, and the all-caps is CSS `text-transform` (the
+locale strings stay in normal case). Values next to them are body size, weight 500, `--text`.
 Numbers use tabular figures (`font-variant-numeric: tabular-nums`) everywhere they can change.
 
 What makes a page look machine-made, and must be avoided: everything in the same size and weight,
@@ -115,14 +138,17 @@ portrait; use `object-fit: cover` with `object-position: center 65%` so the lit 
 ### Header
 
 Wordmark "flux-rc" (amber, monospace, letter-spacing 0.15em), subtitle "NXS R1 optical programmer"
-in muted monospace. Right: outline buttons "Presets" and "Saved" with icons (labels may hide below
+in muted monospace. Right: raised-key buttons "Presets" and "Saved" with icons (labels may hide below
 400 px; keep accessible names).
 
 ### Quick start
 
-Three pill buttons in a row: Everyday, Tactical, Gentle (`QUICK_PRESETS`). The one equal to the
-current config is filled amber; the others are outline. One tap loads it with an Undo toast. Under
-the row, one muted line: the description of the selected quick preset (or nothing).
+Three raised keys in a row (`.pill`): Everyday, Tactical, Gentle (`QUICK_PRESETS`), equal height
+and gaps. The one equal to the current config (`aria-pressed="true"`, computed from the config, so
+changing any tile or setting clears it) has a pressed face (`--surface-2` with the inset well
+shade, no drop shadow) and an 8 x 3 px amber bar before its label. The other keys show the same
+bar slot in `--key-edge` so labels do not shift. Text stays `--text`. One tap loads a preset with an
+Undo toast. Under the row, one muted line: the description of the selected quick preset (or nothing).
 
 ### Mode groups ("One cell", "Two cells in series")
 
@@ -131,27 +157,28 @@ Header row: battery image (about 80 × 24 px), title, monospace subtitle ("1 × 
 "18650, 18350, 21700…", because the driver cares about the cell voltage, not the size). Right side: a switch "Use" and, for two
 cells, a segmented control "2 × Li-ion" / "2 × CR123A".
 
-When a group is off, replace its tiles with one muted line: "Not used. This set copies the
+When a group is off, replace its tiles with one quiet recessed note (`--well`, no dashed border): "Not used. This set copies the
 one-cell modes." (or two-cell, or "Modes stay as they are on the light" when both are off).
 
-**Mode tile** (aspect about 1.3 : 1 on desktop/tablet, 1 : 1 on phone):
+**Mode tile** (a card: aspect 1 : 1.12 on phone, 1 : 1.05 at 768-1023 px, 1.2 : 1 from 1024 px):
 
-- Beam photo filling the tile, with a dark gradient at top and bottom for legible text.
-- Top left, two lines in Plum Sans: line 1 is the power ("8.3 mW", "17 W"), 15/20, weight 600,
+- Card: `--surface`, 1 px `--line`, radius 12, padding 6 px. Hover only changes the border to `--key-edge`; nothing lifts or scales.
+- Photo window (radius 8, 1 px `--well-edge` rim, `--well-shade` drawn over the photo, same `object-position: center 65%` on every level). In the light theme the window is still dark inside a light card; there is no dark frame around it.
+- Top left, on a solid `--plate` (radius 4, padding 4 x 6): line 1 is the power ("8.3 mW", "17 W"), 15/20, weight 600,
   -0.01em, `--photo-text`; line 2 is the percent written tight ("0.03%"), 12/16, weight 500,
-  `--photo-muted`, tabular figures. Special modes show their name as line 1 in the same style and
-  no line 2 ("Red moonlight", "10 Hz strobe", "S.O.S.", "Red beacon", "Signal · white"); afterburning
+  `--photo-muted`, tabular figures. Special modes show their name as line 1 and no line 2
+  ("Red moonlight", "10 Hz strobe", "S.O.S.", "Red beacon", "Signal · white"); afterburning
   shows "Afterburning" over "100% · 30 W". Text comes from `tileText()` in `src/ui/modes-list.js`.
-  The top shade is dark enough (about 0.7 at label height) that line 2 stays above 4.5:1 on the
-  brightest photo (afterburning, measured 5.0:1 worst case).
-- Top right: slot number badge 1–4 (30 × 30 px square, 15 px weight 600, 6 px radius, border). The label's right edge leaves 8 px to the badge; the issue dot sits under it.
-- Bottom left: small "LVL" then the level number large, amber, monospace. Special modes show a
-  short code instead: AB, RM, SOS, STB, BCN, SIG.
-- Right edge: up and down chevron buttons (visually 28–32 px, hit area at least 44 × 44 px). Up =
-  next entry in the list below, down = previous. List order: (Not used, slots 2–4 only), Red
-  moonlight, levels 1–32, Afterburning, S.O.S., 10 Hz strobe, Red beacon, Custom signal.
-- Afterburning tile: 2 px amber border and a soft amber glow.
-- Not used: dashed border, no photo, centred muted "Not used" and a "+" hint.
+  The plate is 86% opaque dark, so both lines stay above 5.6:1 even over a white pixel (afterburning is the brightest photo).
+- Top right: slot number badge 1-4 as a printed plate (30 x 30 px, `--plate`, Plum Mono 15 px weight 600, radius 4, no outline). The label's right edge leaves 4 px to the badge; the issue dot sits under it.
+- Bottom strip (solid `--surface-2`, 52 px, inside the card): small "LVL" device label (11 px, weight 500, +0.08em, `--muted`) and the level number in Plum Mono, tabular, `--text` (not amber), 40 px from 1024 px up. Special modes show a
+  short code instead: AB, RM, SOS, STB, BCN, SIG. Below 1024 px the strip is narrow, so LVL stacks above the number and the number shrinks to 22 px (phone) / 20 px (tablet): three-letter codes in Plum Mono are 2.25 x the font size wide and must clear the key cluster.
+- Right end of the strip: up and down keys as one cluster (side by side, 88 x 44 px, divider between, outer corners radius 8, inner 0). Each button is a stable 44 x 44 hit area; only its face sinks 1 px when pressed. Up =
+  next entry in the list below, down = previous. List order: (Not used, slots 2-4 only), Red
+  moonlight, levels 1-32, Afterburning, S.O.S., 10 Hz strobe, Red beacon, Custom signal.
+  At the first or last entry the key is disabled (no shadow, muted).
+- Afterburning tile: 2 px `--accent-strong` rim on the photo window, no glow.
+- Not used: the window is an empty recessed well (`--well`) with a muted "Not used" and a "+"; the slot number is printed straight onto it; the strip and keys stay.
 - Inline issues (from `validateConfig` by path) as a small red or amber badge on the tile; the full
   text appears in the issues strip above the footer.
 - Tapping the tile body opens the **mode picker**: dialog on desktop/tablet, bottom sheet on phone.
@@ -159,15 +186,16 @@ one-cell modes." (or two-cell, or "Modes stay as they are on the light" when bot
   scroll a little):
   - **Brightness levels** first: 32 square-ish cells, 8 columns on desktop/tablet (dialog about
     760 px wide), 4 columns on phone. Each cell is a tiny beam photo (the `-thumb` file of its band,
-    with the same `brightness()` rule as the tiles) darkened at the bottom, the level number large
-    in Plum Mono top-left, and bottom-left the power ("3 W", "180 mW") in Plum Sans 13 px weight 600
-    over the tight percent ("10%") in 11 px muted. Both lines fit in the 79 px phone cell (measured
-    5 px between number and power).
+    with the same `brightness()` rule as the tiles); the level number in Plum Mono sits top-left and the
+    power ("3 W", "180 mW", Plum Sans 13 px weight 600) over the tight percent ("10%", 11 px muted) bottom-left,
+    each on a solid `--plate` (radius 4), 8 px from the cell edges in every cell. Both plates fit in the 79 px phone cell.
   - **Other modes** below, under a small heading: Afterburning, Red moonlight, S.O.S., 10 Hz strobe,
     Red beacon, Custom signal, and Not used (slots 2–4 only). Wider cells (4 per row desktop, 2 per
     row phone) with their photo, name (Plum Sans 13 px, weight 600), and one short detail line ("100 % · 30 W", "Distress
     pattern").
-  - The current choice has a 2 px amber border; hover/focus show a lighter border.
+  - Unselected cells have no visible border (2 px transparent, so nothing shifts). The current choice has a 2 px
+    `--accent-strong` border plus a check on an amber plate at the top right (not colour only); hover/focus show a
+    `--key-edge` border. The picker fades in over 160 ms with a 4 px rise (none under reduced motion).
   - A detail bar pinned at the bottom of the picker shows the hovered/focused/current entry in full:
     "Level 21 · 10 % · 3 W". On touch it shows the current entry.
   - Arrow keys move focus within the grid (roving focus), Enter/Space chooses, Escape closes.
@@ -180,9 +208,12 @@ back to tile 1 (as in the reference). Phone: no arrows; the badges show the orde
 
 ### Behaviour
 
-Four equal cards in a row (2 × 2 on phone): icon (inline SVG, 1.5 px line style), current state as
-the label ("Hybrid memory", "Li-ion protection on", "Battery stretch on", "Bounce sensor: keep
-current"), chevron on the right. Tapping opens a small dialog/sheet with the choices:
+Four equal raised-key cards in a row at 1024 px and up (2 x 2 below): a small all-caps LABEL on
+top (MEMORY, LI-ION PROTECTION, BATTERY STRETCH, BOUNCE SENSOR), the current VALUE below (Hybrid /
+Standard / No memory, On / Off, Keep current / Not in use / Sensitivity 85), a muted chevron at the
+right. No icons. On / Off values get a 6 px mark before the text: On is an amber dot, Off a hollow
+`--muted` ring, so the state is never colour only. Values come from the real config. Tapping opens
+a small dialog/sheet with the choices:
 
 - Memory: No memory / Standard / Hybrid, each with its one-line explanation.
 - Li-ion protection: On / Off (Off warns "Only use protected cells").
@@ -191,9 +222,11 @@ current"), chevron on the right. Tapping opens a small dialog/sheet with the cho
 
 ### Footer
 
-One bar (card style): left, the Advanced toggle row ("Advanced (vendor safety settings)" with a
-lock icon and chevron); right, "20.6 s per loop" in monospace, a "More" icon button (menu: Save,
-Share link, Download GIF, Packet details) and the amber Program button with a play icon.
+One bar (panel: `--surface`, 1 px `--line`): left, the Advanced toggle, a flat text control with a
+hover face ("Advanced (vendor safety settings)", lock icon and chevron); right, the loop time in
+a small recessed number window (`--well`, mono tabular number) followed by muted "per loop", a
+"More" raised-key icon button (menu: Save, Share link, Download GIF, Packet details; the menu is a
+raised surface with a soft shadow) and the amber Program key with a play icon.
 
 Expanding Advanced opens a panel above the footer bar: the warning banner, then the settings
 (switch timeout, thermal cutoff with °C and °F, one-cell limit, two-cell limit, PIN digits), each
@@ -202,7 +235,7 @@ Expanding Advanced opens a panel above the footer bar: the warning banner, then 
 Issues strip: when there are warnings or errors, a compact list directly above the footer. An
 error disables Program and the button's accessible description says why.
 
-On phone and tablet the loop time, More and Program sit in a sticky bottom bar instead; the
+On phone and tablet (below 1200 px) the loop time, More and Program sit in a sticky bottom bar (a panel with a top `--line`) instead; the
 Advanced row stays in the page flow.
 
 ## Program screen

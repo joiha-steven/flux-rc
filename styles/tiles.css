@@ -13,104 +13,136 @@
 .group-controls .switch-track { margin-top: 0; }
 .group-controls .switch-text { padding-top: 0; }
 .group-controls .switch-label { line-height: var(--lh-body); }
-.off-note { color: var(--muted); font-size: var(--fs-body); padding: var(--sp-2); border: 1px dashed var(--line); border-radius: var(--radius); }
+.off-note { color: var(--muted); font-size: var(--fs-body); padding: var(--sp-2); background: var(--well); border: 1px solid var(--well-edge); border-radius: var(--radius); box-shadow: var(--well-shade); }
 
 .tiles { display: grid; grid-template-columns: 1fr 1fr; gap: var(--sp-1); }
-.tile { position: relative; min-width: 0; aspect-ratio: 1 / 1; border-radius: var(--radius); }
+/* A tile is a card: a recessed photo window above a solid strip (level number on the left, the two step keys on the right).
+   The card is a little taller than the old full-bleed photo so the window keeps most of its height. */
+.tile { --pad: 6px; --strip-h: 52px; position: relative; min-width: 0; aspect-ratio: 1 / 1.12; border-radius: var(--radius); }
 .tile-main {
   position: absolute;
   inset: 0;
-  display: block;
-  overflow: hidden;
-  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--pad);
+  padding: var(--pad);
   text-align: left;
-  background: var(--photo-bg);
+  background: var(--surface);
   border: 1px solid var(--line);
   border-radius: var(--radius);
 }
+.tile-main:hover { border-color: var(--key-edge); }
+.tile-window {
+  position: relative;
+  display: block;
+  flex: 1 1 0;
+  min-height: 0;
+  overflow: hidden;
+  background: var(--photo-bg);
+  border: 1px solid var(--well-edge);
+  border-radius: var(--radius-s);
+}
+/* Inset shade drawn over the photo (an inset box-shadow on the window itself would sit under the image). */
+.tile-window::after { content: ""; position: absolute; inset: 0; border-radius: inherit; box-shadow: var(--well-shade); pointer-events: none; }
 .tile-img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: center 65%; }
-/* The top is dark enough behind the 12 px muted percent line to keep it above 4.5:1, even on the
-   bright afterburning photo (measured 5.2:1 worst pixel at 375 px). The px floors keep the stops in order on the short wide tiles. */
-.tile-shade { position: absolute; inset: 0; background: linear-gradient(rgb(0 0 0 / 0.8), rgb(0 0 0 / 0.72) 52px, rgb(0 0 0 / 0.25) max(33%, 70px), transparent max(45%, 86px), transparent max(55%, 86px), rgb(0 0 0 / 0.75)); }
-/* Top-left label: primary line (power or mode name) over an optional secondary line (percent).
-   The right edge leaves room for the slot badge (30 px) plus 8 px either side. */
+/* Top-left: power (or mode name) over the percent, on a solid plate so it reads on dark and on the bright afterburning photo. */
 .tile-label {
   position: absolute;
+  z-index: 1;
   top: var(--sp-1);
   left: var(--sp-1);
-  right: calc(var(--sp-1) + 30px + var(--sp-1));
+  max-width: calc(100% - 2 * var(--sp-1) - 30px - 4px);
   display: grid;
-  overflow: hidden;
-  text-shadow: 0 1px 2px #000;
+  padding: 4px 6px;
+  background: var(--plate);
+  border-radius: var(--radius-plate);
+  overflow-wrap: break-word;
 }
 .tile-primary { font-size: 15px; line-height: 20px; font-weight: 600; letter-spacing: -0.01em; color: var(--photo-text); }
 .tile-secondary { font-size: 12px; line-height: 16px; font-weight: 500; color: var(--photo-muted); font-variant-numeric: tabular-nums; }
+/* Slot number: a printed plate, no outline. */
 .tile-badge {
   position: absolute;
+  z-index: 1;
   top: var(--sp-1);
   right: var(--sp-1);
   width: 30px;
   height: 30px;
   display: grid;
   place-items: center;
-  font-size: 15px;
-  font-weight: 600;
-  background: rgb(0 0 0 / 0.5);
+  font: 600 15px/1 var(--mono);
+  font-variant-numeric: tabular-nums;
+  background: var(--plate);
   color: var(--photo-text);
-  border: 1px solid var(--photo-muted);
-  border-radius: 6px;
+  border-radius: var(--radius-plate);
 }
-.tile-code { position: absolute; left: var(--sp-1); bottom: var(--sp-1); display: flex; align-items: baseline; gap: var(--sp-1); color: var(--accent); }
-.tile-code small { color: var(--photo-muted); font-size: 11px; line-height: 1; letter-spacing: 0.08em; text-transform: uppercase; }
-.tile-code b { font-size: var(--tile-number); line-height: 1; font-weight: 600; text-shadow: 0 1px 3px #000; }
-.tile-issue { position: absolute; top: calc(var(--sp-1) + 30px + 4px); right: var(--sp-1); }
+.tile-issue { position: absolute; z-index: 1; top: calc(var(--sp-1) + 30px + 4px); right: var(--sp-1); }
 .issue-dot { display: grid; place-items: center; width: 22px; height: 22px; border-radius: 50%; font-size: var(--fs-small); font-weight: 600; color: var(--on-accent); }
 .issue-dot.issue-error { color: var(--on-danger); }
 .issue-dot.issue-error { background: var(--danger); }
 .issue-dot.issue-warning, .issue-dot.issue-info { background: var(--accent); }
 
-.steps { position: absolute; right: 4px; bottom: 4px; display: grid; }
-.step { width: var(--tap); height: var(--tap); display: grid; place-items: center; padding: 0; background: none; border: 0; }
-.step > span { width: 30px; height: 30px; display: grid; place-items: center; background: rgb(0 0 0 / 0.55); color: var(--photo-text); border: 1px solid var(--photo-muted); border-radius: var(--radius-s); }
-.step:hover:not(:disabled) > span { border-color: var(--photo-text); background: rgb(0 0 0 / 0.75); }
-.step:active:not(:disabled) > span { background: var(--accent); border-color: var(--accent); color: var(--on-accent); }
-.step:disabled { cursor: not-allowed; }
-.step:disabled > span { opacity: 0.35; }
+.tile-strip { display: flex; align-items: center; flex: none; height: var(--strip-h); padding: 0 10px; background: var(--surface-2); border-radius: var(--radius-s); }
+.tile-code { display: flex; align-items: baseline; gap: 6px; color: var(--text); }
+.tile-code small { color: var(--muted); font-size: 11px; line-height: 1; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; }
+.tile-code b { font-size: var(--tile-number); line-height: 1; font-weight: 600; font-variant-numeric: tabular-nums; }
 
-.tile.burn .tile-main { border: 2px solid var(--accent-strong); box-shadow: 0 0 18px var(--accent-glow); }
-.tile.unused .tile-main { background: transparent; border: 1px dashed var(--muted); }
-/* No photo behind an unused tile, so its badge and arrows use the page colours. */
-.tile.unused .tile-badge, .tile.unused .step > span { background: var(--surface); color: var(--text); border-color: var(--muted); }
-.tile.unused .step:hover:not(:disabled) > span { border-color: var(--text); background: var(--surface-2); }
+/* Step keys: one cluster laid over the strip's right end. Each button is a stable 44 x 44 hit area; only its face sinks. */
+.steps { position: absolute; right: calc(1px + var(--pad) + 4px); bottom: calc(1px + var(--pad) + (var(--strip-h) - var(--tap)) / 2); display: flex; }
+.step { width: var(--tap); height: var(--tap); display: block; padding: 0; background: none; border: 0; }
+.step > span {
+  width: 100%;
+  height: 100%;
+  display: grid;
+  place-items: center;
+  background: var(--key);
+  color: var(--text);
+  border: 1px solid var(--key-edge);
+  box-shadow: inset 0 1px 0 var(--key-hi), var(--key-drop);
+  transition: transform var(--press), box-shadow var(--press), background var(--press);
+}
+.step:first-child > span { border-radius: var(--radius-s) 0 0 var(--radius-s); }
+.step:last-child > span { border-radius: 0 var(--radius-s) var(--radius-s) 0; border-left: 0; }
+.step:hover:not(:disabled) > span { background: var(--key-hover); }
+.step:active:not(:disabled) > span { transform: translateY(1px); box-shadow: inset 0 1px 0 var(--key-hi); }
+.step:disabled { cursor: not-allowed; }
+.step:disabled > span { box-shadow: none; color: var(--muted); opacity: 0.55; }
+
+/* Afterburning: a 2 px amber rim around the window, no glow. */
+.tile.burn .tile-window { border-color: var(--accent-strong); }
+.tile.burn .tile-window::after { box-shadow: var(--well-shade), inset 0 0 0 1px var(--accent-strong); }
+/* Not used: no photo, an empty recessed well; the slot number is printed straight onto it. */
+.tile.unused .tile-window { background: var(--well); }
+.tile.unused .tile-badge { background: none; color: var(--text); }
 .tile-empty { position: absolute; inset: 0; display: grid; place-content: center; justify-items: center; color: var(--muted); }
-.tile-main:hover { border-color: var(--muted); }
-.tile-main:active { border-color: var(--text); }
-.tile.burn .tile-main:hover { border-color: var(--accent-strong); }
 .tile-empty b { font-size: 24px; font-weight: 400; }
 .return-line { display: none; }
+/* Narrow tiles (phone 2 x 2, tablet 4 across): the 88 px key cluster leaves ~50 px, so LVL stacks over a smaller number.
+   Plum Mono is wide (0.75 em per digit): three-letter codes (SOS, STB, BCN) at 22 px are 50 px, at 20 px 45 px. */
+@media (max-width: 1023px) {
+  .tile-strip { padding-left: 8px; }
+  .tile-code { flex-direction: column; align-items: flex-start; gap: 3px; }
+  .tile-code b { font-size: 20px; }
+}
+@media (max-width: 767px) { .tile-code b { font-size: 22px; } }
 
 @media (min-width: 768px) {
   .tiles { grid-template-columns: repeat(4, 1fr); gap: var(--sp-3); }
-  .tile { aspect-ratio: 1.3 / 1; }
-  .tile:not(:last-child)::after {
-    content: "→";
-    position: absolute;
-    left: 100%;
-    top: 50%;
-    width: var(--sp-3);
-    transform: translateY(-50%);
-    text-align: center;
-    color: var(--muted);
-    pointer-events: none;
-  }
+  /* 4 across at 162 px (768 px wide): nearly square, so the window keeps ~100 px. */
+  .tile { aspect-ratio: 1 / 1.05; }
+  /* Thin technical arrow between tiles: a line plus an arrowhead. */
+  .tile:not(:last-child)::after, .tile:not(:last-child)::before { content: ""; position: absolute; top: 50%; pointer-events: none; }
+  .tile:not(:last-child)::after { left: calc(100% + 4px); width: 16px; height: 1px; background: var(--key-edge); }
+  .tile:not(:last-child)::before { left: calc(100% + 15px); width: 6px; height: 6px; margin-top: -2.5px; border: solid var(--key-edge); border-width: 1px 1px 0 0; transform: rotate(45deg); }
   .return-line {
     display: block;
     height: 12px;
     margin: 0 12.5%;
-    border: 1px solid var(--line);
+    border: 1px solid var(--key-edge);
     border-top: 0;
     border-radius: 0 0 10px 10px;
   }
 }
 /* Narrow phones: a tighter column gap keeps "Two cells in series" on one line next to the Use switch. */
 @media (max-width: 479px) { .group-head { column-gap: var(--sp-1); } }
+@media (min-width: 1024px) { .tile { aspect-ratio: 1.2 / 1; } }

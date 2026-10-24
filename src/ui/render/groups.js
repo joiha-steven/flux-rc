@@ -48,19 +48,25 @@ function tile(store, key, i, mode, first) {
     title: (dir > 0 ? idx >= ENTRIES.length - 1 : idx <= low) ? t(dir > 0 ? 'groups.tile.atLast' : 'groups.tile.atFirst') : null,
   }, h('span', {}, icon(dir > 0 ? 'chevronUp' : 'chevronDown', 16)));
   const art = beam(mode);
+  // The button is the whole card: a recessed photo window above a solid strip (level + step keys).
+  // The step keys are siblings, laid over the strip's right end, because a button cannot hold buttons.
+  const label = (text) => ({ 'aria-label': text, 'data-k': `${path}:open`, onclick: open });
   const main = mode
-    ? h('button', { type: 'button', class: 'tile-main', 'aria-label': t('groups.tile.change', { mode: describe(mode, i + 1) }), 'data-k': `${path}:open`, onclick: open },
-      h('img', {
-        class: 'tile-img', src: art.src, alt: '', width: 365, height: 442, decoding: 'async', style: `filter: brightness(${art.shade})`,
-        ...(first ? { fetchpriority: 'high' } : { loading: 'lazy' }),
-      }),
-      h('span', { class: 'tile-shade' }),
-      tileLabel(mode),
-      h('span', { class: 'tile-badge' }, i + 1),
-      h('span', { class: 'tile-code' }, mode.type === 'level' && h('small', { class: 'mono' }, t('mode.code.level')), h('b', { class: 'mono' }, tileCode(mode))),
-      h('span', { class: 'tile-issue', 'data-issues': path, 'data-badge': '' }))
-    : h('button', { type: 'button', class: 'tile-main', 'aria-label': t('groups.tile.unused', { n: i + 1 }), 'data-k': `${path}:open`, onclick: open },
-      h('span', { class: 'tile-badge' }, i + 1), h('span', { class: 'tile-empty' }, t('mode.notUsed'), h('b', {}, '+')));
+    ? h('button', { type: 'button', class: 'tile-main', ...label(t('groups.tile.change', { mode: describe(mode, i + 1) })) },
+      h('span', { class: 'tile-window' },
+        h('img', {
+          class: 'tile-img', src: art.src, alt: '', width: 365, height: 442, decoding: 'async', style: `filter: brightness(${art.shade})`,
+          ...(first ? { fetchpriority: 'high' } : { loading: 'lazy' }),
+        }),
+        tileLabel(mode),
+        h('span', { class: 'tile-badge' }, i + 1),
+        h('span', { class: 'tile-issue', 'data-issues': path, 'data-badge': '' })),
+      h('span', { class: 'tile-strip' },
+        h('span', { class: 'tile-code' }, mode.type === 'level' && h('small', {}, t('mode.code.level')), h('b', { class: 'mono' }, tileCode(mode)))))
+    : h('button', { type: 'button', class: 'tile-main', ...label(t('groups.tile.unused', { n: i + 1 })) },
+      h('span', { class: 'tile-window' },
+        h('span', { class: 'tile-badge' }, i + 1), h('span', { class: 'tile-empty' }, t('mode.notUsed'), h('b', {}, '+'))),
+      h('span', { class: 'tile-strip' }));
   return h('li', { class: `tile ${mode ? '' : 'unused'} ${mode?.type === 'afterburning' ? 'burn' : ''}` },
     main, h('div', { class: 'steps' }, stepBtn(1), stepBtn(-1)));
 }
