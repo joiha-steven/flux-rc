@@ -6,7 +6,7 @@ import { t } from './i18n.js';
 export const THEME_KEY = 'flux-rc:theme';
 
 // Page background per theme; keep equal to --bg in styles/tokens.css and the theme-color meta in index.html.
-const THEME_BG = { light: '#f6f4f0', dark: '#0b0c0e' };
+const THEME_BG = { light: '#e6e3dc', dark: '#20211f' };
 // The icon shows what a click switches to, matching the label.
 const ICON = { dark: 'sun', light: 'moon' };
 
