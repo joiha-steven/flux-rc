@@ -10,7 +10,9 @@ square programs it.
 
 It is one static web page: no account, no server, nothing leaves your browser.
 
-**Use it here: https://joiha-steven.github.io/flux-rc/** (GitHub Pages, deployed from `main`).
+**Use it here: https://flux-rc.stevensdesk.com/** (Cloudflare Workers static assets, built from `main`
+on every push; see `wrangler.jsonc`, `.assetsignore` and `_headers`). The old GitHub Pages address
+redirects there.
 
 ## Run it locally
 

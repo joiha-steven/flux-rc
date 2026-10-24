@@ -224,9 +224,19 @@ and step 4), `src/ui/pin-rhythm.js` (the schedule, pure), `src/ui/beeper.js` (We
    hint that a PIN just changed in Advanced only applies after this programming. **Start** runs the
    PIN metronome: a 3-2-1 count-in with a low beep each second, then one pulse per click: a big circle
    lights up, the action word shows (PRESS for McClicky, RELEASE for MOFF), a short high beep plays
-   and Android vibrates. Progress shows digit and click. After the last digit "Wait", then the final
-   cue "Switch on and leave it on" (McClicky) or "Release and leave it" (MOFF) with a long beep,
-   and the screen moves straight to step 4. **Stop** aborts. Users follow the beeps, not the light:
+   and Android vibrates. Progress shows digit and click. Between digits the circle dims and the word is "WAIT"; after
+   the last digit "WAIT" again with "PIN entered. Next: …". At the final cue (long beep) step 3
+   **holds**: the circle becomes a solid ring whose fill drains as a countdown, the big word reads
+   "ON · KEEP IT ON" (McClicky) or "RELEASE · LEAVE IT" (MOFF), and below it "Flashing starts in
+   2 s". Exactly at the planned GIF start the screen moves to step 4. **Stop** aborts (also during
+   the hold). A **rhythm timeline** (`src/ui/rhythm-timeline.js`, pieces from `timelineSegments` in
+   `pin-rhythm.js`) shows the whole run as a strip, like the timing diagram in the Lux-RC manual:
+   count-in dots, clicks as raised blocks as wide as their on-time, gaps as empty space, and one long
+   block "ON · keep it on" / "Release · leave it" up to the GIF start. It is a preview on the setup
+   screen (redrawn when the PIN or speed changes) and gets a playhead on the run's clock during the
+   run: passed pieces dim, the current one is highlighted, and during the final wait the long block
+   is outlined as next. With reduced motion the playhead jumps from piece to piece and the hold ring
+   empties once a second. The drawing is `aria-hidden`; a screen-reader sentence describes it. Users follow the beeps, not the light:
    it may not flash during the clicks. With reduced motion the circle changes colour only (no scale
    or glow). Under the buttons a small link "PIN not working? Try the tailcap method" opens the
    **tailcap view** (for an electronic button on the driver, battery always connected): unscrew the
@@ -245,8 +255,9 @@ and step 4), `src/ui/pin-rhythm.js` (the schedule, pure), `src/ui/beeper.js` (We
 The light waits only about 5–6 s in programming mode, and the signal loops every ~19 s starting
 with 3 s of green lead, so the GIF must start at frame 0 right after the light enters programming
 mode. A fresh blob URL restarts the GIF at frame 0; it is assigned `GIF_START_DELAY_MS` (2.3 s) after
-the final cue: a 2 s breather, counted down under the square ("Flashing starts in 2 s"), plus
-300 ms to react and for the driver to boot. Keep it under about 3 s so the lead starts well inside
+the final cue: a 2 s breather, counted down by the hold on step 3 ("Flashing starts in 2 s"), plus
+300 ms to react and for the driver to boot. Step 4 mounts at that moment on the run's clock and
+assigns the blob URL immediately. Keep it under about 3 s so the lead starts well inside
 the light's wait. Beeps are scheduled on the AudioContext clock and the visuals and the GIF start read
 the same clock (or `performance.now()` when sound is off or unavailable). On the audio clock the
 visuals and the GIF start are shifted by `AudioContext.outputLatency` (when 0–500 ms), so they match
@@ -255,6 +266,10 @@ does not run, step 3 says "Sound isn't available. Follow the circle instead." an
 A run never continues with a broken rhythm: if the audio clock stops or the page is hidden it
 returns to the PIN setup with "Interrupted. Start again when you're ready.", and if any event is
 shown more than 150 ms late (`isTooLate` in `pin-rhythm.js`) with "Timing slipped. Start again."
+Once the hold has begun, a stopped audio clock no longer aborts: the light may already be in
+programming mode, so a plain timer moves on to step 4 at most 200 ms after the planned GIF start
+(still well inside the light's 5–6 s wait). A hidden page, Stop and Escape still abort during the
+hold, and then no GIF starts.
 Timing (manual limits in brackets):
 
 | | Normal | Slow | Limit |

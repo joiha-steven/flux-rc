@@ -1,7 +1,7 @@
 // The PIN metronome schedule must stay inside the timing limits of the Lux-RC 371/372 v2 manual.
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { buildPinSchedule, parsePin, isTooLate, MAX_LATE_MS, LIMITS, SPEEDS } from '../src/ui/pin-rhythm.js';
+import { buildPinSchedule, parsePin, isTooLate, MAX_LATE_MS, LIMITS, SPEEDS, timelineSegments, segmentAt } from '../src/ui/pin-rhythm.js';
 import { isValidPin } from '../src/core/index.js';
 
 const SPEED_NAMES = Object.keys(SPEEDS);
@@ -123,4 +123,55 @@ test('isTooLate: on time and slightly late are fine, beyond 150 ms or past the o
   assert.equal(isTooLate({ kind: 'off', atMs: 3200 }, 3349), false);
   assert.equal(isTooLate({ kind: 'off', atMs: 3200 }, 3351), true);
   assert.equal(MAX_LATE_MS, 150);
+});
+
+test('timeline pieces cover 0–100 % end to end with no overlap, for every PIN and speed', () => {
+  for (const speed of SPEED_NAMES) for (const pin of PINS) {
+    const schedule = buildPinSchedule(pin, speed);
+    const pieces = timelineSegments(schedule, 2300);
+    assert.equal(pieces[0].start, 0, `${pin} ${speed}`);
+    for (let i = 1; i < pieces.length; i++) {
+      assert.equal(pieces[i].startMs, pieces[i - 1].endMs, `${pin} ${speed} piece ${i} touches the previous one`);
+      assert.ok(Math.abs(pieces[i].start - (pieces[i - 1].start + pieces[i - 1].width)) < 1e-9, `${pin} ${speed} piece ${i}`);
+      assert.ok(pieces[i].width > 0);
+    }
+    const last = pieces.at(-1);
+    assert.ok(Math.abs(last.start + last.width - 100) < 1e-9, `${pin} ${speed} ends at 100 %`);
+    assert.equal(last.endMs, schedule.finalAtMs + 2300);
+  }
+});
+
+test('timeline: the hold block runs from the final cue for holdMs, and its width matches', () => {
+  const schedule = buildPinSchedule([2, 2, 2], 'normal');
+  const hold = timelineSegments(schedule, 2300).at(-1);
+  assert.equal(hold.kind, 'hold');
+  assert.equal(hold.startMs, 7950);
+  assert.equal(hold.endMs, 10250);
+  assert.ok(Math.abs(hold.width - (2300 / 10250) * 100) < 1e-9);
+  const click = timelineSegments(schedule, 2300).find((p) => p.kind === 'click');
+  assert.ok(Math.abs(click.width - (200 / 10250) * 100) < 1e-9, 'a click is as wide as its on-time');
+});
+
+test('timeline: 222 Normal gives the right kinds in order', () => {
+  const pieces = timelineSegments(buildPinSchedule([2, 2, 2], 'normal'), 2300);
+  assert.deepEqual(pieces.map((p) => p.kind), [
+    'count', 'count', 'count',
+    'click', 'gap', 'click', 'pause',
+    'click', 'gap', 'click', 'pause',
+    'click', 'gap', 'click',
+    'wait', 'hold',
+  ]);
+  assert.deepEqual(pieces.filter((p) => p.kind === 'click').map((p) => [p.digit, p.click]), [[1, 1], [1, 2], [2, 1], [2, 2], [3, 1], [3, 2]]);
+});
+
+test('segmentAt finds the current piece, with -1 before and length after', () => {
+  const pieces = timelineSegments(buildPinSchedule([2, 2, 2], 'normal'), 2300);
+  assert.equal(segmentAt(pieces, -5), -1);
+  assert.equal(pieces[segmentAt(pieces, 0)].kind, 'count');
+  assert.equal(pieces[segmentAt(pieces, 3000)].kind, 'click');
+  assert.equal(pieces[segmentAt(pieces, 3199)].kind, 'click');
+  assert.equal(pieces[segmentAt(pieces, 3200)].kind, 'gap');
+  assert.equal(pieces[segmentAt(pieces, 7000)].kind, 'wait');
+  assert.equal(pieces[segmentAt(pieces, 7950)].kind, 'hold');
+  assert.equal(segmentAt(pieces, 10250), pieces.length);
 });

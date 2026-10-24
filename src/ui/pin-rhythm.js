@@ -10,6 +10,15 @@ import { isValidPin } from '../core/index.js';
 export const COUNT_IN_BEATS = 3;
 export const COUNT_IN_INTERVAL_MS = 1000;
 
+/**
+ * Delay from the final "switch on" cue to the GIF starting at frame 0. 2 s of it is a breather the
+ * owner asked for, so the jump from clicking to flashing doesn't catch people off guard (step 3
+ * holds and counts it down); the other 300 ms covers reacting to the cue and the driver booting. The light
+ * waits only about 5–6 s in programming mode, so the green lead must begin well inside that: keep
+ * this under about 3 s.
+ */
+export const GIF_START_DELAY_MS = 2300;
+
 /** Timing per speed. Every value sits well inside the manual limits above. */
 export const SPEEDS = Object.freeze({
   normal: Object.freeze({ onMs: 200, clickGapMs: 250, digitGapMs: 1000, finalWaitMs: 1000 }),
@@ -78,4 +87,41 @@ export const MAX_LATE_MS = 150;
 export function isTooLate(event, nowMs) {
   const limit = event.kind === 'on' ? Math.min(MAX_LATE_MS, event.durationMs) : MAX_LATE_MS;
   return nowMs - event.atMs > limit;
+}
+
+/**
+ * Turns a schedule into the pieces of the rhythm timeline drawn on step 3, from the first count-in
+ * beat to the planned GIF start (finalAtMs + holdMs). Pieces touch end to end and cover 0–100 %:
+ *   { kind, startMs, endMs, start, width }   start and width in percent of the whole strip
+ * kind: 'count' (one beat, drawn as a dot at its start), 'click' (the light on), 'gap' (off between
+ * clicks of a digit), 'pause' (off between digits), 'wait' (the pause after the last digit) and
+ * 'hold' (switch on and keep it on, until the flashing begins). 'click' also carries digit and click.
+ * @param {{ events: object[], finalAtMs: number }} schedule from buildPinSchedule
+ * @param {number} holdMs time from the final cue to the GIF start
+ */
+export function timelineSegments({ events, finalAtMs }, holdMs) {
+  const totalMs = finalAtMs + holdMs;
+  const pieces = [];
+  events.forEach((e, i) => {
+    const next = events[i + 1];
+    const endMs = next ? next.atMs : totalMs;
+    if (endMs <= e.atMs) return; // the last 'off' and the 'wait' share a time
+    let kind;
+    if (e.kind === 'count') kind = 'count';
+    else if (e.kind === 'on') kind = 'click';
+    else if (e.kind === 'off') kind = next.kind === 'on' && next.digit === e.digit ? 'gap' : 'pause';
+    else if (e.kind === 'wait') kind = 'wait';
+    else kind = 'hold';
+    const piece = { kind, startMs: e.atMs, endMs, start: (e.atMs / totalMs) * 100, width: ((endMs - e.atMs) / totalMs) * 100 };
+    if (kind === 'click') Object.assign(piece, { digit: e.digit, click: e.click });
+    pieces.push(piece);
+  });
+  return pieces;
+}
+
+/** Index of the piece that is current at timeMs: -1 before the start, pieces.length after the end. */
+export function segmentAt(pieces, timeMs) {
+  if (!pieces.length || timeMs < pieces[0].startMs) return -1;
+  const i = pieces.findIndex((p) => timeMs < p.endMs);
+  return i === -1 ? pieces.length : i;
 }

@@ -69,3 +69,37 @@
 .flash-img { display: block; width: min(300px, calc(100vw - 32px), calc(100vh - 260px)); min-width: 160px; height: auto; aspect-ratio: 1 / 1; image-rendering: pixelated; background: #000; }
 .program.flashing .program-buttons { justify-content: center; }
 .program.flashing .btn { color: #8d8d8d; background: #0b0b0b; }
+
+/* Step 3: pauses and the HOLD at the end */
+.pulse-word { text-align: center; }
+.pulse-word.waiting { color: var(--muted); }
+.pulse-circle.pause { border-color: #262626; background: #050505; }
+/* HOLD: a full, steady ring whose fill drains as the countdown runs (--hold-left goes 1 to 0). */
+.pulse-circle.hold {
+  --hold-left: 1;
+  border: 6px solid var(--accent);
+  background: conic-gradient(var(--accent) calc(var(--hold-left) * 360deg), #0b0b0b 0);
+  box-shadow: 0 0 32px var(--accent-glow);
+  transition: none;
+}
+/* Smaller than the pulse words: "RELEASE · LEAVE IT" must stay on one line at 375 px. */
+.pulse-word.holding { color: var(--accent-strong); font-size: var(--fs-display); line-height: 40px; text-wrap: balance; }
+
+/* Step 3: the rhythm timeline. Pieces are placed in percent, so the strip scales to any width. */
+.rhythm { width: 100%; }
+.rhythm[hidden] { display: none; }
+.rhythm-drawing { display: grid; gap: 4px; }
+.rhythm-title { font-size: var(--fs-caption); line-height: var(--lh-caption); color: var(--muted); }
+.rhythm-bar { position: relative; height: 28px; }
+.rhythm-base { position: absolute; left: 0; right: 0; bottom: 0; height: 1px; background: var(--border); }
+.rhythm-piece { position: absolute; bottom: 0; height: 100%; }
+.rhythm-piece.is-count::before { content: ''; position: absolute; left: 0; bottom: 0; width: 6px; height: 6px; border-radius: 50%; background: var(--muted); }
+.rhythm-piece.is-click { height: 16px; background: #bdbdbd; border-radius: 2px 2px 0 0; }
+.rhythm-piece.is-hold { height: 100%; background: var(--accent); border-radius: 3px 3px 0 0; }
+.rhythm-piece.past { opacity: 0.3; }
+.rhythm-piece.is-click.now { background: var(--accent); }
+.rhythm-piece.is-count.now::before { background: var(--accent); }
+.rhythm-piece.is-hold.next { outline: 2px solid var(--text); outline-offset: 2px; }
+.rhythm-head { position: absolute; top: -4px; bottom: -4px; left: 0; width: 2px; margin-left: -1px; background: var(--text); display: none; }
+.rhythm.running .rhythm-head { display: block; }
+.rhythm-label { text-align: right; font-size: var(--fs-caption); line-height: var(--lh-caption); color: var(--accent-strong); }

@@ -332,12 +332,16 @@ export default {
   'program.switch.mcclicky.action': 'PRESS',
   'program.switch.mcclicky.verb': 'press',
   'program.switch.mcclicky.final': 'Switch on and leave it on',
+  'program.switch.mcclicky.hold': 'ON · KEEP IT ON',
+  'program.switch.mcclicky.holdLabel': 'ON · keep it on',
   'program.switch.moff.name': 'E-switch (MOFF)',
   'program.switch.moff.desc': 'Flat metal button that cuts the power while pressed.',
   'program.switch.moff.rest': 'Hold the button down so the light is off.',
   'program.switch.moff.action': 'RELEASE',
   'program.switch.moff.verb': 'release',
   'program.switch.moff.final': 'Release and leave it',
+  'program.switch.moff.hold': 'RELEASE · LEAVE IT',
+  'program.switch.moff.holdLabel': 'Release · leave it',
 
   // Program step 2: get ready
   'program.ready.title': 'Get ready',
@@ -377,8 +381,17 @@ export default {
   'program.run.announceFlash': 'Entering PIN {pin}. Count-in, then {verb} at each flash.',
   'program.run.noSound': "Sound isn't available. Follow the circle instead.",
   'program.run.progress': 'Digit {digit} of {digits} · click {click} of {clicks}',
-  'program.run.wait': 'Wait',
-  'program.run.waitHint': 'PIN entered. Wait one second.',
+  'program.run.wait': 'WAIT',
+  'program.run.waitHint': 'PIN entered. Next: {next}.',
+  'program.run.startsIn': 'Flashing starts in {seconds} s',
+  'program.run.announceHold': '{cue}. Flashing starts in {seconds} s.',
+
+  // Program step 3: the rhythm timeline (setup preview and run)
+  'program.timeline.title': 'Rhythm',
+  'program.timeline.click': '{n} click',
+  'program.timeline.clicks': '{n} clicks',
+  'program.timeline.pause': 'pause',
+  'program.timeline.desc': 'Rhythm: count-in, {clicks}. Then: {final}.',
 
   // Program step 3: tailcap method
   'program.tailcap.title': 'Tailcap method',
@@ -392,7 +405,6 @@ export default {
   // Program step 4: the flashing square and what follows
   'program.flash.cue': 'Programming',
   'program.flash.hint': 'Dim red light? Keep holding the light on the square.',
-  'program.flash.startsIn': 'Flashing starts in {seconds} s. Keep the light on the square.',
   'program.flash.alt': 'Flashing square that programs the light',
   'program.flash.announce': '{cue}. {hint}',
   'program.flash.seen': 'I see the red light',

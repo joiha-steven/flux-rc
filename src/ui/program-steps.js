@@ -5,6 +5,7 @@ import { segmented, switchRow } from './controls.js';
 import { icon } from './icons.js';
 import { writePref } from './storage.js';
 import { parsePin } from './pin-rhythm.js';
+import { rhythmTimeline } from './rhythm-timeline.js';
 import { t } from './i18n.js';
 
 export const SWITCH_KEY = 'flux-rc:switch';
@@ -21,7 +22,8 @@ export const SWITCHES = {
 
 /**
  * A switch type's words, from the locale ("program.switch.<type>.<part>"): name, desc, rest (tip in
- * Get ready), action (PRESS / RELEASE on the circle), verb (the same in a sentence), final (step 4 cue).
+ * Get ready), action (PRESS / RELEASE on the circle), verb (the same in a sentence), final (the cue
+ * in words), hold (the big word while holding at the end), holdLabel (under the timeline's hold block).
  */
 export const switchText = (type, part) => t(`program.switch.${type}.${part}`);
 
@@ -102,6 +104,7 @@ export function pinStep(ctx, options = {}) {
     oninput: (e) => { state.customPin = e.target.value; update(); },
   });
   const customRow = h('div', { class: 'pin-custom' }, custom, error);
+  const timeline = rhythmTimeline({ holdLabel: switchText(state.switchType, 'holdLabel'), final: switchText(state.switchType, 'final') });
 
   function update() {
     const digits = currentPin(state);
@@ -112,6 +115,7 @@ export function pinStep(ctx, options = {}) {
     error.textContent = state.pinChoice === 'custom' && typed && !digits
       ? t('program.pin.customError') : '';
     start.disabled = !digits;
+    timeline.show(digits, state.speed);
   }
 
   ctx.render({
@@ -131,8 +135,9 @@ export function pinStep(ctx, options = {}) {
       segmented({
         key: 'prog-speed', label: t('program.pin.speed'), value: state.speed,
         options: [{ value: 'normal', label: t('program.pin.speedNormal') }, { value: 'slow', label: t('program.pin.speedSlow') }],
-        onChange: (v) => { state.speed = v; },
+        onChange: (v) => { state.speed = v; update(); },
       }),
+      timeline.el,
       switchRow({
         key: 'prog-sound', label: t('program.pin.sound'), aria: t('program.pin.sound'), checked: state.sound,
         desc: t('program.pin.soundHint'),

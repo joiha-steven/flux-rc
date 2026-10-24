@@ -1,18 +1,14 @@
-// The PIN metronome run (step 3) and the flashing square (step 4) with its follow-up views.
+// The PIN metronome run (step 3, ending in the HOLD countdown) and the flashing square (step 4)
+// with its follow-up views.
 // Beeps, flashes and the GIF start all read one clock (beeper.startClock), so they stay in sync.
 import { h } from './dom.js';
-import { buildPinSchedule, isTooLate } from './pin-rhythm.js';
+import { buildPinSchedule, isTooLate, GIF_START_DELAY_MS } from './pin-rhythm.js';
 import { switchText, currentPin } from './program-steps.js';
+import { rhythmTimeline } from './rhythm-timeline.js';
 import { t } from './i18n.js';
 
-/**
- * Delay from the final "switch on" cue to the GIF starting at frame 0. 2 s of it is a breather the
- * owner asked for, so the jump from clicking to flashing doesn't catch people off guard (step 4
- * counts it down); the other 300 ms covers reacting to the cue and the driver booting. The light
- * waits only about 5–6 s in programming mode, so the green lead must begin well inside that: keep
- * this under about 3 s.
- */
-export const GIF_START_DELAY_MS = 2300;
+// GIF_START_DELAY_MS lives in pin-rhythm.js now, because the timeline draws it too.
+export { GIF_START_DELAY_MS };
 
 /**
  * Calls fn once clock.elapsed() reaches atMs. A timer rather than animation frames, because frames
@@ -28,7 +24,7 @@ function waitUntil(clock, atMs, fn) {
   return () => clearTimeout(id);
 }
 
-/** How long after the planned GIF start the plain-timer backstop fires. */
+/** How long after the planned GIF start the plain-timer backstop moves on from HOLD, if the run's clock stalls. */
 const GIF_BACKSTOP_MS = 200;
 
 /** Gap between pressing Start and the first count-in beat, so no beep is scheduled in the past. */
@@ -44,24 +40,28 @@ export function runPin(ctx) {
   const digits = currentPin(state);
   if (!digits) { ctx.go('pin'); return; }
   const { events, finalAtMs } = buildPinSchedule(digits, state.speed);
+  const gifAtMs = finalAtMs + GIF_START_DELAY_MS;
 
   const number = h('span', { class: 'pulse-number mono' });
   const circle = h('div', { class: 'pulse-circle', 'aria-hidden': 'true' }, number);
   const word = h('p', { class: 'pulse-word' }, t('program.run.getReady'));
   const progress = h('p', { class: 'pulse-progress' }, t('program.pinValue', { pin: digits.join(' · ') }));
   const note = h('p', { class: 'hint pulse-note', role: 'status' });
+  const timeline = rhythmTimeline({ holdLabel: switchText(type, 'holdLabel'), final: switchText(type, 'final') });
+  timeline.show(digits, state.speed);
   const stop = h('button', { type: 'button', class: 'btn', 'data-stop': '', onclick: () => ctx.go('pin') }, t('program.run.stop'));
 
   ctx.render({
     step: 3,
     title: t(state.sound ? 'program.run.titleBeeps' : 'program.run.titleCircle'),
-    body: [h('div', { class: 'pulse-stage' }, circle, word, progress, note), h('div', { class: 'program-buttons' }, stop)],
+    body: [h('div', { class: 'pulse-stage' }, circle, word, progress, timeline.el, note), h('div', { class: 'program-buttons' }, stop)],
     focus: '[data-stop]',
     announce: t(state.sound ? 'program.run.announceBeep' : 'program.run.announceFlash', { pin: digits.join(' '), verb: switchText(type, 'verb') }),
   });
 
   let left = false;
   let handedOff = false;
+  const cleanups = []; // timers and frames of this run; all cancelled when the view is left
   let cancel = () => {};
   let unwatch = () => {};
   const abort = (noticeKey) => { if (!left) ctx.go('pin', { notice: t(noticeKey) }); };
@@ -70,6 +70,7 @@ export function runPin(ctx) {
   ctx.onLeave(() => {
     left = true;
     cancel(); unwatch();
+    for (const fn of cleanups) fn();
     document.removeEventListener('visibilitychange', onHidden);
     if (!handedOff) ctx.beeper.stop();
   });
@@ -86,7 +87,7 @@ export function runPin(ctx) {
     begin();
   });
 
-  function apply(e) {
+  function apply(e, nextEvent) {
     if (e.kind === 'count') {
       circle.className = 'pulse-circle count';
       number.textContent = String(e.beat);
@@ -94,14 +95,65 @@ export function runPin(ctx) {
       circle.className = 'pulse-circle lit';
       number.textContent = '';
       word.textContent = switchText(type, 'action');
+      word.classList.remove('waiting');
       progress.textContent = t('program.run.progress', { digit: e.digit, digits: e.digits, click: e.click, clicks: e.clicks });
       try { navigator.vibrate?.(e.durationMs); } catch (error) { console.warn('flux-rc: vibrate failed', error); }
     } else if (e.kind === 'off') {
-      circle.className = 'pulse-circle';
+      // Between clicks of one digit the word stays (250 ms); between digits it reads as a pause.
+      const digitEnds = nextEvent?.kind !== 'on' || nextEvent.digit !== e.digit;
+      circle.className = digitEnds ? 'pulse-circle pause' : 'pulse-circle';
+      if (digitEnds) { word.textContent = t('program.run.wait'); word.classList.add('waiting'); }
     } else if (e.kind === 'wait') {
+      circle.className = 'pulse-circle pause';
       word.textContent = t('program.run.wait');
-      progress.textContent = t('program.run.waitHint');
+      word.classList.add('waiting');
+      progress.textContent = t('program.run.waitHint', { next: switchText(type, 'final') });
     }
+  }
+
+  /**
+   * The final cue: step 3 holds a solid, emptying ring with "ON · KEEP IT ON" and counts down to the
+   * GIF start, then hands over to step 4 exactly at gifAtMs on the run's clock.
+   */
+  function hold(clock) {
+    // From here an audio stop no longer aborts: the light may already be in programming mode, so
+    // the backstop below moves on to the flashing at most GIF_BACKSTOP_MS late. A hidden page
+    // (onHidden) still aborts, since nobody is holding the light to the screen then.
+    unwatch();
+    const deadline = performance.now() + Math.max(0, gifAtMs - clock.elapsed());
+    const stepped = globalThis.matchMedia?.('(prefers-reduced-motion: reduce)').matches ?? false;
+    circle.className = 'pulse-circle hold';
+    number.textContent = '';
+    word.classList.remove('waiting');
+    word.classList.add('holding');
+    word.textContent = switchText(type, 'hold');
+    let shown = -1;
+    let totalSteps = 1;
+    let frame = 0;
+    const countdown = () => {
+      const leftMs = Math.max(0, deadline - performance.now());
+      // Whole seconds counted from the 2 s breather: the extra 300 ms (GIF_START_DELAY_MS % 1000) is
+      // folded into the last second, so 2.3 s reads "2 s" and never flashes "3 s".
+      const seconds = Math.max(1, Math.ceil((leftMs - (GIF_START_DELAY_MS % 1000)) / 1000));
+      if (shown < 0) totalSteps = seconds;
+      if (seconds !== shown) { shown = seconds; progress.textContent = t('program.run.startsIn', { seconds }); }
+      // Reduced motion: the fill drops once a second instead of draining smoothly.
+      const fraction = stepped ? (leftMs > 0 ? seconds / totalSteps : 0) : leftMs / GIF_START_DELAY_MS;
+      circle.style.setProperty('--hold-left', String(Math.max(0, Math.min(1, fraction))));
+      if (leftMs > 0) frame = requestAnimationFrame(countdown);
+    };
+    countdown();
+    ctx.announce(t('program.run.announceHold', { cue: switchText(type, 'final'), seconds: Math.round(GIF_START_DELAY_MS / 1000) }));
+    let moved = false;
+    const toFlashing = () => {
+      if (moved || left) return;
+      moved = true;
+      handedOff = true; // nothing left to silence; keeps the final beep's tail if it is still playing
+      ctx.go('program', { from: 'pin', cue: switchText(type, 'final') });
+    };
+    const cancelClock = waitUntil(clock, gifAtMs, toFlashing);
+    const backstop = setTimeout(toFlashing, Math.max(0, deadline - performance.now()) + GIF_BACKSTOP_MS);
+    cleanups.push(cancelClock, () => clearTimeout(backstop), () => cancelAnimationFrame(frame));
   }
 
   function begin() {
@@ -113,6 +165,7 @@ export function runPin(ctx) {
     }
     // A stopped audio clock would freeze the run on a lit circle; stop instead.
     unwatch = clock.onInterrupt(() => abort(NOTICE_INTERRUPTED));
+    cleanups.push(timeline.play(clock));
     let next = 0;
     function tick() {
       if (left) return;
@@ -123,22 +176,19 @@ export function runPin(ctx) {
           abort(NOTICE_SLIPPED);
           return;
         }
-        apply(events[next++]);
+        apply(events[next], events[next + 1]);
+        next += 1;
       }
-      if (now >= finalAtMs) {
-        handedOff = true; // keep the long final beep playing into step 4
-        ctx.go('program', { from: 'pin', clock, gifAtMs: finalAtMs + GIF_START_DELAY_MS, cue: switchText(type, 'final') });
-        return;
-      }
+      if (now >= finalAtMs) { hold(clock); return; }
       cancel = waitUntil(clock, events[next].atMs, tick);
     }
     tick();
   }
 }
 
-/** Step 4. options.clock + options.gifAtMs start the GIF on the run's clock; without them it starts now. */
+/** Step 4. The GIF starts at frame 0 as soon as the step mounts: the PIN run calls it at the planned time. */
 export function programStep(ctx, options = {}) {
-  const { clock, gifAtMs, cue } = options;
+  const { cue } = options;
   const img = h('img', { class: 'flash-img', alt: '' });
   const hint = h('p', { class: 'flash-hint' }, t('program.flash.hint'));
   const buttons = h('div', { class: 'program-buttons' });
@@ -152,9 +202,7 @@ export function programStep(ctx, options = {}) {
       btn(t('program.flash.tryAgain'), tryAgain),
       btn(t('common.back'), tryAgain));
   }
-  let isConfirmed = false;
   function confirmed() {
-    isConfirmed = true;
     hint.textContent = t('program.flash.keepHolding');
     buttons.replaceChildren(
       btn(t('program.flash.wentOff'), () => ctx.go('success'), { 'data-done': '' }),
@@ -173,31 +221,8 @@ export function programStep(ctx, options = {}) {
   });
 
   // A fresh blob URL makes the GIF start at frame 0, i.e. at the start of the green lead.
-  const startGif = () => {
-    img.src = ctx.newGifUrl();
-    img.alt = t('program.flash.alt');
-  };
-  if (!clock) { startGif(); return; }
-  // Normally the run's clock starts the GIF. If that clock stops (audio suspended right after the
-  // cue) a plain timer starts it anyway, slightly late, rather than leaving the square black.
-  let started = false;
-  const hintText = hint.textContent;
-  const countdown = () => {
-    const seconds = Math.ceil((gifAtMs - clock.elapsed()) / 1000);
-    if (!started && !isConfirmed && seconds > 0) hint.textContent = t('program.flash.startsIn', { seconds });
-  };
-  const ticker = setInterval(countdown, 200);
-  countdown();
-  const startOnce = () => {
-    if (started) return;
-    started = true;
-    clearInterval(ticker);
-    if (!isConfirmed) hint.textContent = hintText;
-    startGif();
-  };
-  const cancelClock = waitUntil(clock, gifAtMs, startOnce);
-  const backstop = setTimeout(startOnce, Math.max(0, gifAtMs - clock.elapsed()) + GIF_BACKSTOP_MS);
-  ctx.onLeave(() => { cancelClock(); clearTimeout(backstop); clearInterval(ticker); });
+  img.src = ctx.newGifUrl();
+  img.alt = t('program.flash.alt');
 }
 
 export function successView(ctx) {
