@@ -1,0 +1,10 @@
+# Not uploaded to Cloudflare (see wrangler.jsonc).
+.git
+.github
+.claude
+node_modules
+test
+.DS_Store
+wrangler.jsonc
+.assetsignore
+.gitignore

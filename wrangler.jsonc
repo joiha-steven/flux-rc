@@ -1,0 +1,11 @@
+// Cloudflare Workers static-assets deploy (Workers Builds runs `npx wrangler deploy` on every push to main).
+// The site is the repo root as-is: no build step. .assetsignore lists what is not uploaded.
+{
+  "name": "flux-rc-stevensdesk-com",
+  "compatibility_date": "2025-10-01",
+  "assets": {
+    "directory": "./",
+    "html_handling": "auto-trailing-slash",
+    "not_found_handling": "none"
+  }
+}
