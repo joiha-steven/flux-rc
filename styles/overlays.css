@@ -8,6 +8,7 @@ dialog.dlg {
   background: var(--surface);
   color: var(--text);
   overflow: hidden;
+  box-shadow: 0 12px 32px var(--shadow);
 }
 dialog.dlg[open] { display: flex; flex-direction: column; }
 dialog.dlg::backdrop { background: var(--scrim); }
@@ -20,12 +21,12 @@ dialog.picker { width: min(760px, calc(100vw - 32px)); }
 }
 
 .list { display: grid; grid-template-columns: minmax(0, 1fr); gap: var(--sp-1); }
-.list-item { display: grid; grid-template-columns: minmax(0, 1fr); gap: var(--sp-1); min-width: 0; padding: 12px var(--sp-2); border: 1px solid var(--line); border-radius: var(--radius-s); background: var(--bg); }
+.list-item { display: grid; grid-template-columns: minmax(0, 1fr); gap: var(--sp-1); min-width: 0; padding: 12px var(--sp-2); border: 1px solid var(--line); border-radius: var(--radius-s); background: var(--surface-2); }
 .list-title { font-weight: 600; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; min-width: 0; }
 .list-actions { display: flex; flex-wrap: wrap; gap: var(--sp-1); }
 .list-sub { color: var(--muted); font-size: var(--fs-small); line-height: var(--lh-small); }
 .inline-form { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: var(--sp-1); align-items: end; }
-.text-input, .readonly-link { width: 100%; min-height: var(--tap); padding: 0 12px; background: var(--surface-2); border: 1px solid var(--line); border-radius: var(--radius-s); color: var(--text); }
+.text-input, .readonly-link { width: 100%; min-height: var(--tap); padding: 0 12px; background: var(--well); border: 1px solid var(--well-edge); box-shadow: var(--well-shade); border-radius: var(--radius-s); color: var(--text); }
 .readonly-link { font-size: var(--fs-small); }
 .form-error { color: var(--danger); font-size: var(--fs-small); line-height: var(--lh-small); }
 .fields { width: 100%; border-collapse: collapse; font-size: var(--fs-small); font-family: var(--mono); }

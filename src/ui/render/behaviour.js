@@ -17,11 +17,11 @@ const PROTECTION = () => onOff('protection');
 const STRETCH = () => onOff('stretch');
 const BOUNCE = () => choices('bounce', ['keep', 'off', 'set']);
 const NORMAL_BOUNCE = 179;
-const memoryName = (v) => t(`behaviour.memory.card.${v}`);
 const sensitivity = (v) => t(v === NORMAL_BOUNCE ? 'behaviour.bounce.sensitivityNormal' : 'behaviour.bounce.sensitivity', { n: Math.round(scales.bounceSensitivity(v)) });
-const bounceLabel = (b) => (b.action === 'keep' ? t('behaviour.bounce.cardKeep')
-  : b.action === 'off' ? t('behaviour.bounce.cardOff')
-    : t('behaviour.bounce.cardSet', { n: Math.round(scales.bounceSensitivity(b.value)) }));
+const memoryName = (v) => MEMORY().find((o) => o.value === v).label;
+const bounceValue = (b) => (b.action === 'keep' ? t('behaviour.bounce.keep')
+  : b.action === 'off' ? t('behaviour.bounce.off')
+    : t('behaviour.bounce.sensitivity', { n: Math.round(scales.bounceSensitivity(b.value)) }));
 
 function dialogs(store) {
   const set = (fn, meta) => store.update(fn, meta);
@@ -45,13 +45,14 @@ function dialogs(store) {
 
 export function mountBehaviour(root, store) {
   const defs = dialogs(store);
+  // [id, label, value, on]: `on` is true/false for On/Off values (they get a state mark), null for the rest.
   const cards = (c) => [
-    ['memory', 'memory', memoryName(c.memory)],
-    ['protection', 'shield', t(c.protection ? 'behaviour.protection.cardOn' : 'behaviour.protection.cardOff')],
-    ['stretch', 'bars', t(c.stretch ? 'behaviour.stretch.cardOn' : 'behaviour.stretch.cardOff')],
-    ['bounce', 'bounce', bounceLabel(c.bounce)],
+    ['memory', t('behaviour.memory.title'), memoryName(c.memory), null],
+    ['protection', t('behaviour.protection.label'), t(c.protection ? 'behaviour.on' : 'behaviour.off'), c.protection],
+    ['stretch', t('behaviour.stretch.title'), t(c.stretch ? 'behaviour.on' : 'behaviour.off'), c.stretch],
+    ['bounce', t('behaviour.bounce.title'), bounceValue(c.bounce), null],
   ];
-  mountSection(root, store, (c) => [h('div', { class: 'options' }, cards(c).map(([id, ic, label]) =>
+  mountSection(root, store, (c) => [h('div', { class: 'options' }, cards(c).map(([id, label, value, on]) =>
     h('button', {
       type: 'button', class: 'option', 'data-k': `option:${id}`, 'aria-haspopup': 'dialog',
       onclick: () => {
@@ -64,5 +65,8 @@ export function mountBehaviour(root, store) {
           document.querySelector(`[data-k="option:${id}"]`)?.focus();
         });
       },
-    }, icon(ic, 24), h('span', { class: 'option-label' }, label), icon('chevronRight', 16))))]);
+    }, h('span', { class: 'option-text' },
+      h('span', { class: 'option-label' }, label),
+      h('span', { class: 'option-value' }, on !== null && h('span', { class: on ? 'dot dot-on' : 'dot dot-off', 'aria-hidden': 'true' }), value)),
+    icon('chevronRight', 16))))]);
 }

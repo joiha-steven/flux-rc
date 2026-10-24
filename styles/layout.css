@@ -11,18 +11,25 @@
 
 .pills { display: flex; flex-wrap: wrap; gap: var(--sp-1); }
 .pill {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
   min-height: var(--tap);
   padding: 0 var(--sp-3);
-  border: 1px solid var(--line);
+  border: 1px solid var(--key-edge);
   border-radius: var(--radius-s);
-  background: var(--surface);
+  background: var(--key);
+  box-shadow: inset 0 1px 0 var(--key-hi), var(--key-drop);
   font-weight: 500;
-  transition: background 0.12s, border-color 0.12s;
+  transition: transform var(--press), box-shadow var(--press), background var(--press);
 }
-.pill:hover { background: var(--surface-2); border-color: var(--muted); }
-.pill:active { background: var(--line); }
-.pill[aria-pressed="true"] { background: var(--accent); border-color: var(--accent); color: var(--on-accent); }
-.pill[aria-pressed="true"]:hover { filter: brightness(1.08); }
+/* The mark slot is always there (key-edge colour) so the label does not shift when a preset is selected. */
+.pill::before { content: ""; flex: none; width: 8px; height: 3px; border-radius: 2px; background: var(--key-edge); }
+.pill:hover { background: var(--key-hover); }
+.pill:active { transform: translateY(1px); box-shadow: inset 0 1px 0 var(--key-hi); }
+.pill[aria-pressed="true"] { background: var(--surface-2); box-shadow: var(--well-shade); }
+.pill[aria-pressed="true"]::before { background: var(--accent); }
 .quick-desc { color: var(--muted); font-size: var(--fs-small); line-height: var(--lh-small); min-height: var(--lh-small); margin-top: var(--sp-1); }
 @media (max-width: 767px) { .pills { display: grid; grid-template-columns: repeat(3, 1fr); } .pill { padding: 0 var(--sp-1); } }
 
@@ -30,29 +37,28 @@
 .options { display: grid; gap: var(--sp-1); grid-template-columns: 1fr 1fr; }
 .option {
   display: grid;
-  grid-template-columns: auto minmax(0, 1fr) auto;
+  grid-template-columns: minmax(0, 1fr) auto;
   align-items: center;
-  gap: var(--sp-2);
+  gap: var(--sp-1);
   min-height: 72px;
   padding: var(--sp-1) var(--sp-2);
   text-align: left;
-  background: var(--surface);
-  border: 1px solid var(--line);
+  background: var(--key);
+  border: 1px solid var(--key-edge);
   border-radius: var(--radius);
-  transition: background 0.12s, border-color 0.12s;
+  box-shadow: inset 0 1px 0 var(--key-hi), var(--key-drop);
+  transition: transform var(--press), box-shadow var(--press), background var(--press);
 }
-.option:hover { background: var(--surface-2); border-color: var(--muted); }
-.option:active { background: var(--line); }
-.option-label { font-weight: 500; }
-.option > .icon:first-child { color: var(--text); }
-.option > .icon:last-child { color: var(--muted); }
-/* Phone: icon and chevron on the first row, the label below, so two cards per row stay readable. */
-@media (max-width: 599px) {
-  .option { grid-template-columns: minmax(0, 1fr) auto; grid-template-rows: auto auto; gap: var(--sp-1); align-items: start; min-height: 96px; padding: 12px var(--sp-2); }
-  .option > .icon:first-child { grid-row: 1; grid-column: 1; }
-  .option > .icon:last-child { grid-row: 1; grid-column: 2; }
-  .option-label { grid-row: 2; grid-column: 1 / -1; font-size: var(--fs-small); line-height: var(--lh-small); }
-}
+.option:hover { background: var(--key-hover); }
+.option:active { transform: translateY(1px); box-shadow: inset 0 1px 0 var(--key-hi); }
+.option-text { display: grid; gap: 2px; min-width: 0; }
+/* Device label: small all-caps, set in CSS so the locale strings stay normal case. */
+.option-label { font-size: var(--fs-caption); line-height: var(--lh-caption); font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); overflow-wrap: anywhere; }
+.option-value { display: flex; align-items: center; gap: 6px; font-weight: 500; color: var(--text); min-width: 0; }
+.dot { flex: none; box-sizing: content-box; width: 6px; height: 6px; border-radius: 50%; }
+.dot-on { background: var(--accent); border: 1px solid var(--accent-edge); }
+.dot-off { border: 1.5px solid var(--muted); }
+.option > .icon { color: var(--muted); }
 @media (min-width: 1024px) { .options { grid-template-columns: repeat(4, 1fr); } }
 
 /* Footer */
@@ -69,13 +75,15 @@
   border: 1px solid var(--line);
   border-radius: var(--radius);
 }
-.adv-toggle { display: flex; align-items: center; gap: var(--sp-1); min-height: var(--tap); flex: 1; min-width: 0; background: none; border: 0; padding: 0; text-align: left; font-weight: 500; border-radius: var(--radius-s); }
-.adv-toggle:hover { color: var(--accent-strong); }
+.adv-toggle { display: flex; align-items: center; gap: var(--sp-1); min-height: var(--tap); flex: 1; min-width: 0; background: none; border: 0; padding: 0 12px; margin-left: -12px; text-align: left; font-weight: 500; border-radius: var(--radius-s); transition: background var(--press); }
+.adv-toggle:hover { background: var(--surface-2); }
 .adv-toggle > .icon { color: var(--muted); }
 .adv-toggle .muted { font-weight: 400; }
 .footer-actions { position: relative; display: flex; align-items: center; gap: var(--sp-1); flex: none; }
 .loop { display: grid; margin-right: var(--sp-1); color: var(--muted); font-size: var(--fs-small); line-height: var(--lh-small); }
-.loop b { font: 500 var(--fs-body)/var(--lh-small) var(--mono); color: var(--text); }
+.loop > span:first-child { display: flex; align-items: center; gap: var(--sp-1); }
+/* The loop time sits in a small recessed number window. */
+.loop b { padding: 4px 10px; border: 1px solid var(--well-edge); border-radius: var(--radius-s); background: var(--well); box-shadow: var(--well-shade); font: 500 var(--fs-body)/var(--lh-small) var(--mono); font-variant-numeric: tabular-nums; color: var(--text); white-space: nowrap; }
 .loop-error { color: var(--danger); font-size: var(--fs-caption); line-height: var(--lh-caption); }
 .menu-wrap { position: relative; }
 .menu {
@@ -86,13 +94,14 @@
   min-width: 200px;
   display: grid;
   padding: 4px;
-  background: var(--surface-2);
-  border: 1px solid var(--line);
+  background: var(--key);
+  border: 1px solid var(--key-edge);
   border-radius: var(--radius);
+  box-shadow: inset 0 1px 0 var(--key-hi), 0 8px 24px var(--shadow);
 }
 .menu-item { min-height: var(--tap); padding: 0 var(--sp-2); text-align: left; font-weight: 500; background: none; border: 0; border-radius: var(--radius-s); }
-.menu-item:hover:not(:disabled) { background: var(--surface); }
-.menu-item:active:not(:disabled) { background: var(--line); }
+.menu-item:hover:not(:disabled) { background: var(--key-hover); }
+.menu-item:active:not(:disabled) { background: var(--surface-2); }
 .menu-item:disabled { color: var(--muted); cursor: not-allowed; }
 .menu-note { padding: 4px var(--sp-2) var(--sp-1); color: var(--muted); font-size: var(--fs-caption); line-height: var(--lh-caption); max-width: 240px; }
 
