@@ -46,7 +46,8 @@ export function mountLanguageMenu(button) {
 
   button.addEventListener('click', () => (isOpen() ? close(true) : open()));
   button.addEventListener('keydown', (e) => {
-    if (['Enter', ' ', 'ArrowDown'].includes(e.key)) { e.preventDefault(); if (!isOpen()) open(); }
+    // Enter and Space reach the click handler natively; handling them here too re-closes the menu in browsers that click on keyup.
+    if (e.key === 'ArrowDown') { e.preventDefault(); if (!isOpen()) open(); }
   });
   menu.addEventListener('keydown', (e) => {
     const index = items.indexOf(document.activeElement);
