@@ -2,9 +2,16 @@
 .page { max-width: 1080px; margin: 0 auto; padding-left: var(--gutter); padding-right: var(--gutter); }
 .topbar-inner { display: flex; align-items: center; justify-content: space-between; gap: var(--sp-2); padding-top: var(--sp-3); padding-bottom: var(--sp-3); }
 .brand { min-width: 0; }
-.wordmark { font: 600 28px/32px var(--mono); letter-spacing: 0.02em; color: var(--accent-strong); }
+.wordmark { white-space: nowrap; font: 600 28px/32px var(--mono); letter-spacing: 0.02em; color: var(--accent-strong); }
 .tagline { color: var(--muted); font-size: var(--fs-small); line-height: var(--lh-small); }
 .topbar-actions { display: flex; gap: var(--sp-1); flex: none; }
+/* Language button: the short label (EN, 日本語) sits in a key as wide as its text; the menu drops down from it. */
+.topbar-actions .lang-btn { padding: 0 var(--sp-1); font-size: var(--fs-small); white-space: nowrap; }
+.menu.lang-menu { top: calc(100% + var(--sp-1)); bottom: auto; left: 0; right: auto; min-width: 160px; }
+.lang-menu[hidden] { display: none; }
+.lang-item { display: flex; align-items: center; justify-content: space-between; gap: var(--sp-2); }
+.lang-item[aria-checked="true"] { color: var(--accent-strong); }
+.lang-item[aria-checked="true"]::after { content: ""; flex: none; width: 8px; height: 3px; border-radius: 2px; background: var(--accent); }
 
 .main { display: grid; gap: var(--sp-4); padding-bottom: calc(var(--bar-h) + var(--sp-4)); }
 .main > * { min-width: 0; }

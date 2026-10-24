@@ -8,6 +8,7 @@ import { paintIssues, setIssueSource } from './issues.js';
 import { showToast } from './toast.js';
 import { openPresets, openSaved, shareLink } from './dialogs.js';
 import { mountThemeToggle } from './theme.js';
+import { mountLanguageMenu } from './language-menu.js';
 import { createProgramScreen } from './program-screen.js';
 import { mountQuick } from './render/quick.js';
 import { mountGroups } from './render/groups.js';
@@ -95,5 +96,6 @@ window.addEventListener('hashchange', () => {
 });
 
 mountThemeToggle($('btn-theme'));
+mountLanguageMenu($('btn-lang'));
 $('btn-presets').addEventListener('click', () => openPresets(store));
 $('btn-saved').addEventListener('click', () => openSaved(store));

@@ -3,16 +3,81 @@
 // See locales/README.md for adding a language.
 import en from '../../locales/en.js';
 
-/** Registry of bundled locales. Adding a language: import locales/<code>.js and add it here. */
-export const LOCALES = { en };
 export const FALLBACK = 'en';
+export const LANG_KEY = 'flux-rc:lang';
 
 /**
- * The locale in use. Always English for now.
- * Picking goes here when a second locale exists: a stored choice first, then the first of
- * navigator.languages that is in LOCALES, then FALLBACK. Pick once, before anything renders.
+ * Supported languages in menu order. `name` is the language's own name and `short` the topbar
+ * button label. These are data, not UI text: each language is always shown in its own name, so
+ * they are deliberately not in locales/. Each code has a file locales/<code>.js.
  */
-const current = FALLBACK;
+export const LANGUAGES = [
+  { code: 'en', name: 'English', short: 'EN' },
+  { code: 'vi', name: 'Tiếng Việt', short: 'VI' },
+  { code: 'de', name: 'Deutsch', short: 'DE' },
+  { code: 'ja', name: '日本語', short: '日本語' },
+  { code: 'zh-Hans', name: '简体中文', short: '中文' },
+];
+const CODES = LANGUAGES.map((l) => l.code);
+
+/** Maps one BCP 47 tag from navigator.languages to a supported code, or null. */
+function matchTag(tag) {
+  const parts = String(tag).toLowerCase().split('-');
+  const primary = parts[0];
+  if (primary === 'zh') {
+    // Only Simplified Chinese is supported; Traditional (TW, HK, MO, Hant) must not match.
+    if (parts.includes('hant') || ['tw', 'hk', 'mo'].includes(parts[1])) return null;
+    return 'zh-Hans';
+  }
+  return CODES.find((code) => code.toLowerCase() === primary) ?? null;
+}
+
+/**
+ * The language to use: a stored choice that is a known code, else the first of the browser's
+ * languages that matches (by primary subtag), else English. Pure so it can be tested.
+ */
+export function pickLanguage(stored, navigatorLanguages = []) {
+  if (CODES.includes(stored)) return stored;
+  for (const tag of navigatorLanguages ?? []) {
+    const code = matchTag(tag);
+    if (code) return code;
+  }
+  return FALLBACK;
+}
+
+function readStoredLanguage() {
+  try {
+    return localStorage.getItem(LANG_KEY);
+  } catch (error) {
+    console.warn('flux-rc: could not read the language choice', error);
+    return null;
+  }
+}
+
+/** Saves the choice and reloads, so the whole page (including the static HTML) is rebuilt in it. */
+export function setLanguage(code) {
+  if (!CODES.includes(code)) return;
+  try {
+    localStorage.setItem(LANG_KEY, code);
+  } catch (error) {
+    console.warn('flux-rc: could not save the language choice', error);
+  }
+  location.reload();
+}
+
+// Only the chosen locale is downloaded; English is always bundled as the fallback.
+// Outside a browser (the tests) there is no stored choice or navigator language, so it stays English.
+let current = typeof document === 'undefined' ? FALLBACK : pickLanguage(readStoredLanguage(), navigator.languages);
+/** Locales loaded so far (code -> strings). */
+export const LOCALES = { en };
+if (current !== FALLBACK) {
+  try {
+    LOCALES[current] = (await import(`../../locales/${current}.js`)).default;
+  } catch (error) {
+    console.warn(`flux-rc: could not load the "${current}" texts, using English`, error);
+    current = FALLBACK;
+  }
+}
 
 /** Fills {name} placeholders. Unknown placeholders stay as they are, so a mistake is visible. */
 export function format(template, params) {

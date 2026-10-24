@@ -128,3 +128,14 @@ h3 { font-size: var(--fs-body); line-height: var(--lh-body); }
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { transition-duration: 0.001ms !important; animation-duration: 0.001ms !important; scroll-behavior: auto !important; }
 }
+
+/* Japanese and Chinese use installed system fonts (no webfont download). Plum Sans / Plum Mono stay first,
+   so Latin letters, digits and units keep the page's look; CJK characters fall through to the system font. */
+html:lang(ja) {
+  --font: "Plum Sans", "Hiragino Kaku Gothic ProN", "Hiragino Sans", "Noto Sans JP", "Yu Gothic", "Meiryo", sans-serif;
+  --mono: "Plum Mono", "Hiragino Kaku Gothic ProN", "Hiragino Sans", "Noto Sans JP", "Yu Gothic", "Meiryo", ui-monospace, monospace;
+}
+html:lang(zh-Hans) {
+  --font: "Plum Sans", "PingFang SC", "Hiragino Sans GB", "Noto Sans SC", "Microsoft YaHei", sans-serif;
+  --mono: "Plum Mono", "PingFang SC", "Hiragino Sans GB", "Noto Sans SC", "Microsoft YaHei", ui-monospace, monospace;
+}

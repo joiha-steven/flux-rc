@@ -5,13 +5,19 @@ truth; other languages translate its keys.
 
 ## Add a language
 
-1. Copy `en.js` to `<code>.js`, using the language code (`vi.js`, `de.js`, `pt-BR.js`).
+1. Copy `en.js` to `<code>.js`, using the language code (`vi.js`, `de.js`, `zh-Hans.js`).
 2. Translate the values. Leave the keys as they are. A key you leave out falls back to English, so
    you can translate in parts.
-3. In `src/ui/i18n.js`, import the file and add it to `LOCALES`. Choosing the language (a saved
-   choice or the browser's languages) is not built yet; the place for it is marked in that file.
-4. Add `<link rel="modulepreload" href="locales/<code>.js">` to `index.html`; `npm test` tells you
-   if it is missing.
+3. In `src/ui/i18n.js`, add the language to `LANGUAGES` (code, its own name, and the short label for
+   the topbar button). If browsers use other tags for it, extend `matchTag`. Only the chosen language
+   is downloaded (`import()`), so nothing is added to `index.html` preloads; for a stored choice, also
+   add the code to the pattern in the inline script near the top of `index.html`.
+4. For a script the bundled fonts do not cover, add a `html:lang(<code>)` font stack in
+   `styles/tokens.css` (see `ja` and `zh-Hans`). Vietnamese diacritics are in the bundled Plum fonts.
+5. `npm test` checks that `LANGUAGES` and the files in `locales/` match.
+
+The language button in the topbar saves the choice in `localStorage` (`flux-rc:lang`) and reloads
+the page. With no saved choice the first of the browser's languages that matches is used.
 
 ## Keys
 
@@ -62,9 +68,6 @@ before any module loads.
 - The mode picker builds each cell's screen-reader name by replacing the English separator
   `' · '` with `', '` (`src/ui/render/picker.js`). A locale with a different separator in
   `mode.withDetail` or `mode.detail` should get a key for this instead.
-- Every registered locale is imported statically at startup, and each needs a modulepreload line
-  in `index.html` (enforced by `test/modulepreload.test.js`). With many languages, switch to
-  loading only the chosen one with `import()`.
 - `src/data/presets.js` and `src/data/quick-presets.js` import `src/ui/i18n.js` for preset names.
 
 ## Test
