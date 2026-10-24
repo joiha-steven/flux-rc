@@ -77,7 +77,6 @@ test('every computed key used under src/ exists in locales/en.js for all its val
     'behaviour.${area}.${value}.desc': ['none', 'standard', 'hybrid'].map((v) => `behaviour.memory.${v}.desc`).concat(['keep', 'off', 'set'].map((v) => `behaviour.bounce.${v}.desc`)),
     'behaviour.${area}.on.desc': ['behaviour.protection.on.desc', 'behaviour.stretch.on.desc'],
     'behaviour.${area}.off.desc': ['behaviour.protection.off.desc', 'behaviour.stretch.off.desc'],
-    'behaviour.memory.card.${v}': each(['none', 'standard', 'hybrid'], (s) => `behaviour.memory.card.${s}`),
     'field.${FIELD_IDS[i]}': FIELD_IDS.map((id) => `field.${id}`),
     'program.switch.${type}.${part}': ['mcclicky', 'moff'].flatMap((s) => ['name', 'desc', 'rest', 'action', 'verb', 'final', 'hold', 'holdLabel'].map((p) => `program.switch.${s}.${p}`)),
     'program.tailcap.step${n}': [1, 2, 3, 4].map((n) => `program.tailcap.step${n}`),

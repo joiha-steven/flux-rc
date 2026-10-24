@@ -24,6 +24,8 @@
 .btn-primary:hover:not(:disabled) { background: var(--accent); }
 .btn-primary:active:not(:disabled) { box-shadow: inset 0 1px 0 rgb(255 255 255 / 0.35); }
 .btn-primary:disabled { background: var(--key); border-color: var(--key-edge); color: var(--muted); }
+/* The Program screen keeps its flat buttons: the raised-key look stays off the always-dark programming flow. */
+.program .btn, .program .btn:active:not(:disabled) { box-shadow: none; transform: none; }
 .btn-ghost { background: transparent; border-color: transparent; box-shadow: none; }
 .btn-ghost:hover:not(:disabled) { background: var(--surface-2); }
 .btn-ghost:active:not(:disabled) { box-shadow: none; }
