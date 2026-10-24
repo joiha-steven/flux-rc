@@ -11,7 +11,7 @@ const reducedMotion = () => globalThis.matchMedia?.('(prefers-reduced-motion: re
 /** Screen-reader text: "Count-in, 2 clicks, pause, 2 clicks, pause, 2 clicks. Then: Switch on and leave it on." */
 function describe(digits, final) {
   const groups = digits.map((n) => t(n === 1 ? 'program.timeline.click' : 'program.timeline.clicks', { n }));
-  const clicks = groups.join(`, ${t('program.timeline.pause')}, `);
+  const clicks = groups.join(`${t('a11y.listSeparator')}${t('program.timeline.pause')}${t('a11y.listSeparator')}`);
   return t('program.timeline.desc', { clicks, final });
 }
 

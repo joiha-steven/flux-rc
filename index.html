@@ -12,6 +12,10 @@
   <script>
     try { var t = localStorage.getItem('flux-rc:theme'); if (t === 'light' && CSS.supports('color', 'light-dark(red, red)')) document.documentElement.setAttribute('data-theme', t); } catch (e) {}
   </script>
+  <!-- Start downloading a stored non-English locale in parallel with the app. Same key and codes as src/ui/i18n.js; a bad value is ignored there. -->
+  <script>
+    try { var l = localStorage.getItem('flux-rc:lang'); if (/^(vi|de|ja|zh-Hans)$/.test(l)) { var p = document.createElement('link'); p.rel = 'modulepreload'; p.href = 'locales/' + l + '.js'; document.head.appendChild(p); } } catch (e) {}
+  </script>
   <!-- Text marked data-i18n / data-i18n-attr is English as the no-JS fallback; src/ui/i18n.js applyStatic() fills it from locales/. test/i18n.test.js keeps it equal to locales/en.js. -->
   <title data-i18n="meta.title">flux-rc — NXS R1 optical programmer</title>
   <meta name="description" data-i18n-attr="content:meta.description" content="Pick modes and options, hold the flashlight against the screen, and the flashing square programs it.">
@@ -50,6 +54,7 @@
   <link rel="modulepreload" href="src/ui/i18n.js">
   <link rel="modulepreload" href="src/ui/icons.js">
   <link rel="modulepreload" href="src/ui/issues.js">
+  <link rel="modulepreload" href="src/ui/language-menu.js">
   <link rel="modulepreload" href="src/ui/mode-text.js">
   <link rel="modulepreload" href="src/ui/modes-list.js">
   <link rel="modulepreload" href="src/ui/pin-rhythm.js">
@@ -98,6 +103,9 @@
         <p class="tagline" data-i18n="topbar.tagline">NXS R1 optical programmer</p>
       </div>
       <div class="topbar-actions">
+        <div class="menu-wrap lang-wrap">
+          <button type="button" class="btn btn-outline lang-btn" id="btn-lang" aria-label="Language" title="Language" data-i18n-attr="aria-label:lang.label;title:lang.label" aria-haspopup="menu" aria-expanded="false">EN</button>
+        </div>
         <button type="button" class="btn btn-outline btn-icon" id="btn-theme" aria-label="Switch to light theme" title="Switch to light theme"></button>
         <button type="button" class="btn btn-outline" id="btn-presets" aria-label="Presets" data-i18n-attr="aria-label:topbar.presets">
           <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M4 7h10M18 7h2M4 17h2M10 17h10"/><circle cx="16" cy="7" r="2"/><circle cx="8" cy="17" r="2"/></svg>

@@ -6,7 +6,7 @@ import { readFileSync, readdirSync, statSync } from 'node:fs';
 import { dirname, join } from 'node:path';
 import { fileURLToPath, pathToFileURL } from 'node:url';
 import en from '../locales/en.js';
-import { createTranslator, t as pageT, LOCALES } from '../src/ui/i18n.js';
+import { createTranslator, t as pageT, LANGUAGES } from '../src/ui/i18n.js';
 import { modeLabel } from '../src/ui/mode-text.js';
 import { ENTRIES } from '../src/ui/modes-list.js';
 import { PRESETS } from '../src/data/presets.js';
@@ -113,7 +113,7 @@ test('every other locale has only en keys, with the same placeholders', async ()
   for (const file of files) {
     const other = (await import(pathToFileURL(join(root, 'locales', file)))).default;
     assert.deepEqual(localeProblems(en, other), [], file);
-    assert.ok(Object.hasOwn(LOCALES, file.replace(/\.js$/, '')), `${file} is in the LOCALES registry in src/ui/i18n.js`);
+    assert.ok(LANGUAGES.some((l) => `${l.code}.js` === file), `${file} is in LANGUAGES in src/ui/i18n.js`);
   }
 });
 

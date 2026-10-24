@@ -34,7 +34,7 @@ function cell(index, current, slotMode, onPick) {
     : [h('span', { class: 'pick-text' }, h('b', {}, mode ? entryName(mode) : t('mode.notUsed')), h('span', { class: 'pick-detail' }, entryDetail(mode)))];
   return h('button', {
     type: 'button', class: `pick ${level ? 'pick-level' : 'pick-wide'} ${mode ? '' : 'pick-unused'}`, 'aria-current': index === current ? 'true' : null,
-    'aria-label': text.replaceAll(' · ', ', '), 'data-k': `pick:${index}`, 'data-text': text, tabindex: -1, onclick: () => onPick(index),
+    'aria-label': text.replaceAll(' · ', t('a11y.listSeparator')), 'data-k': `pick:${index}`, 'data-text': text, tabindex: -1, onclick: () => onPick(index),
   }, art && h('img', { class: 'pick-img', src: art.thumb, alt: '', width: 96, height: 116, decoding: 'async', style: `filter: brightness(${art.shade})` }),
   !art && h('span', { class: 'pick-plus', 'aria-hidden': 'true' }, '+'),
   ...inner,

@@ -83,6 +83,16 @@ else, including an old "auto", means dark) and set as `<html data-theme>`. A sma
 toggle still works for the current page view.
 Logic: `src/ui/theme.js`.
 
+### Language
+
+A key left of the theme button (`#btn-lang`) shows the current language's short label (EN, VI, DE,
+日本語, 中文) and opens a dropdown menu (`role="menu"`, items `menuitemradio`, each in its own name and
+with its own `lang`). Choosing one saves `flux-rc:lang` and reloads the page; the autosaved config
+survives the reload. Keyboard: Enter, Space or ArrowDown opens; arrows, Home, End move; Escape closes
+and returns focus; Tab and outside clicks close. Below 400 px the Presets and Saved keys shrink to 44 px
+icons so the wordmark and this key fit. Logic: `src/ui/language-menu.js`, `src/ui/i18n.js`. Ja and zh-Hans
+use system CJK fonts after Plum Sans (`styles/tokens.css`).
+
 Radius by function: 12 px on panels and cards (`--radius`), 8 px on keys and windows (`--radius-s`),
 6 px on keys inside a cluster (`--radius-xs`), 4 px on printed plates (`--radius-plate`). 8 px spacing grid. Content max width 1080 px,
 centred, 24 px gutters (16 px on phones).
