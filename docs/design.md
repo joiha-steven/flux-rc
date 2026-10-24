@@ -157,27 +157,28 @@ Header row: battery image (about 80 × 24 px), title, monospace subtitle ("1 × 
 "18650, 18350, 21700…", because the driver cares about the cell voltage, not the size). Right side: a switch "Use" and, for two
 cells, a segmented control "2 × Li-ion" / "2 × CR123A".
 
-When a group is off, replace its tiles with one muted line: "Not used. This set copies the
+When a group is off, replace its tiles with one quiet recessed note (`--well`, no dashed border): "Not used. This set copies the
 one-cell modes." (or two-cell, or "Modes stay as they are on the light" when both are off).
 
-**Mode tile** (aspect about 1.3 : 1 on desktop/tablet, 1 : 1 on phone):
+**Mode tile** (a card: aspect 1 : 1.12 on phone, 1 : 1.05 at 768-1023 px, 1.2 : 1 from 1024 px):
 
-- Beam photo filling the tile, with a dark gradient at top and bottom for legible text.
-- Top left, two lines in Plum Sans: line 1 is the power ("8.3 mW", "17 W"), 15/20, weight 600,
+- Card: `--surface`, 1 px `--line`, radius 12, padding 6 px. Hover only changes the border to `--key-edge`; nothing lifts or scales.
+- Photo window (radius 8, 1 px `--well-edge` rim, `--well-shade` drawn over the photo, same `object-position: center 65%` on every level). In the light theme the window is still dark inside a light card; there is no dark frame around it.
+- Top left, on a solid `--plate` (radius 4, padding 4 x 6): line 1 is the power ("8.3 mW", "17 W"), 15/20, weight 600,
   -0.01em, `--photo-text`; line 2 is the percent written tight ("0.03%"), 12/16, weight 500,
-  `--photo-muted`, tabular figures. Special modes show their name as line 1 in the same style and
-  no line 2 ("Red moonlight", "10 Hz strobe", "S.O.S.", "Red beacon", "Signal · white"); afterburning
+  `--photo-muted`, tabular figures. Special modes show their name as line 1 and no line 2
+  ("Red moonlight", "10 Hz strobe", "S.O.S.", "Red beacon", "Signal · white"); afterburning
   shows "Afterburning" over "100% · 30 W". Text comes from `tileText()` in `src/ui/modes-list.js`.
-  The top shade is dark enough (about 0.7 at label height) that line 2 stays above 4.5:1 on the
-  brightest photo (afterburning, measured 5.0:1 worst case).
-- Top right: slot number badge 1–4 (30 × 30 px square, 15 px weight 600, 6 px radius, border). The label's right edge leaves 8 px to the badge; the issue dot sits under it.
-- Bottom left: small "LVL" then the level number large, amber, monospace. Special modes show a
-  short code instead: AB, RM, SOS, STB, BCN, SIG.
-- Right edge: up and down chevron buttons (visually 28–32 px, hit area at least 44 × 44 px). Up =
-  next entry in the list below, down = previous. List order: (Not used, slots 2–4 only), Red
-  moonlight, levels 1–32, Afterburning, S.O.S., 10 Hz strobe, Red beacon, Custom signal.
-- Afterburning tile: 2 px amber border and a soft amber glow.
-- Not used: dashed border, no photo, centred muted "Not used" and a "+" hint.
+  The plate is 86% opaque dark, so both lines stay above 5.6:1 even over a white pixel (afterburning is the brightest photo).
+- Top right: slot number badge 1-4 as a printed plate (30 x 30 px, `--plate`, Plum Mono 15 px weight 600, radius 4, no outline). The label's right edge leaves 4 px to the badge; the issue dot sits under it.
+- Bottom strip (solid `--surface-2`, 52 px, inside the card): small "LVL" device label (11 px, weight 500, +0.08em, `--muted`) and the level number in Plum Mono, tabular, `--text` (not amber), 40 px from 1024 px up. Special modes show a
+  short code instead: AB, RM, SOS, STB, BCN, SIG. Below 1024 px the strip is narrow, so LVL stacks above the number and the number shrinks to 22 px (phone) / 20 px (tablet): three-letter codes in Plum Mono are 2.25 x the font size wide and must clear the key cluster.
+- Right end of the strip: up and down keys as one cluster (side by side, 88 x 44 px, divider between, outer corners radius 8, inner 0). Each button is a stable 44 x 44 hit area; only its face sinks 1 px when pressed. Up =
+  next entry in the list below, down = previous. List order: (Not used, slots 2-4 only), Red
+  moonlight, levels 1-32, Afterburning, S.O.S., 10 Hz strobe, Red beacon, Custom signal.
+  At the first or last entry the key is disabled (no shadow, muted).
+- Afterburning tile: 2 px `--accent-strong` rim on the photo window, no glow.
+- Not used: the window is an empty recessed well (`--well`) with a muted "Not used" and a "+"; the slot number is printed straight onto it; the strip and keys stay.
 - Inline issues (from `validateConfig` by path) as a small red or amber badge on the tile; the full
   text appears in the issues strip above the footer.
 - Tapping the tile body opens the **mode picker**: dialog on desktop/tablet, bottom sheet on phone.
@@ -185,15 +186,16 @@ one-cell modes." (or two-cell, or "Modes stay as they are on the light" when bot
   scroll a little):
   - **Brightness levels** first: 32 square-ish cells, 8 columns on desktop/tablet (dialog about
     760 px wide), 4 columns on phone. Each cell is a tiny beam photo (the `-thumb` file of its band,
-    with the same `brightness()` rule as the tiles) darkened at the bottom, the level number large
-    in Plum Mono top-left, and bottom-left the power ("3 W", "180 mW") in Plum Sans 13 px weight 600
-    over the tight percent ("10%") in 11 px muted. Both lines fit in the 79 px phone cell (measured
-    5 px between number and power).
+    with the same `brightness()` rule as the tiles); the level number in Plum Mono sits top-left and the
+    power ("3 W", "180 mW", Plum Sans 13 px weight 600) over the tight percent ("10%", 11 px muted) bottom-left,
+    each on a solid `--plate` (radius 4), 8 px from the cell edges in every cell. Both plates fit in the 79 px phone cell.
   - **Other modes** below, under a small heading: Afterburning, Red moonlight, S.O.S., 10 Hz strobe,
     Red beacon, Custom signal, and Not used (slots 2–4 only). Wider cells (4 per row desktop, 2 per
     row phone) with their photo, name (Plum Sans 13 px, weight 600), and one short detail line ("100 % · 30 W", "Distress
     pattern").
-  - The current choice has a 2 px amber border; hover/focus show a lighter border.
+  - Unselected cells have no visible border (2 px transparent, so nothing shifts). The current choice has a 2 px
+    `--accent-strong` border plus a check on an amber plate at the top right (not colour only); hover/focus show a
+    `--key-edge` border. The picker fades in over 160 ms with a 4 px rise (none under reduced motion).
   - A detail bar pinned at the bottom of the picker shows the hovered/focused/current entry in full:
     "Level 21 · 10 % · 3 W". On touch it shows the current entry.
   - Arrow keys move focus within the grid (roving focus), Enter/Space chooses, Escape closes.
