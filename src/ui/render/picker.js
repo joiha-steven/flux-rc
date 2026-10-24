@@ -4,7 +4,7 @@ import { openDialog } from '../dialog.js';
 import { segmented } from '../controls.js';
 import { LEVELS } from '../../core/index.js';
 import { t } from '../i18n.js';
-import { durationText } from '../mode-text.js';
+import { durationText, modePercent } from '../mode-text.js';
 import { ENTRIES, entryIndex, entryMode, beam, entryName, entryDetail, entryFull } from '../modes-list.js';
 
 function signalControls(store, key, i, mode) {
@@ -29,7 +29,7 @@ function cell(index, current, slotMode, onPick) {
   const level = mode?.type === 'level';
   const text = entryFull(mode);
   const inner = level
-    ? [h('b', { class: 'pick-num mono' }, mode.level), h('span', { class: 'pick-power mono' }, LEVELS[mode.level - 1].power)]
+    ? [h('b', { class: 'pick-num mono' }, mode.level), h('span', { class: 'pick-level-text' }, h('span', { class: 'pick-power' }, LEVELS[mode.level - 1].power), h('span', { class: 'pick-percent' }, modePercent(mode)))]
     : [h('span', { class: 'pick-text' }, h('b', {}, mode ? entryName(mode) : t('mode.notUsed')), h('span', { class: 'pick-detail' }, entryDetail(mode)))];
   return h('button', {
     type: 'button', class: `pick ${level ? 'pick-level' : 'pick-wide'} ${mode ? '' : 'pick-unused'}`, 'aria-current': index === current ? 'true' : null,

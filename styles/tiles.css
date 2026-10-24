@@ -29,43 +29,41 @@
   border-radius: var(--radius);
 }
 .tile-img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: center 65%; }
-.tile-shade { position: absolute; inset: 0; background: linear-gradient(rgb(0 0 0 / 0.7), transparent 40%, transparent 55%, rgb(0 0 0 / 0.75)); }
-/* right edge leaves room for the slot badge (22 px) plus 8 px either side */
+/* The top is dark enough behind the 12 px muted percent line to keep it above 4.5:1, even on the
+   bright afterburning photo (measured 5.2:1 worst pixel at 375 px). The px floors keep the stops in order on the short wide tiles. */
+.tile-shade { position: absolute; inset: 0; background: linear-gradient(rgb(0 0 0 / 0.8), rgb(0 0 0 / 0.72) 52px, rgb(0 0 0 / 0.25) max(33%, 70px), transparent max(45%, 86px), transparent max(55%, 86px), rgb(0 0 0 / 0.75)); }
+/* Top-left label: primary line (power or mode name) over an optional secondary line (percent).
+   The right edge leaves room for the slot badge (30 px) plus 8 px either side. */
 .tile-label {
   position: absolute;
   top: var(--sp-1);
   left: var(--sp-1);
-  right: calc(var(--sp-1) + 22px + var(--sp-1));
-  display: -webkit-box;
-  -webkit-box-orient: vertical;
-  -webkit-line-clamp: 2;
+  right: calc(var(--sp-1) + 30px + var(--sp-1));
+  display: grid;
   overflow: hidden;
-  font-size: var(--fs-caption);
-  line-height: var(--lh-caption);
-  font-weight: 500;
-  color: var(--photo-text);
   text-shadow: 0 1px 2px #000;
 }
-.tile-label span { display: block; }
+.tile-primary { font-size: 15px; line-height: 20px; font-weight: 600; letter-spacing: -0.01em; color: var(--photo-text); }
+.tile-secondary { font-size: 12px; line-height: 16px; font-weight: 500; color: var(--photo-muted); font-variant-numeric: tabular-nums; }
 .tile-badge {
   position: absolute;
   top: var(--sp-1);
   right: var(--sp-1);
-  min-width: 22px;
-  height: 22px;
+  width: 30px;
+  height: 30px;
   display: grid;
   place-items: center;
-  font-size: var(--fs-caption);
-  font-weight: 500;
+  font-size: 15px;
+  font-weight: 600;
   background: rgb(0 0 0 / 0.5);
   color: var(--photo-text);
   border: 1px solid var(--photo-muted);
-  border-radius: 4px;
+  border-radius: 6px;
 }
 .tile-code { position: absolute; left: var(--sp-1); bottom: var(--sp-1); display: flex; align-items: baseline; gap: var(--sp-1); color: var(--accent); }
 .tile-code small { color: var(--photo-muted); font-size: 11px; line-height: 1; letter-spacing: 0.08em; text-transform: uppercase; }
 .tile-code b { font-size: var(--tile-number); line-height: 1; font-weight: 600; text-shadow: 0 1px 3px #000; }
-.tile-issue { position: absolute; top: 38px; right: var(--sp-1); }
+.tile-issue { position: absolute; top: calc(var(--sp-1) + 30px + 4px); right: var(--sp-1); }
 .issue-dot { display: grid; place-items: center; width: 22px; height: 22px; border-radius: 50%; font-size: var(--fs-small); font-weight: 600; color: var(--on-accent); }
 .issue-dot.issue-error { color: var(--on-danger); }
 .issue-dot.issue-error { background: var(--danger); }

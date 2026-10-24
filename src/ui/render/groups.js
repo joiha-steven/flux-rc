@@ -2,7 +2,7 @@
 import { h, mountSection } from '../dom.js';
 import { switchRow, segmented } from '../controls.js';
 import { icon } from '../icons.js';
-import { ENTRIES, entryIndex, entryMode, beam, tileLines, tileCode, entryName } from '../modes-list.js';
+import { ENTRIES, entryIndex, entryMode, beam, tileText, tileCode, entryName } from '../modes-list.js';
 import { openPicker } from './picker.js';
 import { t } from '../i18n.js';
 import { LEVELS } from '../../core/index.js';
@@ -23,6 +23,12 @@ function describe(mode, n) {
   if (mode.type !== 'level') return t('groups.tile.mode', { n, name: entryName(mode) });
   const { percent, power } = LEVELS[mode.level - 1];
   return t('groups.tile.modeLevel', { n, name: entryName(mode), percent, power });
+}
+
+/** Top-left text: primary line (power or name) and an optional secondary line (percent). */
+function tileLabel(mode) {
+  const { primary, secondary } = tileText(mode);
+  return h('span', { class: 'tile-label' }, h('span', { class: 'tile-primary' }, primary), secondary && h('span', { class: 'tile-secondary' }, secondary));
 }
 
 /** first: the first group's tiles are the first thing seen, so their photos load with high priority. */
@@ -49,7 +55,7 @@ function tile(store, key, i, mode, first) {
         ...(first ? { fetchpriority: 'high' } : { loading: 'lazy' }),
       }),
       h('span', { class: 'tile-shade' }),
-      h('span', { class: 'tile-label mono' }, tileLines(mode).map((line) => h('span', {}, line))),
+      tileLabel(mode),
       h('span', { class: 'tile-badge' }, i + 1),
       h('span', { class: 'tile-code' }, mode.type === 'level' && h('small', { class: 'mono' }, t('mode.code.level')), h('b', { class: 'mono' }, tileCode(mode))),
       h('span', { class: 'tile-issue', 'data-issues': path, 'data-badge': '' }))
