@@ -157,8 +157,11 @@ in muted monospace. Right: raised-key buttons "Presets" and "Saved" with icons (
 
 ### Quick start
 
-Three raised keys in a row (`.pill`): Everyday, Tactical, Gentle (`QUICK_PRESETS`), equal height
-and gaps. The one equal to the current config (`aria-pressed="true"`, computed from the config, so
+Six raised keys (`.pill`): Everyday, Tactical, Gentle, Camp, Simple, Power (`QUICK_PRESETS`), in an
+equal-column grid with one gap (`--sp-1`) and equal row height (`grid-auto-rows: 1fr`, so a name
+that wraps, such as Russian "На каждый день", makes every key that tall). 3 x 2 below 1024 px, one
+row of six from 1024 px (each key at least 156 px, enough for every language). Under 768 px the
+bar sits above the label so long names fit; from 768 px it sits before the label. The one equal to the current config (`aria-pressed="true"`, computed from the config, so
 changing any tile or setting clears it) has a pressed face (`--surface-2` with the inset well
 shade, no drop shadow) and an 8 x 3 px amber bar before its label. The other keys show the same
 bar slot in `--key-edge` so labels do not shift. Text stays `--text`. One tap loads a preset with an
@@ -337,7 +340,7 @@ Timing (manual limits in brackets):
 
 ## Presets and saved configs
 
-- **Presets** dialog: "Quick start" (the three) at the top, then the vendor presets. Loading
+- **Presets** dialog: "Quick start" (all six) at the top, then the vendor presets. Loading
   replaces the config with an Undo toast.
 - **Saved** dialog: list from `localStorage` (name, date), Load, Rename, Delete with confirm,
   "Save current". Long names truncate with an ellipsis. Empty state: "Nothing saved yet".

@@ -64,6 +64,12 @@ export default {
   'quickPreset.tactical.description': 'Всегда включается на максимуме (17 W), дальше стробоскоп 10 Hz, потом низкий (0.4 W).',
   'quickPreset.gentle.name': 'Щадящий',
   'quickPreset.gentle.description': 'Не ярче 3 W, поэтому фонарь почти не греется и не режет глаза. Включается в последнем режиме.',
+  'quickPreset.camp.name': 'Походный',
+  'quickPreset.camp.description': 'Всегда включается на красном мунлайте, чтобы не сбить ночное зрение, дальше низкий (36 mW) и средний (1.4 W). Последний режим мигает красным каждые 3 s, чтобы фонарь можно было найти в темноте.',
+  'quickPreset.simple.name': 'Простой',
+  'quickPreset.simple.description': 'Всего два режима: низкий (180 mW) и максимум (17 W). Всегда включается на низком.',
+  'quickPreset.power.name': 'Мощный',
+  'quickPreset.power.description': 'Для фонарей на два элемента. Один элемент: 180 mW, 3 W, 17 W. С двумя элементами четвёртым режимом добавляется Турбо (30 W). Включается в последнем режиме.',
 
   // Vendor presets (src/data/presets.js). Names are the vendors' own program names.
   'vendorPreset.fl33-v4-factory.name': 'FL33 v4 Factory Prog',

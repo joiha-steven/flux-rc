@@ -63,6 +63,12 @@ export default {
   'quickPreset.tactical.description': '开机总是最亮（17 W），然后是 10 Hz 爆闪，再是低亮（0.4 W）。',
   'quickPreset.gentle.name': '柔和',
   'quickPreset.gentle.description': '亮度不超过 3 W，不烫手也不刺眼。开机进入上次使用的模式。',
+  'quickPreset.camp.name': '露营',
+  'quickPreset.camp.description': '开机总是红光月光，保护夜视，然后是低亮（36 mW）、中亮（1.4 W）。最后一档每 3 s 闪一次红光，方便在黑暗中找到手电。',
+  'quickPreset.simple.name': '简单',
+  'quickPreset.simple.description': '只有两档：低亮（180 mW）和最亮（17 W）。开机总是低亮。',
+  'quickPreset.power.name': '强劲',
+  'quickPreset.power.description': '适合能装双节电池的手电。单节：180 mW、3 W、17 W。装双节时第四档是极亮（30 W）。开机进入上次使用的模式。',
 
   // Vendor presets (src/data/presets.js). Names are the vendors' own program names.
   'vendorPreset.fl33-v4-factory.name': 'FL33 v4 Factory Prog',

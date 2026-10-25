@@ -65,6 +65,12 @@ export default {
   'quickPreset.tactical.description': 'Siempre empieza en máximo (17 W), luego estrobo de 10 Hz y luego bajo (0.4 W).',
   'quickPreset.gentle.name': 'Suave',
   'quickPreset.gentle.description': 'Nunca pasa de 3 W, así que se mantiene fresca y no cansa la vista. Empieza en el último modo usado.',
+  'quickPreset.camp.name': 'Camping',
+  'quickPreset.camp.description': 'Siempre empieza en luna roja para conservar la visión nocturna, luego bajo (36 mW) y medio (1.4 W). El último modo es un destello rojo cada 3 s, para encontrar la linterna a oscuras.',
+  'quickPreset.simple.name': 'Simple',
+  'quickPreset.simple.description': 'Solo dos modos: bajo (180 mW) y máximo (17 W). Siempre empieza en bajo.',
+  'quickPreset.power.name': 'Potente',
+  'quickPreset.power.description': 'Para linternas que admiten dos celdas. Una celda: 180 mW, 3 W, 17 W. Con dos celdas se suma Turbo (30 W) como cuarto modo. Empieza en el último modo usado.',
 
   // Vendor presets (src/data/presets.js). Names are the vendors' own program names.
   'vendorPreset.fl33-v4-factory.name': 'FL33 v4 Factory Prog',

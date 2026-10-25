@@ -63,6 +63,12 @@ export default {
   'quickPreset.tactical.description': '常に Max（17 W）から点灯。次が10 Hz ストロボ、その次が Low（0.4 W）です。',
   'quickPreset.gentle.name': 'やさしめ',
   'quickPreset.gentle.description': '最大でも3 W。発熱が少なく、目にもやさしい設定です。最後に使ったモードから点灯します。',
+  'quickPreset.camp.name': 'キャンプ',
+  'quickPreset.camp.description': '常に赤色月光から点灯し、暗さに慣れた目を守ります。次が Low（36 mW）、その次が Mid（1.4 W）。最後のモードは3 s ごとに赤く点滅するので、暗闇でもライトを見つけられます。',
+  'quickPreset.simple.name': 'シンプル',
+  'quickPreset.simple.description': 'Low（180 mW）と Max（17 W）の2モードだけ。常に Low から点灯します。',
+  'quickPreset.power.name': 'パワー',
+  'quickPreset.power.description': '電池2本を使えるライト向け。1本なら 180 mW / 3 W / 17 W。2本なら4番目のモードがターボ（30 W）になります。最後に使ったモードから点灯します。',
 
   // Vendor presets (src/data/presets.js). Names are the vendors' own program names.
   'vendorPreset.fl33-v4-factory.name': 'FL33 v4 Factory Prog',

@@ -63,6 +63,12 @@ export default {
   'quickPreset.tactical.description': '開燈一律最亮（17 W），接著是 10 Hz 爆閃，再來是低亮（0.4 W）。',
   'quickPreset.gentle.name': '柔和',
   'quickPreset.gentle.description': '亮度不超過 3 W，不燙手也不刺眼。開燈回到上次用的模式。',
+  'quickPreset.camp.name': '露營',
+  'quickPreset.camp.description': '開燈一律紅光月光，保護夜視，接著是低亮（36 mW）、中亮（1.4 W）。最後一檔每 3 s 閃一次紅光，方便在黑暗中找到手電筒。',
+  'quickPreset.simple.name': '簡單',
+  'quickPreset.simple.description': '只有兩檔：低亮（180 mW）和最亮（17 W）。開燈一律低亮。',
+  'quickPreset.power.name': '強勁',
+  'quickPreset.power.description': '適合能裝兩顆電池的手電筒。單顆：180 mW、3 W、17 W。裝兩顆時第四檔是極亮（30 W）。開燈回到上次用的模式。',
 
   // Vendor presets (src/data/presets.js). Names are the vendors' own program names.
   'vendorPreset.fl33-v4-factory.name': 'FL33 v4 Factory Prog',

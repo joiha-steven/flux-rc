@@ -8,14 +8,15 @@ import { t } from '../ui/i18n.js';
 const level = (n) => ({ type: 'level', level: n });
 
 /**
- * Build a config from the defaults with only the single-cell modes and memory changed.
- * The dual-cell group stays off, so a two-cell light mirrors the same modes.
+ * Build a config from the defaults with only the modes and memory changed. Without `dualModes`
+ * the dual-cell group stays off, so a two-cell light mirrors the single-cell modes.
  */
-function quickConfig(modes, memory) {
+function quickConfig(modes, memory, dualModes = null) {
   const config = defaultConfig();
   config.single.enabled = true;
   config.single.modes = modes;
-  config.dual.enabled = false;
+  config.dual.enabled = dualModes !== null;
+  if (dualModes) { config.dual.cells = 'li-ion'; config.dual.modes = dualModes; }
   config.memory = memory;
   return config;
 }
@@ -39,5 +40,21 @@ export const QUICK_PRESETS = [
   {
     id: 'gentle',
     config: quickConfig([level(6), level(12), level(17), level(21)], 'hybrid'),
+  },
+  {
+    // Always starts on red moonlight to keep night vision; slot 4 is a slow red locator blink.
+    id: 'camp',
+    config: quickConfig([{ type: 'moonlight' }, level(10), level(19),
+      { type: 'signal', color: 'red', double: false, onMs: 64, offMs: 3000 }], 'none'),
+  },
+  {
+    id: 'simple',
+    config: quickConfig([level(14), level(28), null, null], 'none'),
+  },
+  {
+    // The only quick preset with its own two-cell modes, for lights that take two cells.
+    id: 'power',
+    config: quickConfig([level(14), level(21), level(28), null], 'hybrid',
+      [level(14), level(21), level(28), { type: 'afterburning' }]),
   },
 ].map(withText);

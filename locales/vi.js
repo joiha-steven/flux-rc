@@ -63,6 +63,12 @@ export default {
   'quickPreset.tactical.description': 'Luôn bật ở max (17 W), kế đó strobe 10 Hz, rồi mức thấp (0.4 W).',
   'quickPreset.gentle.name': 'Dịu',
   'quickPreset.gentle.description': 'Không bao giờ sáng quá 3 W, nên đèn mát và đỡ chói mắt. Bật lên là vào mode lần trước.',
+  'quickPreset.camp.name': 'Cắm trại',
+  'quickPreset.camp.description': 'Luôn bật ở Moonlight đỏ để mắt vẫn quen bóng tối, kế đó mức thấp (36 mW) rồi vừa (1.4 W). Mode cuối chớp đỏ mỗi 3 s, để tìm đèn trong bóng tối.',
+  'quickPreset.simple.name': 'Đơn giản',
+  'quickPreset.simple.description': 'Chỉ hai mode: thấp (180 mW) và max (17 W). Luôn bật ở mức thấp.',
+  'quickPreset.power.name': 'Mạnh',
+  'quickPreset.power.description': 'Cho đèn lắp được 2 pin. 1 pin: 180 mW, 3 W, 17 W. Lắp 2 pin thì có thêm Turbo (30 W) làm mode thứ tư. Bật lên là vào mode lần trước.',
 
   // Vendor presets (src/data/presets.js). Names are the vendors' own program names.
   'vendorPreset.fl33-v4-factory.name': 'FL33 v4 Factory Prog',

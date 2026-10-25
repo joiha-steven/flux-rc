@@ -63,6 +63,12 @@ export default {
   'quickPreset.tactical.description': '항상 최대(17 W)로 켜지고, 다음은 10 Hz 스트로브, 그다음은 약(0.4 W)이에요.',
   'quickPreset.gentle.name': '은은하게',
   'quickPreset.gentle.description': '3 W 넘게 밝아지지 않아서 뜨거워지지 않고 눈도 편해요. 마지막에 쓴 모드로 켜져요.',
+  'quickPreset.camp.name': '캠핑',
+  'quickPreset.camp.description': '항상 빨간 문라이트로 켜져서 야간 시력을 지켜 줘요. 다음은 약(36 mW), 그다음은 중(1.4 W)이에요. 마지막 모드는 3 s마다 빨갛게 깜빡여서 어둠 속에서도 라이트를 찾을 수 있어요.',
+  'quickPreset.simple.name': '심플',
+  'quickPreset.simple.description': '약(180 mW)과 최대(17 W), 두 모드뿐이에요. 항상 약으로 켜져요.',
+  'quickPreset.power.name': '파워',
+  'quickPreset.power.description': '2셀을 쓸 수 있는 라이트용이에요. 1셀: 180 mW, 3 W, 17 W. 2셀이면 네 번째 모드로 터보(30 W)가 추가돼요. 마지막에 쓴 모드로 켜져요.',
 
   // Vendor presets (src/data/presets.js). Names are the vendors' own program names.
   'vendorPreset.fl33-v4-factory.name': 'FL33 v4 Factory Prog',

@@ -64,6 +64,12 @@ export default {
   'quickPreset.tactical.description': 'Startet immer auf Max (17 W), dann 10-Hz-Strobe, dann niedrig (0.4 W).',
   'quickPreset.gentle.name': 'Sanft',
   'quickPreset.gentle.description': 'Nie heller als 3 W: bleibt kühl und schont die Augen. Startet im zuletzt benutzten Modus.',
+  'quickPreset.camp.name': 'Camping',
+  'quickPreset.camp.description': 'Startet immer auf rotem Moonlight, damit die Nachtsicht erhalten bleibt, dann niedrig (36 mW) und Medium (1.4 W). Der letzte Modus blinkt alle 3 s rot, damit man die Lampe im Dunkeln findet.',
+  'quickPreset.simple.name': 'Einfach',
+  'quickPreset.simple.description': 'Nur zwei Modi: niedrig (180 mW) und Max (17 W). Startet immer auf niedrig.',
+  'quickPreset.power.name': 'Stark',
+  'quickPreset.power.description': 'Für Lampen, die 2 Zellen aufnehmen. 1 Zelle: 180 mW, 3 W, 17 W. Mit 2 Zellen kommt Afterburning (30 W) als vierter Modus dazu. Startet im zuletzt benutzten Modus.',
 
   // Vendor presets (src/data/presets.js). Names are the vendors' own program names.
   'vendorPreset.fl33-v4-factory.name': 'FL33 v4 Factory Prog',

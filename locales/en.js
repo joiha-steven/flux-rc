@@ -64,6 +64,12 @@ export default {
   'quickPreset.tactical.description': 'Always starts at max (17 W), then 10 Hz strobe, then low (0.4 W).',
   'quickPreset.gentle.name': 'Gentle',
   'quickPreset.gentle.description': 'Never brighter than 3 W, so it stays cool and easy on the eyes. Starts in the last mode used.',
+  'quickPreset.camp.name': 'Camp',
+  'quickPreset.camp.description': 'Always starts on red moonlight to keep your night vision, then low (36 mW) and medium (1.4 W). The last mode is a red blink every 3 s, so you can find the light in the dark.',
+  'quickPreset.simple.name': 'Simple',
+  'quickPreset.simple.description': 'Just two modes: low (180 mW) and max (17 W). Always starts on low.',
+  'quickPreset.power.name': 'Power',
+  'quickPreset.power.description': 'For lights that take two cells. One cell: 180 mW, 3 W, 17 W. Two cells add afterburning (30 W) as the fourth mode. Starts in the last mode used.',
 
   // Vendor presets (src/data/presets.js). Names are the vendors' own program names.
   'vendorPreset.fl33-v4-factory.name': 'FL33 v4 Factory Prog',

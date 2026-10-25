@@ -24,7 +24,7 @@ It is one static web page: no account, no server code, no analytics, nothing lea
 
 - **Modes**: four modes for one 3.7 V Li-ion cell and four for two cells in series (or 2 × CR123A),
   picked from a grid that shows every level with its brightness and power.
-- **Quick presets** (Everyday, Tactical, Gentle) and the vendor presets from the original page.
+- **Quick presets** (Everyday, Tactical, Gentle, Camp, Simple, Power) and the vendor presets from the original page.
 - **Behaviour and advanced settings**: memory, Li-ion protection, battery stretch, bounce sensor,
   and the vendor safety settings (thermal limit, output limits, PIN, switch timeout), which default
   to "keep what the light has".

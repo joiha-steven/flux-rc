@@ -1,4 +1,4 @@
-// Quick start: three pill buttons. One tap loads one (with Undo); the matching one is filled amber.
+// Quick start: pill buttons, one per quick preset. One tap loads one (with Undo); the matching one is filled amber.
 import { h, mountSection } from '../dom.js';
 import { QUICK_PRESETS } from '../../data/quick-presets.js';
 import { normalizeConfig } from '../../core/index.js';
