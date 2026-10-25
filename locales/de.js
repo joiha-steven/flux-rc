@@ -2,8 +2,8 @@
 // Decimals keep the dot ("0.4 s") on purpose: numbers arrive from code and protocol tables that way.
 export default {
   // <head> and the static page (index.html, filled by applyStatic)
-  'meta.title': 'flux-rc — optischer NXS-R1-Programmer',
-  'meta.description': 'Wähl Modi und Optionen, halt die Taschenlampe an den Bildschirm, und das blinkende Quadrat programmiert sie.',
+  'meta.title': 'flux-rc — optischer Programmer für Lux-RC NXS R1',
+  'meta.description': 'Kostenloser Open-Source-Programmer für Lux-RC-LED-Module 371/372 (NXS R1). Wähl Modi und Optionen, halt die Taschenlampe an den Bildschirm, und das blinkende Quadrat programmiert sie.',
   'topbar.tagline': 'Optischer NXS-R1-Programmer',
   'topbar.presets': 'Presets',
   'topbar.saved': 'Gespeichert',

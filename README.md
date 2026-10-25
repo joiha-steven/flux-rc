@@ -76,6 +76,7 @@ revalidates, code caches for 10 minutes, images and fonts for a week). The old G
 | `docs/design.md` | UI layout and behaviour |
 | `docs/screenshots/` | Images for this README (not deployed) |
 | `wrangler.jsonc`, `.assetsignore`, `_headers` | Cloudflare deploy settings |
+| `robots.txt`, `sitemap.xml`, `assets/og.jpg` | For search engines and link previews |
 
 ## How it works
 

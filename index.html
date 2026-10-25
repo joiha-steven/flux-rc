@@ -17,8 +17,25 @@
     try { var l = localStorage.getItem('flux-rc:lang'); if (/^(vi|de|ja|zh-Hans)$/.test(l)) { var p = document.createElement('link'); p.rel = 'modulepreload'; p.href = 'locales/' + l + '.js'; document.head.appendChild(p); } } catch (e) {}
   </script>
   <!-- Text marked data-i18n / data-i18n-attr is English as the no-JS fallback; src/ui/i18n.js applyStatic() fills it from locales/. test/i18n.test.js keeps it equal to locales/en.js. -->
-  <title data-i18n="meta.title">flux-rc — NXS R1 optical programmer</title>
-  <meta name="description" data-i18n-attr="content:meta.description" content="Pick modes and options, hold the flashlight against the screen, and the flashing square programs it.">
+  <title data-i18n="meta.title">flux-rc — Lux-RC NXS R1 optical programmer (fan-made)</title>
+  <meta name="description" data-i18n-attr="content:meta.description" content="Free, open-source programmer for Lux-RC 371/372 light engines (NXS R1). Pick modes and options, hold the flashlight against the screen, and the flashing square programs it.">
+  <!-- Link previews (Facebook, chat apps) and search engines. English only: crawlers see the default page. -->
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://flux-rc.stevensdesk.com/">
+  <meta property="og:title" content="flux-rc — Lux-RC NXS R1 optical programmer (fan-made)">
+  <meta property="og:description" content="Free, open-source programmer for Lux-RC 371/372 light engines (NXS R1). Pick modes and options, hold the flashlight against the screen, and the flashing square programs it.">
+  <meta property="og:image" content="https://flux-rc.stevensdesk.com/assets/og.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta name="twitter:card" content="summary_large_image">
+  <script type="application/ld+json">
+  {"@context": "https://schema.org", "@type": "WebApplication", "name": "flux-rc", "url": "https://flux-rc.stevensdesk.com/",
+   "description": "Free, open-source programmer for Lux-RC 371/372 light engines (NXS R1). Pick modes and options, hold the flashlight against the screen, and the flashing square programs it.",
+   "applicationCategory": "UtilitiesApplication", "operatingSystem": "Any (web browser)", "isAccessibleForFree": true,
+   "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"},
+   "inLanguage": ["en", "vi", "de", "ja", "zh-Hans"],
+   "codeRepository": "https://github.com/joiha-steven/flux-rc"}
+  </script>
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Crect width='16' height='16' rx='3' fill='%2320211f'/%3E%3Crect x='4' y='4' width='8' height='8' fill='%23eba43b'/%3E%3C/svg%3E">
   <link rel="stylesheet" href="styles/fonts.css">
   <link rel="stylesheet" href="styles/tokens.css">

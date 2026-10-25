@@ -1,8 +1,8 @@
 // Vietnamese (tiếng Việt), written in everyday flashlight-hobby speech. Keys match en.js; see locales/README.md.
 export default {
   // <head> and the static page (index.html, filled by applyStatic)
-  'meta.title': 'flux-rc — nạp mode cho NXS R1 bằng ánh sáng',
-  'meta.description': 'Chọn mode và tuỳ chọn, áp đèn vào màn hình, ô vuông nhấp nháy sẽ nạp chương trình cho đèn.',
+  'meta.title': 'flux-rc — nạp mode cho Lux-RC NXS R1 bằng ánh sáng',
+  'meta.description': 'Công cụ miễn phí, mã nguồn mở để nạp mode cho đèn dùng module Lux-RC 371/372 (NXS R1). Chọn mode và tuỳ chọn, áp đèn vào màn hình, ô vuông nhấp nháy sẽ nạp chương trình cho đèn.',
   'topbar.tagline': 'Nạp mode cho NXS R1 bằng ánh sáng',
   'topbar.presets': 'Preset',
   'topbar.saved': 'Đã lưu',

@@ -2,8 +2,8 @@
 // Keys are grouped by area; {name} is a placeholder filled in by the code. See locales/README.md.
 export default {
   // <head> and the static page (index.html, filled by applyStatic)
-  'meta.title': 'flux-rc — NXS R1 optical programmer',
-  'meta.description': 'Pick modes and options, hold the flashlight against the screen, and the flashing square programs it.',
+  'meta.title': 'flux-rc — Lux-RC NXS R1 optical programmer (fan-made)',
+  'meta.description': 'Free, open-source programmer for Lux-RC 371/372 light engines (NXS R1). Pick modes and options, hold the flashlight against the screen, and the flashing square programs it.',
   'topbar.tagline': 'NXS R1 optical programmer',
   'topbar.presets': 'Presets',
   'topbar.saved': 'Saved',

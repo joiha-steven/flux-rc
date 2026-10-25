@@ -1,8 +1,8 @@
 // Japanese. Translates every key of en.js (the source of truth); see locales/README.md.
 export default {
   // <head> and the static page (index.html, filled by applyStatic)
-  'meta.title': 'flux-rc — NXS R1 光学式プログラマー',
-  'meta.description': 'モードとオプションを選び、ライトを画面に当てると、点滅する四角がライトにプログラムを書き込みます。',
+  'meta.title': 'flux-rc — Lux-RC NXS R1 光学式プログラマー',
+  'meta.description': 'Lux-RC 371/372 ライトエンジン（NXS R1）用の無料・オープンソースのプログラマー。モードとオプションを選び、ライトを画面に当てると、点滅する四角がライトにプログラムを書き込みます。',
   'topbar.tagline': 'NXS R1 光学式プログラマー',
   'topbar.presets': 'プリセット',
   'topbar.saved': '保存済み',

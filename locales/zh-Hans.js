@@ -1,8 +1,8 @@
 // Simplified Chinese (mainland usage). Keys and placeholders match en.js; see locales/README.md.
 export default {
   // <head> and the static page (index.html, filled by applyStatic)
-  'meta.title': 'flux-rc — NXS R1 光学编程器',
-  'meta.description': '选好模式和选项，把手电贴在屏幕上，闪烁的方块就会给手电编程。',
+  'meta.title': 'flux-rc — Lux-RC NXS R1 光学编程器',
+  'meta.description': '免费开源的 Lux-RC 371/372 灯芯（NXS R1）编程工具。选好模式和选项，把手电贴在屏幕上，闪烁的方块就会给手电编程。',
   'topbar.tagline': 'NXS R1 光学编程器',
   'topbar.presets': '预设',
   'topbar.saved': '已保存',
