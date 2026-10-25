@@ -14,9 +14,11 @@ It is one static web page: no account, no server code, no analytics, nothing lea
 
 ![flux-rc on desktop and phone](docs/screenshots/1-hero.jpg)
 
-| PIN guide | Mode picker | Languages |
-|---|---|---|
-| ![The PIN guide: setup, a beep, the hold](docs/screenshots/2-pin.jpg) | ![The mode picker with every level and its power](docs/screenshots/3-picker.jpg) | ![The page in Vietnamese, German, Japanese and Chinese](docs/screenshots/4-languages.jpg) |
+<p>
+  <img src="docs/screenshots/2-pin.jpg" width="32%" alt="The PIN guide: setup, a beep, the hold">
+  <img src="docs/screenshots/3-picker.jpg" width="32%" alt="The mode picker with every level and its power">
+  <img src="docs/screenshots/4-languages.jpg" width="32%" alt="The page in several languages">
+</p>
 
 ## What it does
 
