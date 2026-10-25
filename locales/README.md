@@ -55,7 +55,7 @@ Some text is put together from several keys, so check the pieces read well side 
 - `theme.switchToLight` / `theme.switchToDark` name what the theme button does when clicked.
 - `program.run.announceBeep` / `announceFlash` use `program.switch.*.verb` (press / release).
 - `footer.blocked` and `footer.downloadOff` end with an issue message (`issue.*`);
-  `footer.blockedUnknown` is the lower-case fallback for that slot.
+  `footer.blockedUnknown` is the fallback sentence for that slot.
 - Numbers (`{n}`, `{percent}`, `{frames}`, `{digits}`) arrive as English-style digits with a dot
   for decimals ("0.4"). There is no plural support: `packet.meta` always has many frames, and
   `program.run.progress` counts "1 of 3", so phrase them to work for any number.
