@@ -10,6 +10,8 @@ import { fileURLToPath } from 'node:url';
 
 const root = join(dirname(fileURLToPath(import.meta.url)), '..');
 const html = readFileSync(join(root, 'index.html'), 'utf8');
+// Paths in the page are root-absolute (/src/ui/app.js) so the pages in vi/, de/... work too.
+const fromRoot = (href) => href.replace(/^\//, '');
 
 /** Static imports of one module, as repo-relative paths. Dynamic import() is not followed. */
 function importsOf(file) {
@@ -33,14 +35,16 @@ function startupGraph(entry) {
 }
 
 test('index.html preloads exactly the modules imported at startup', () => {
-  const entries = [...html.matchAll(/<script[^>]*type="module"[^>]*src="([^"]+)"/g)].map((m) => m[1]);
+  const entries = [...html.matchAll(/<script[^>]*type="module"[^>]*src="([^"]+)"/g)].map((m) => fromRoot(m[1]));
   assert.ok(entries.length > 0, 'index.html has a module entry script');
 
   const expected = new Set(entries.flatMap((e) => [...startupGraph(e)]));
   const preloaded = new Set([...html.matchAll(/<link[^>]*rel="modulepreload"[^>]*href="([^"]+)"/g)].map((m) => m[1]));
+  for (const href of preloaded) assert.ok(href.startsWith('/'), `root-absolute: ${href}`);
+  const files = new Set([...preloaded].map(fromRoot));
 
-  for (const href of preloaded) assert.ok(existsSync(join(root, href)), `preloaded file exists: ${href}`);
-  assert.deepEqual([...preloaded].sort(), [...expected].sort());
+  for (const href of files) assert.ok(existsSync(join(root, href)), `preloaded file exists: ${href}`);
+  assert.deepEqual([...files].sort(), [...expected].sort());
 });
 
 test('fonts are preloaded with the attributes browsers require', () => {
@@ -49,7 +53,7 @@ test('fonts are preloaded with the attributes browsers require', () => {
   for (const tag of fontPreloads) {
     assert.match(tag, /type="font\/woff2"/);
     assert.match(tag, /crossorigin/);
-    const href = tag.match(/href="([^"]+)"/)[1];
+    const href = fromRoot(tag.match(/href="([^"]+)"/)[1]);
     assert.ok(existsSync(join(root, href)), `font file exists: ${href}`);
   }
 });

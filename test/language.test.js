@@ -5,7 +5,7 @@ import assert from 'node:assert/strict';
 import { readFileSync, readdirSync } from 'node:fs';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { pickLanguage, LANGUAGES } from '../src/ui/i18n.js';
+import { pickLanguage, languagePath, LANGUAGES, LANG_KEY } from '../src/ui/i18n.js';
 
 const root = join(dirname(fileURLToPath(import.meta.url)), '..');
 const localeFiles = readdirSync(join(root, 'locales')).filter((f) => f.endsWith('.js')).map((f) => f.replace(/\.js$/, ''));
@@ -46,9 +46,47 @@ test('falls back to English with no usable input', () => {
   assert.equal(pickLanguage(null, ['fr', 'es-MX', 'pt-BR']), 'en');
 });
 
+test('each language has its own URL folder; English is the root', () => {
+  assert.deepEqual(LANGUAGES.map((l) => languagePath(l.code)), ['/', '/vi/', '/de/', '/ja/', '/zh/']);
+  assert.equal(languagePath('nope'), '/');
+});
+
+// The inline script at the top of index.html repeats pickLanguage(); run it against the real rule.
+function runRedirect({ pathname = '/', stored, languages, storageThrows = false, search = '', hash = '' }) {
+  const html = readFileSync(join(root, 'index.html'), 'utf8');
+  const script = html.match(/<!-- Language redirect[\s\S]*?<script>([\s\S]*?)<\/script>/)[1];
+  let target = null;
+  const location = { pathname, search, hash, replace: (url) => { target = url; } };
+  const localStorage = { getItem: (key) => {
+    assert.equal(key, LANG_KEY);
+    if (storageThrows) throw new Error('blocked');
+    return stored ?? null;
+  } };
+  new Function('location', 'localStorage', 'navigator', script)(location, localStorage, { languages });
+  return target;
+}
+
+test('the redirect on "/" sends each visitor where pickLanguage() says, and keeps ?query and #hash', () => {
+  const stores = [undefined, 'en', 'vi', 'de', 'ja', 'zh-Hans', 'fr', 'zh-Hant', 'constructor', ''];
+  const browsers = [[], ['en-US'], ['vi-VN', 'en'], ['de-AT'], ['ja-JP'], ['zh-CN'], ['zh-Hans-CN'], ['zh-TW'], ['zh-HK', 'ja'], ['fr', 'de'], ['fr-FR', 'es']];
+  for (const stored of stores) for (const languages of browsers) {
+    const code = pickLanguage(stored ?? null, languages);
+    const expected = code === 'en' ? null : languagePath(code);
+    assert.equal(runRedirect({ stored, languages }), expected, `${stored} ${languages}`);
+  }
+  assert.equal(runRedirect({ languages: ['vi'], search: '?a=1', hash: '#c=abc' }), '/vi/?a=1#c=abc');
+  assert.equal(runRedirect({ stored: 'en', languages: ['vi'], hash: '#c=abc' }), null);
+});
+
+test('the redirect survives a blocked localStorage and does nothing off the root', () => {
+  assert.equal(runRedirect({ storageThrows: true, languages: ['ja'] }), '/ja/');
+  assert.equal(runRedirect({ storageThrows: true, languages: ['en'] }), null);
+  assert.equal(runRedirect({ pathname: '/de/', stored: 'vi', languages: ['ja'] }), null);
+});
+
 test('no locale other than en is statically imported or modulepreloaded', () => {
   const html = readFileSync(join(root, 'index.html'), 'utf8');
-  const preloaded = [...html.matchAll(/<link[^>]*rel="modulepreload"[^>]*href="locales\/([^"]+)\.js"/g)].map((m) => m[1]);
+  const preloaded = [...html.matchAll(/<link[^>]*rel="modulepreload"[^>]*href="\/locales\/([^"]+)\.js"/g)].map((m) => m[1]);
   assert.deepEqual(preloaded, ['en']);
   const sources = ['src/ui', 'src/data', 'src/core'].flatMap((dir) => readdirSync(join(root, dir), { recursive: true }).filter((f) => f.endsWith('.js')).map((f) => join(dir, f)));
   for (const file of sources) {

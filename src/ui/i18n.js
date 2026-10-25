@@ -4,19 +4,20 @@
 import en from '../../locales/en.js';
 
 export const FALLBACK = 'en';
+/** localStorage key for the language choice. The inline script at the top of index.html reads the same key. */
 export const LANG_KEY = 'flux-rc:lang';
 
 /**
  * Supported languages in menu order. `name` is the language's own name and `short` the topbar
- * button label. These are data, not UI text: each language is always shown in its own name, so
+ * button label; `path` is the language's URL folder ('' for English at /). These are data, not UI text: each language is always shown in its own name, so
  * they are deliberately not in locales/. Each code has a file locales/<code>.js.
  */
 export const LANGUAGES = [
-  { code: 'en', name: 'English', short: 'EN' },
-  { code: 'vi', name: 'Tiếng Việt', short: 'VI' },
-  { code: 'de', name: 'Deutsch', short: 'DE' },
-  { code: 'ja', name: '日本語', short: '日本語' },
-  { code: 'zh-Hans', name: '简体中文', short: '中文' },
+  { code: 'en', name: 'English', short: 'EN', path: '' },
+  { code: 'vi', name: 'Tiếng Việt', short: 'VI', path: 'vi' },
+  { code: 'de', name: 'Deutsch', short: 'DE', path: 'de' },
+  { code: 'ja', name: '日本語', short: '日本語', path: 'ja' },
+  { code: 'zh-Hans', name: '简体中文', short: '中文', path: 'zh' },
 ];
 const CODES = LANGUAGES.map((l) => l.code);
 
@@ -33,8 +34,9 @@ function matchTag(tag) {
 }
 
 /**
- * The language to use: a stored choice that is a known code, else the first of the browser's
- * languages that matches (by primary subtag), else English. Pure so it can be tested.
+ * The language "/" redirects to: a stored choice that is a known code, else the first of the
+ * browser's languages that matches (by primary subtag), else English. Pure so it can be tested;
+ * the inline script in index.html repeats this rule (test/language.test.js runs both).
  */
 export function pickLanguage(stored, navigatorLanguages = []) {
   if (CODES.includes(stored)) return stored;
@@ -45,16 +47,16 @@ export function pickLanguage(stored, navigatorLanguages = []) {
   return FALLBACK;
 }
 
-function readStoredLanguage() {
-  try {
-    return localStorage.getItem(LANG_KEY);
-  } catch (error) {
-    console.warn('flux-rc: could not read the language choice', error);
-    return null;
-  }
+/** The root-absolute URL path of a language's page: '/' for English, '/vi/' for Vietnamese. */
+export function languagePath(code) {
+  const language = LANGUAGES.find((l) => l.code === code) ?? LANGUAGES[0];
+  return language.path ? `/${language.path}/` : '/';
 }
 
-/** Saves the choice and reloads, so the whole page (including the static HTML) is rebuilt in it. */
+/**
+ * Saves the choice and goes to that language's page, keeping the query and the #hash (share links).
+ * English is stored too, so the root page stays English for someone who picked it.
+ */
 export function setLanguage(code) {
   if (!CODES.includes(code)) return;
   try {
@@ -62,12 +64,15 @@ export function setLanguage(code) {
   } catch (error) {
     console.warn('flux-rc: could not save the language choice', error);
   }
-  location.reload();
+  location.assign(languagePath(code) + location.search + location.hash);
 }
 
+// The page decides its language: each language has its own URL and its static HTML carries <html lang>.
+// Storage and the browser's languages only matter on "/", where the inline script in index.html redirects.
 // Only the chosen locale is downloaded; English is always bundled as the fallback.
-// Outside a browser (the tests) there is no stored choice or navigator language, so it stays English.
-let current = typeof document === 'undefined' ? FALLBACK : pickLanguage(readStoredLanguage(), navigator.languages);
+// Outside a browser (the tests) there is no page, so it stays English.
+const pageLang = typeof document === 'undefined' ? null : document.documentElement.lang;
+let current = CODES.includes(pageLang) ? pageLang : FALLBACK;
 /** Locales loaded so far (code -> strings). */
 export const LOCALES = { en };
 if (current !== FALLBACK) {

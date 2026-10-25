@@ -10,8 +10,9 @@ export function encodeShare(config) {
   return btoa(binary).replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '');
 }
 
+// Always the root page, so whoever opens the link gets their own browser's language, not the sender's.
 export function shareUrl(config) {
-  return `${location.origin}${location.pathname}${PREFIX}${encodeShare(config)}`;
+  return `${location.origin}/${PREFIX}${encodeShare(config)}`;
 }
 
 export function hasShare(hash) {

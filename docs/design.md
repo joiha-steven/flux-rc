@@ -89,8 +89,9 @@ Logic: `src/ui/theme.js`.
 
 A key left of the theme button (`#btn-lang`) shows the current language's short label (EN, VI, DE,
 日本語, 中文) and opens a dropdown menu (`role="menu"`, items `menuitemradio`, each in its own name and
-with its own `lang`). Choosing one saves `flux-rc:lang` and reloads the page; the autosaved config
-survives the reload. Keyboard: Enter, Space or ArrowDown opens; arrows, Home, End move; Escape closes
+with its own `lang`). Each language has its own page (`/`, `/vi/`, `/de/`, `/ja/`, `/zh/`). Choosing one saves
+`flux-rc:lang` and goes to that page, keeping the query and `#hash`; the autosaved config survives.
+On `/` only, an inline script in `index.html` sends visitors to their stored or browser language. Keyboard: Enter, Space or ArrowDown opens; arrows, Home, End move; Escape closes
 and returns focus; Tab and outside clicks close. Below 400 px the Presets and Saved keys shrink to 44 px
 icons so the wordmark and this key fit. Logic: `src/ui/language-menu.js`, `src/ui/i18n.js`. Ja and zh-Hans
 use system CJK fonts after Plum Sans (`styles/tokens.css`).

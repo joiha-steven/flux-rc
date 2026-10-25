@@ -1,5 +1,5 @@
 // Language switcher in the topbar: a button showing the current language's short label, and a menu
-// of languages (each in its own name) that saves the choice and reloads. Logic for which languages
+// of languages (each in its own name) that saves the choice and goes to that language's URL. Logic for which languages
 // exist and how one is picked lives in i18n.js.
 import { h } from './dom.js';
 import { t, locale, LANGUAGES, setLanguage } from './i18n.js';

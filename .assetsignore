@@ -10,3 +10,4 @@ wrangler.jsonc
 .gitignore
 .wrangler
 docs/screenshots
+scripts

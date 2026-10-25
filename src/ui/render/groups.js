@@ -76,7 +76,7 @@ function group(store, c, key) {
   const data = c[key];
   const other = key === 'single' ? c.dual : c.single;
   const head = h('div', { class: 'group-head' },
-    h('img', { class: 'battery', src: `assets/${g.img(c)}.webp`, alt: '', width: 80, height: 24 }),
+    h('img', { class: 'battery', src: `/assets/${g.img(c)}.webp`, alt: '', width: 80, height: 24 }),
     h('div', { class: 'group-title' }, h('h2', {}, t(`groups.${key}.title`)), h('p', { class: 'sub' }, g.sub(c), g.sizes?.(c) && h('span', { class: 'sub-sizes' }, g.sizes(c)))),
     h('div', { class: 'group-controls' },
       key === 'dual' && data.enabled && segmented({

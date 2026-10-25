@@ -8,16 +8,27 @@ truth; other languages translate its keys.
 1. Copy `en.js` to `<code>.js`, using the language code (`vi.js`, `de.js`, `zh-Hans.js`).
 2. Translate the values. Leave the keys as they are. A key you leave out falls back to English, so
    you can translate in parts.
-3. In `src/ui/i18n.js`, add the language to `LANGUAGES` (code, its own name, and the short label for
-   the topbar button). If browsers use other tags for it, extend `matchTag`. Only the chosen language
-   is downloaded (`import()`), so nothing is added to `index.html` preloads; for a stored choice, also
-   add the code to the pattern in the inline script near the top of `index.html`.
+3. In `src/ui/i18n.js`, add the language to `LANGUAGES` (code, its own name, the short label for
+   the topbar button, and `path`, its URL folder). If browsers use other tags for it, extend `matchTag`.
+   Only the chosen language is downloaded (`import()`).
+   Each language has its own page, so also:
+   - add the code and folder to `paths` (and the tag matching, if needed) in the "Language redirect"
+     inline script near the top of `index.html`; `test/language.test.js` checks it against `pickLanguage`;
+   - add a `hreflang` `<link rel="alternate">` for it to the set in `index.html`;
+   - add a `<url>` with the full set of `xhtml:link` alternates to `sitemap.xml`;
+   - run `npm run pages` to generate `<path>/index.html` (`scripts/build-pages.mjs` reads `LANGUAGES`,
+     so the generator needs no edit) and commit it.
 4. For a script the bundled fonts do not cover, add a `html:lang(<code>)` font stack in
    `styles/tokens.css` (see `ja` and `zh-Hans`). Vietnamese diacritics are in the bundled Plum fonts.
 5. `npm test` checks that `LANGUAGES` and the files in `locales/` match.
 
-The language button in the topbar saves the choice in `localStorage` (`flux-rc:lang`) and reloads
-the page. With no saved choice the first of the browser's languages that matches is used.
+Each language has its own URL (`/vi/`, `/de/`, `/ja/`, `/zh/`; English is `/`). The page's `<html lang>`
+decides the language shown. The language button in the topbar saves the choice in `localStorage`
+(`flux-rc:lang`) and goes to that URL. Only on `/`, a script in `index.html` redirects to the saved
+choice, else to the first of the browser's languages that matches.
+
+After editing `en.js`, another locale or `index.html`, run `npm run pages`: the pages in `vi/`, `de/`,
+`ja/` and `zh/` are generated from them and committed, and `npm test` fails while they are stale.
 
 ## Keys
 
@@ -59,7 +70,7 @@ them unless a translation is clearly better.
 
 ## Not in this folder
 
-`index.html` keeps the English text as the fallback when JavaScript is off. The `<noscript>`
+`index.html` holds the English text; the generator copies each language's text into its own page, so it shows without JavaScript. The `<noscript>`
 message and the "couldn't load" message (keys `boot.*`) cannot be translated, because they run
 before any module loads.
 

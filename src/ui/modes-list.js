@@ -29,7 +29,7 @@ export function entryMode(index, previous) {
 }
 
 export function beam(mode) {
-  const base = 'assets/';
+  const base = '/assets/';
   if (!mode) return null;
   if (mode.type === 'level') {
     const band = BANDS.find((b) => mode.level >= b.from && mode.level <= b.to);
