@@ -17,7 +17,7 @@ export default {
 
   // About section. {link} is the link text from the matching .link key.
   'about.title': 'このページについて',
-  'about.p1': 'flux-rc は {link} のファンが作ったページです。Lux-RC とは提携・公認・関係のいずれもなく、Lux-RC の製品や権利を所有しているわけでもありません。Lux-RC と NXS の名称はそれぞれの権利者に帰属します。',
+  'about.p1': 'flux-rc は {link} のファンが作ったページです。Lux-RC とは提携・公認・関係のいずれもなく、Lux-RC に帰属するものについて一切の所有権を主張しません。Lux-RC と NXS の名称はそれぞれの権利者に帰属します。',
   'about.p1.link': 'Lux-RC',
   'about.p2': '画面や設定の位置を迷わないよう、レイアウトの一部は意図的に{link}に合わせています。',
   'about.p2.link': '純正の Lux-RC プログラマー',
@@ -49,7 +49,7 @@ export default {
   'lang.current': '言語：{name}',
 
   // Toasts
-  'toast.badLink': 'このリンクは読み取れませんでした',
+  'toast.badLink': 'このリンクは読み取れませんでした。',
   'toast.sharedLoaded': '共有された設定を読み込みました。',
   'toast.loadedName': '「{name}」を読み込みました。',
   'toast.presetLoaded': 'プリセット「{name}」を読み込みました。',
@@ -60,7 +60,7 @@ export default {
   'quickPreset.everyday.name': '普段使い',
   'quickPreset.everyday.description': 'Low / Mid / High / Max の4段階（0.12 W〜17 W）。最後に使ったモードから点灯します。',
   'quickPreset.tactical.name': 'タクティカル',
-  'quickPreset.tactical.description': '常に Max（17 W）から点灯。次が10 Hz ストロボ、その次が0.4 W の低出力です。',
+  'quickPreset.tactical.description': '常に Max（17 W）から点灯。次が10 Hz ストロボ、その次が Low（0.4 W）です。',
   'quickPreset.gentle.name': 'やさしめ',
   'quickPreset.gentle.description': '最大でも3 W。発熱が少なく、目にもやさしい設定です。最後に使ったモードから点灯します。',
 
@@ -68,11 +68,11 @@ export default {
   'vendorPreset.fl33-v4-factory.name': 'FL33 v4 Factory Prog',
   'vendorPreset.fl33-v4-factory.description': '1セル：レベル 1、6、11、16。2セル：レベル 21、26、ターボ。メモリー機能は標準、保護とランタイム延長はオン、詳細設定は変更しません。',
   'vendorPreset.minion-factory.name': 'MINION Factory Prog',
-  'vendorPreset.minion-factory.description': '赤色月光、レベル 6 と 18、そして両セル構成ともターボ。さらに切替受付時間 1.5 s、温度上限50 °C、出力制限は両方レベル 28、振動センサー、PIN 1-1-2 を設定します。',
+  'vendorPreset.minion-factory.description': '赤色月光、レベル 6 と 18、そして両セル構成ともターボ。さらに切替受付時間を 1.5 s、温度上限を 50 °C、出力制限を両方レベル 28 にし、振動センサーと PIN 1-1-2 も設定します。',
   'vendorPreset.oem-mark.name': 'OEM_Mark',
   'vendorPreset.oem-mark.description': '1セル：赤色月光、レベル 7、11、15。2セル：レベル 19、23、26、ターボ。メモリー機能はオフ、保護とランタイム延長はオン、詳細設定は変更しません。',
   'vendorPreset.oveready-factory.name': 'OVEREADY Factory Prog',
-  'vendorPreset.oveready-factory.description': '赤色月光のあと、レベル 14、21、28（1セル）または16、24、ターボ（2セル）。さらに切替受付時間 0.7 s、温度上限65 °C を設定し、振動センサーをオフにして、PIN 2-2-2 を設定します。',
+  'vendorPreset.oveready-factory.description': '赤色月光のあと、レベル 14、21、28（1セル）または16、24、ターボ（2セル）。さらに切替受付時間を 0.7 s、温度上限を 65 °C にし、振動センサーをオフにして、PIN 2-2-2 を設定します。',
   'vendorPreset.pin-112.name': 'Set programming PIN to 112',
   'vendorPreset.pin-112.description': 'プログラミング PIN を 1-1-2 に設定します。あわせてメモリー機能をオフ、保護とランタイム延長をオンにします。モードとその他の設定は変更しません。',
   'vendorPreset.thermal-50c.name': 'Temperature Limit 50C',
@@ -95,7 +95,7 @@ export default {
 
   // Saved dialog
   'saved.title': '保存済み',
-  'saved.unavailable': 'このブラウザでは保存できません（ローカルストレージがブロックされています）。ほかの機能は使えます。共有リンクを使えば、設定をリンクに残せます。',
+  'saved.unavailable': 'このブラウザでは保存できません（ローカルストレージがブロックされています）。ほかの機能は使えます。共有リンクを使えば、設定をリンクとして残せます。',
   'saved.nameLabel': '現在の設定の名前',
   'saved.saveCurrent': '現在の設定を保存',
   'saved.empty': '保存した設定はまだありません。',
@@ -158,7 +158,7 @@ export default {
   'groups.single.title': '1セル',
   'groups.single.note': '371D ライトエンジンはバッテリー電流のピークを約5 A に抑えるため、1セルの出力は通常17 W（レベル 28）までです。メーカーが変更している場合もあります。',
   'groups.single.sub': '3.7 V リチウムイオン × 1',
-  'groups.liIonSizes': '18650、18350、21700…',
+  'groups.liIonSizes': '18350、18650、21700…',
   'groups.single.use': '1セルを使う',
   'groups.single.offCopies': '未使用です。2セルのモードをそのままコピーします。',
   'groups.dual.title': '2セル直列',
@@ -229,7 +229,7 @@ export default {
 
   // Advanced (vendor safety settings)
   'advanced.careful': 'ご注意ください。',
-  'advanced.warning': '{careful}純正プログラマーでも、これらを変更できるのはメーカーだけです。値を誤ると、ライトが過熱したり、バッテリーが傷んだりするおそれがあります。理由がわかっている場合を除き、「現状のまま」にしてください。',
+  'advanced.warning': '{careful}純正プログラマーでも、これらを変更できるのはメーカーだけです。値を誤ると、ライトが過熱したり、バッテリーが傷んだりするおそれがあります。自分が何をしているか分かっている場合を除き、「現状のまま」にしてください。',
   'advanced.keep': '現状のまま',
   'advanced.set': '設定する',
   'advanced.none': '制限なし',
@@ -252,7 +252,7 @@ export default {
   'advanced.pin.title': 'プログラミング PIN',
   'advanced.pin.setting': 'プログラミング PIN の設定',
   'advanced.pin.keepHint': 'PIN は変更しません。',
-  'advanced.pin.setHint': '書き込み前に、クリックスイッチで入力する PIN です。',
+  'advanced.pin.setHint': '書き込みのたびに、その前にクリックで入力する PIN です。',
   'advanced.pin.digit': '{n}桁目',
   'advanced.pin.value': 'PIN {pin}',
 
@@ -268,8 +268,8 @@ export default {
   'footer.downloadOff': 'GIF はダウンロードできません。{reason}',
   'footer.packet': 'パケットの詳細',
   'footer.program': '書き込む',
-  'footer.blocked': '書き込めません：{reason}',
-  'footer.blockedUnknown': '問題が発生しました',
+  'footer.blocked': '書き込めません。{reason}',
+  'footer.blockedUnknown': '問題が発生しました。',
   'packet.noChange': '変更なし',
   'packet.meta': 'チェックサム {checksum} · {frames} フレーム',
 
@@ -319,8 +319,8 @@ export default {
   'program.switch.label': 'スイッチの種類',
   'program.switch.next': '次へ',
   'program.switch.mcclicky.name': 'メカニカル（McClicky）',
-  'program.switch.mcclicky.desc': 'ゴムキャップ式。1回のクリックは、素早い半押しです。',
-  'program.switch.mcclicky.rest': 'ライトは消灯。何も押さない状態です。',
+  'program.switch.mcclicky.desc': 'ゴムキャップ式。1回のクリックは全押しではなく、素早い半押しです。',
+  'program.switch.mcclicky.rest': 'ライトを消灯し、スイッチを押していない状態から始めます。',
   'program.switch.mcclicky.action': '押す',
   'program.switch.mcclicky.verb': '押して',
   'program.switch.mcclicky.final': 'スイッチを入れて、そのままにする',
@@ -338,7 +338,7 @@ export default {
   // Program step 2: get ready
   'program.ready.title': '準備',
   'program.ready.brightness': '画面の明るさを最大にします。',
-  'program.ready.dark': '暗い部屋で行ってください。日光や明るい室内灯があると、センサーが露出オーバーになることがあります。',
+  'program.ready.dark': '暗い部屋で行ってください。日光や明るい室内灯があると、センサーが信号を拾えなくなることがあります。',
   'program.ready.close': 'ライトを画面にぴったりと当てます。',
   'program.ready.button': '準備できました',
 
@@ -352,17 +352,17 @@ export default {
   'program.pin.customPlaceholder': '例：{pin}',
   'program.pin.customError': '3桁で入力してください。1桁目は1〜4、2桁目と3桁目は1〜8です（4-8-8 は使えません）。',
   'program.pin.none': '有効な PIN がまだありません',
-  'program.pin.oldPin': '詳細設定で PIN を変更した場合でも、今回の書き込みが終わるまでは、ライトは古い PIN のままです。',
+  'program.pin.oldPin': '詳細設定で PIN を変更しましたか？ここには古い PIN を入力してください。新しい PIN は今回の書き込み後に有効になります。',
   'program.pin.speed': '速度',
   'program.pin.speedNormal': '標準',
   'program.pin.speedSlow': 'ゆっくり',
   'program.pin.sound': '音',
   'program.pin.soundHint': 'ビープ音がクリックのタイミングを知らせます。iPhone ではマナーモードを解除してください。',
-  'program.pin.reverseClicky': 'リバースクリッキーで半押しができない場合は、「ゆっくり」を選び、ビープ音ごとに全押しでオン、続けてオフにします。',
+  'program.pin.reverseClicky': 'リバースクリッキー（消灯中に半押ししても何も起きない）の場合は、「ゆっくり」を選び、ビープ音ごとに全押しでオン、続けてオフにします。',
   'program.pin.start': '開始',
   'program.pin.tailcapLink': 'PIN でうまくいかない場合：テールキャップ方式を試す',
   'program.pin.interrupted': '中断されました。準備ができたらもう一度開始してください。',
-  'program.pin.slipped': 'タイミングがずれました。もう一度開始してください。',
+  'program.pin.slipped': 'ブラウザーの処理が追いつかず、タイミングがずれました。もう一度開始してください。',
 
   // Program step 3: the PIN run
   'program.run.titleBeeps': 'ビープ音に合わせる',
@@ -376,7 +376,7 @@ export default {
   'program.run.wait': '待機',
   'program.run.waitHint': 'PIN を入力しました。次は{next}。',
   'program.run.startsIn': '点滅開始まで {seconds} s',
-  'program.run.announceHold': '{cue}。点滅開始まで {seconds} s。',
+  'program.run.announceHold': '{cue}。点滅開始まで {seconds} 秒。',
 
   // Program step 3: the rhythm timeline (setup preview and run)
   'program.timeline.title': 'リズム',
@@ -387,7 +387,7 @@ export default {
 
   // Program step 3: tailcap method
   'program.tailcap.title': 'テールキャップ方式',
-  'program.tailcap.hint': 'ドライバーに電子ボタンがあり、バッテリーが接続されたままのライト向けです。',
+  'program.tailcap.hint': 'ボタンで電源が切れないライト（ドライバー上の電子スイッチ）向けです。このタイプは PIN をクリックで入力できません。',
   'program.tailcap.step1': 'テールキャップを少し緩めてバッテリーを切り離し、数秒待ちます。',
   'program.tailcap.step2': 'ボタンを押し続けます。',
   'program.tailcap.step3': 'ボタンを押したまま、テールキャップを締め直します。',
@@ -400,15 +400,15 @@ export default {
   'program.flash.alt': 'ライトに書き込む点滅する四角',
   'program.flash.announce': '{cue}。{hint}',
   'program.flash.seen': '赤色光が見えます',
-  'program.flash.tryAgain': '赤色光が見えない。やり直す',
+  'program.flash.tryAgain': '赤色光が見えない？やり直す',
   'program.flash.keepHolding': '赤色光が消えるまで、そのまま当て続けてください（10〜20 s）。',
-  'program.flash.wentOff': '消えた（完了）',
+  'program.flash.wentOff': '消えた',
   'program.flash.stillRed': 'まだ赤い',
   'program.success.title': '書き込み完了',
-  'program.success.text': '書き込みが完了しました。ライトを一度消してから点けて、モードを試してください。',
+  'program.success.text': 'ライトを一度消してから点けて、新しいモードを試してください。',
   'program.success.announce': '書き込みが完了しました。',
   'program.stillRed.title': 'まだ赤いままですか？',
-  'program.stillRed.text': 'ライトが信号を最後まで読み取れませんでした。もう一度試してください。',
+  'program.stillRed.text': 'ライトが信号を最後まで読み取れませんでした。次の点を確認してから、もう一度試してください。',
   'program.stillRed.brightness': '画面の明るさを最大にします。',
   'program.stillRed.closer': 'ライトを四角にもっと近づけて、ぴったり当てます。',
   'program.stillRed.darker': '部屋をもっと暗くします。',

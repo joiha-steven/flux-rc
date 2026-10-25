@@ -5,12 +5,12 @@
   <!-- The site moved from GitHub Pages to Cloudflare. Old github.io links (and share links with #c=) land on the new domain. -->
   <script>if (location.hostname === 'joiha-steven.github.io') location.replace('https://flux-rc.stevensdesk.com' + (location.pathname.replace(/^\/flux-rc(?=\/|$)/, '') || '/') + location.search + location.hash);</script>
   <!-- Language redirect (only "/"; generated pages drop this block). A stored choice other than English, or else the first browser language
-       that is vi, de, ja or Simplified Chinese, goes to that language's page, keeping ?query and #hash (share links). Same rule as pickLanguage()
+       that is vi, de, ja, ru, ko, es or Chinese (Simplified or Traditional), goes to that language's page, keeping ?query and #hash (share links). Same rule as pickLanguage()
        in src/ui/i18n.js; test/language.test.js runs this script against it. It sits before the stylesheets so English never flashes. -->
   <script>
     (function () {
       if (location.pathname !== '/') return;
-      var paths = { vi: 'vi', de: 'de', ja: 'ja', 'zh-Hans': 'zh' };
+      var paths = { vi: 'vi', de: 'de', ja: 'ja', 'zh-Hans': 'zh', 'zh-Hant': 'zh-hant', ru: 'ru', ko: 'ko', es: 'es' };
       var stored = null;
       try { stored = localStorage.getItem('flux-rc:lang'); } catch (e) {}
       var code = stored === 'en' || Object.prototype.hasOwnProperty.call(paths, stored) ? stored : null;
@@ -18,7 +18,7 @@
       for (var i = 0; !code && i < tags.length; i++) {
         var parts = String(tags[i]).toLowerCase().split('-');
         if (parts[0] === 'zh') {
-          if (parts.indexOf('hant') < 0 && ['tw', 'hk', 'mo'].indexOf(parts[1]) < 0) code = 'zh-Hans';
+          code = parts.indexOf('hant') >= 0 || (parts.indexOf('hans') < 0 && ['tw', 'hk', 'mo'].indexOf(parts[1]) >= 0) ? 'zh-Hant' : 'zh-Hans';
         } else if (parts[0] === 'en' || Object.prototype.hasOwnProperty.call(paths, parts[0])) code = parts[0];
       }
       if (code && code !== 'en') location.replace('/' + paths[code] + '/' + location.search + location.hash);
@@ -30,6 +30,10 @@
   <link rel="alternate" hreflang="de" href="https://flux-rc.stevensdesk.com/de/">
   <link rel="alternate" hreflang="ja" href="https://flux-rc.stevensdesk.com/ja/">
   <link rel="alternate" hreflang="zh-Hans" href="https://flux-rc.stevensdesk.com/zh/">
+  <link rel="alternate" hreflang="zh-Hant" href="https://flux-rc.stevensdesk.com/zh-hant/">
+  <link rel="alternate" hreflang="ru" href="https://flux-rc.stevensdesk.com/ru/">
+  <link rel="alternate" hreflang="ko" href="https://flux-rc.stevensdesk.com/ko/">
+  <link rel="alternate" hreflang="es" href="https://flux-rc.stevensdesk.com/es/">
   <link rel="alternate" hreflang="x-default" href="https://flux-rc.stevensdesk.com/">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="color-scheme" content="dark light">
@@ -38,7 +42,7 @@
   <script>
     try { var t = localStorage.getItem('flux-rc:theme'); if (t !== 'light' && t !== 'dark') t = matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark'; if (t === 'light' && CSS.supports('color', 'light-dark(red, red)')) document.documentElement.setAttribute('data-theme', t); } catch (e) {}
   </script>
-  <!-- Text marked data-i18n / data-i18n-attr is English here. scripts/build-pages.mjs fills the same text from locales/ into vi/, de/, ja/ and zh/ (so crawlers and no-JS visitors get each language); src/ui/i18n.js applyStatic() does it again in the browser. test/i18n.test.js keeps this file equal to locales/en.js. -->
+  <!-- Text marked data-i18n / data-i18n-attr is English here. scripts/build-pages.mjs fills the same text from locales/ into vi/, de/, ja/, zh/, zh-hant/, ru/, ko/ and es/ (so crawlers and no-JS visitors get each language); src/ui/i18n.js applyStatic() does it again in the browser. test/i18n.test.js keeps this file equal to locales/en.js. -->
   <title data-i18n="meta.title">flux-rc — Lux-RC NXS R1 optical programmer (fan-made)</title>
   <meta name="description" data-i18n-attr="content:meta.description" content="Free, open-source programmer for Lux-RC 371/372 light engines (NXS R1). Pick modes and options, hold the flashlight against the screen, and the flashing square programs it.">
   <!-- Link previews (Facebook, chat apps) and search engines. The language pages get their own title, description and URL from the generator. -->

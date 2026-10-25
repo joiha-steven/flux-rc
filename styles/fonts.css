@@ -1,8 +1,8 @@
 /* Plum Sans (from Inter) and Plum Mono (from JetBrains Mono), SIL Open Font License 1.1.
-   Built in the plum-fonts repo; only the Latin and Vietnamese subsets are shipped. Japanese and Chinese
+   Built in the plum-fonts repo; only the Latin, Vietnamese and Cyrillic subsets are shipped. Japanese, Chinese and Korean
    use the system fonts named in tokens.css; Plum Sans still draws their Latin letters and digits.
    Unicode ranges are copied from the plum-fonts CSS. Only the Latin files are preloaded (index.html);
-   the Vietnamese files download when a page contains those characters. */
+   the Vietnamese and Cyrillic files download when a page contains those characters. */
 
 @font-face {
   font-family: "Plum Sans";
@@ -38,4 +38,22 @@
   font-display: swap;
   src: url("../assets/fonts/plum-mono-latin.woff2") format("woff2");
   unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2190-2195, U+21B5, U+21E7, U+2212, U+2215, U+2303, U+2318, U+2325, U+232B, U+25CB, U+25CF, U+2713, U+2717, U+FEFF, U+FFFD, U+2248, U+2260, U+2264-2265, U+221E, U+21D0-21D4, U+22EF, U+2715, U+2500-257F;
+}
+
+@font-face {
+  font-family: "Plum Sans";
+  font-style: normal;
+  font-weight: 100 900;
+  font-display: swap;
+  src: url("../assets/fonts/plum-sans-cyrillic.woff2") format("woff2");
+  unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
+}
+
+@font-face {
+  font-family: "Plum Mono";
+  font-style: normal;
+  font-weight: 400 700;
+  font-display: swap;
+  src: url("../assets/fonts/plum-mono-cyrillic.woff2") format("woff2");
+  unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
 }

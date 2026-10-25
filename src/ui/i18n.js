@@ -17,7 +17,11 @@ export const LANGUAGES = [
   { code: 'vi', name: 'Tiếng Việt', short: 'VI', path: 'vi' },
   { code: 'de', name: 'Deutsch', short: 'DE', path: 'de' },
   { code: 'ja', name: '日本語', short: '日本語', path: 'ja' },
-  { code: 'zh-Hans', name: '简体中文', short: '中文', path: 'zh' },
+  { code: 'zh-Hans', name: '简体中文', short: '简中', path: 'zh' },
+  { code: 'zh-Hant', name: '繁體中文', short: '繁中', path: 'zh-hant' },
+  { code: 'ru', name: 'Русский', short: 'RU', path: 'ru' },
+  { code: 'ko', name: '한국어', short: '한국어', path: 'ko' },
+  { code: 'es', name: 'Español', short: 'ES', path: 'es' },
 ];
 const CODES = LANGUAGES.map((l) => l.code);
 
@@ -26,8 +30,8 @@ function matchTag(tag) {
   const parts = String(tag).toLowerCase().split('-');
   const primary = parts[0];
   if (primary === 'zh') {
-    // Only Simplified Chinese is supported; Traditional (TW, HK, MO, Hant) must not match.
-    if (parts.includes('hant') || ['tw', 'hk', 'mo'].includes(parts[1])) return null;
+    // Traditional (Hant, or TW / HK / MO without a script) is zh-Hant; everything else Chinese is Simplified.
+    if (parts.includes('hant') || (!parts.includes('hans') && ['tw', 'hk', 'mo'].includes(parts[1]))) return 'zh-Hant';
     return 'zh-Hans';
   }
   return CODES.find((code) => code.toLowerCase() === primary) ?? null;

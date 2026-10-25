@@ -11,6 +11,10 @@
   <link rel="alternate" hreflang="de" href="https://flux-rc.stevensdesk.com/de/">
   <link rel="alternate" hreflang="ja" href="https://flux-rc.stevensdesk.com/ja/">
   <link rel="alternate" hreflang="zh-Hans" href="https://flux-rc.stevensdesk.com/zh/">
+  <link rel="alternate" hreflang="zh-Hant" href="https://flux-rc.stevensdesk.com/zh-hant/">
+  <link rel="alternate" hreflang="ru" href="https://flux-rc.stevensdesk.com/ru/">
+  <link rel="alternate" hreflang="ko" href="https://flux-rc.stevensdesk.com/ko/">
+  <link rel="alternate" hreflang="es" href="https://flux-rc.stevensdesk.com/es/">
   <link rel="alternate" hreflang="x-default" href="https://flux-rc.stevensdesk.com/">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="color-scheme" content="dark light">
@@ -19,7 +23,7 @@
   <script>
     try { var t = localStorage.getItem('flux-rc:theme'); if (t !== 'light' && t !== 'dark') t = matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark'; if (t === 'light' && CSS.supports('color', 'light-dark(red, red)')) document.documentElement.setAttribute('data-theme', t); } catch (e) {}
   </script>
-  <!-- Text marked data-i18n / data-i18n-attr is English here. scripts/build-pages.mjs fills the same text from locales/ into vi/, de/, ja/ and zh/ (so crawlers and no-JS visitors get each language); src/ui/i18n.js applyStatic() does it again in the browser. test/i18n.test.js keeps this file equal to locales/en.js. -->
+  <!-- Text marked data-i18n / data-i18n-attr is English here. scripts/build-pages.mjs fills the same text from locales/ into vi/, de/, ja/, zh/, zh-hant/, ru/, ko/ and es/ (so crawlers and no-JS visitors get each language); src/ui/i18n.js applyStatic() does it again in the browser. test/i18n.test.js keeps this file equal to locales/en.js. -->
   <title data-i18n="meta.title">flux-rc — Lux-RC NXS R1 光学编程器</title>
   <meta name="description" data-i18n-attr="content:meta.description" content="免费开源的 Lux-RC 371/372 灯芯（NXS R1）编程工具。选好模式和选项，把手电贴在屏幕上，闪烁的方块就会给手电编程。">
   <!-- Link previews (Facebook, chat apps) and search engines. The language pages get their own title, description and URL from the generator. -->
@@ -125,7 +129,7 @@
       </div>
       <div class="topbar-actions">
         <div class="menu-wrap lang-wrap">
-          <button type="button" class="btn btn-outline lang-btn" id="btn-lang" aria-label="语言" title="语言" data-i18n-attr="aria-label:lang.label;title:lang.label" aria-haspopup="menu" aria-expanded="false">中文</button>
+          <button type="button" class="btn btn-outline lang-btn" id="btn-lang" aria-label="语言" title="语言" data-i18n-attr="aria-label:lang.label;title:lang.label" aria-haspopup="menu" aria-expanded="false">简中</button>
         </div>
         <button type="button" class="btn btn-outline btn-icon" id="btn-theme" aria-label="Switch to light theme" title="Switch to light theme"></button>
         <button type="button" class="btn btn-outline" id="btn-presets" aria-label="预设" data-i18n-attr="aria-label:topbar.presets">
@@ -156,7 +160,7 @@
     </div>
     <section class="about" aria-labelledby="h-about">
       <h2 id="h-about" data-i18n="about.title">关于本页</h2>
-      <p data-i18n="about.p1">flux-rc 由 <a href="https://lux-rc.com/" rel="nofollow noopener noreferrer" data-i18n-slot="link" data-i18n="about.p1.link">Lux-RC</a> 的爱好者制作，与 Lux-RC 没有任何隶属、认可或关联关系，Lux-RC 的任何东西都不归我所有。Lux-RC 和 NXS 的名称归各自所有者所有。</p>
+      <p data-i18n="about.p1">flux-rc 由 <a href="https://lux-rc.com/" rel="nofollow noopener noreferrer" data-i18n-slot="link" data-i18n="about.p1.link">Lux-RC</a> 的爱好者制作，与 Lux-RC 没有任何隶属、认可或关联关系，我也不主张对任何属于 Lux-RC 的东西拥有所有权。Lux-RC 和 NXS 的名称归各自所有者所有。</p>
       <p data-i18n="about.p2">部分布局有意参照了<a href="https://lux-rc.com/content/NXS/NXS_R1_programming" rel="nofollow noopener noreferrer" data-i18n-slot="link" data-i18n="about.p2.link">Lux-RC 原版编程器</a>，界面和设置都在你熟悉的位置。</p>
       <p data-i18n="about.p3">这是非商业的爱好项目：免费，没有广告，不用注册账号，你填的内容不会离开浏览器。</p>
       <p data-i18n="about.p4">使用风险自负。对任何手电、电池或其他设备，以及使用本页造成的任何损坏或错误，我概不负责。</p>

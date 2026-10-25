@@ -11,6 +11,10 @@
   <link rel="alternate" hreflang="de" href="https://flux-rc.stevensdesk.com/de/">
   <link rel="alternate" hreflang="ja" href="https://flux-rc.stevensdesk.com/ja/">
   <link rel="alternate" hreflang="zh-Hans" href="https://flux-rc.stevensdesk.com/zh/">
+  <link rel="alternate" hreflang="zh-Hant" href="https://flux-rc.stevensdesk.com/zh-hant/">
+  <link rel="alternate" hreflang="ru" href="https://flux-rc.stevensdesk.com/ru/">
+  <link rel="alternate" hreflang="ko" href="https://flux-rc.stevensdesk.com/ko/">
+  <link rel="alternate" hreflang="es" href="https://flux-rc.stevensdesk.com/es/">
   <link rel="alternate" hreflang="x-default" href="https://flux-rc.stevensdesk.com/">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="color-scheme" content="dark light">
@@ -19,7 +23,7 @@
   <script>
     try { var t = localStorage.getItem('flux-rc:theme'); if (t !== 'light' && t !== 'dark') t = matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark'; if (t === 'light' && CSS.supports('color', 'light-dark(red, red)')) document.documentElement.setAttribute('data-theme', t); } catch (e) {}
   </script>
-  <!-- Text marked data-i18n / data-i18n-attr is English here. scripts/build-pages.mjs fills the same text from locales/ into vi/, de/, ja/ and zh/ (so crawlers and no-JS visitors get each language); src/ui/i18n.js applyStatic() does it again in the browser. test/i18n.test.js keeps this file equal to locales/en.js. -->
+  <!-- Text marked data-i18n / data-i18n-attr is English here. scripts/build-pages.mjs fills the same text from locales/ into vi/, de/, ja/, zh/, zh-hant/, ru/, ko/ and es/ (so crawlers and no-JS visitors get each language); src/ui/i18n.js applyStatic() does it again in the browser. test/i18n.test.js keeps this file equal to locales/en.js. -->
   <title data-i18n="meta.title">flux-rc — optischer Programmer für Lux-RC NXS R1</title>
   <meta name="description" data-i18n-attr="content:meta.description" content="Kostenloser Open-Source-Programmer für Lux-RC-LED-Module 371/372 (NXS R1). Wähl Modi und Optionen, halt die Taschenlampe an den Bildschirm, und das blinkende Quadrat programmiert sie.">
   <!-- Link previews (Facebook, chat apps) and search engines. The language pages get their own title, description and URL from the generator. -->
@@ -156,7 +160,7 @@
     </div>
     <section class="about" aria-labelledby="h-about">
       <h2 id="h-about" data-i18n="about.title">Über diese Seite</h2>
-      <p data-i18n="about.p1">flux-rc stammt von einem Fan von <a href="https://lux-rc.com/" rel="nofollow noopener noreferrer" data-i18n-slot="link" data-i18n="about.p1.link">Lux-RC</a>. Das Projekt steht in keinerlei Verbindung zu Lux-RC und ist von Lux-RC weder autorisiert noch unterstützt; ich besitze keinerlei Rechte an Lux-RC. Die Namen Lux-RC und NXS gehören ihren Inhabern.</p>
+      <p data-i18n="about.p1">flux-rc stammt von einem Fan von <a href="https://lux-rc.com/" rel="nofollow noopener noreferrer" data-i18n-slot="link" data-i18n="about.p1.link">Lux-RC</a>. Das Projekt steht in keinerlei Verbindung zu Lux-RC und ist von Lux-RC weder autorisiert noch unterstützt; ich erhebe keinerlei Anspruch auf irgendetwas, das Lux-RC gehört. Die Namen Lux-RC und NXS gehören ihren jeweiligen Inhabern.</p>
       <p data-i18n="about.p2">Teile des Layouts folgen bewusst dem <a href="https://lux-rc.com/content/NXS/NXS_R1_programming" rel="nofollow noopener noreferrer" data-i18n-slot="link" data-i18n="about.p2.link">originalen Lux-RC-Programmer</a>, damit Ansichten und Einstellungen dort liegen, wo du sie erwartest.</p>
       <p data-i18n="about.p3">Ein nichtkommerzielles Hobbyprojekt: kostenlos, ohne Werbung, ohne Anmeldung, und nichts, was du eingibst, verlässt deinen Browser.</p>
       <p data-i18n="about.p4">Benutzung auf eigene Gefahr. Ich übernehme keine Verantwortung für Taschenlampen, Akkus oder andere Geräte und auch nicht für Schäden oder Fehler, die durch die Nutzung dieser Seite entstehen.</p>

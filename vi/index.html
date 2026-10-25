@@ -11,6 +11,10 @@
   <link rel="alternate" hreflang="de" href="https://flux-rc.stevensdesk.com/de/">
   <link rel="alternate" hreflang="ja" href="https://flux-rc.stevensdesk.com/ja/">
   <link rel="alternate" hreflang="zh-Hans" href="https://flux-rc.stevensdesk.com/zh/">
+  <link rel="alternate" hreflang="zh-Hant" href="https://flux-rc.stevensdesk.com/zh-hant/">
+  <link rel="alternate" hreflang="ru" href="https://flux-rc.stevensdesk.com/ru/">
+  <link rel="alternate" hreflang="ko" href="https://flux-rc.stevensdesk.com/ko/">
+  <link rel="alternate" hreflang="es" href="https://flux-rc.stevensdesk.com/es/">
   <link rel="alternate" hreflang="x-default" href="https://flux-rc.stevensdesk.com/">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="color-scheme" content="dark light">
@@ -19,7 +23,7 @@
   <script>
     try { var t = localStorage.getItem('flux-rc:theme'); if (t !== 'light' && t !== 'dark') t = matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark'; if (t === 'light' && CSS.supports('color', 'light-dark(red, red)')) document.documentElement.setAttribute('data-theme', t); } catch (e) {}
   </script>
-  <!-- Text marked data-i18n / data-i18n-attr is English here. scripts/build-pages.mjs fills the same text from locales/ into vi/, de/, ja/ and zh/ (so crawlers and no-JS visitors get each language); src/ui/i18n.js applyStatic() does it again in the browser. test/i18n.test.js keeps this file equal to locales/en.js. -->
+  <!-- Text marked data-i18n / data-i18n-attr is English here. scripts/build-pages.mjs fills the same text from locales/ into vi/, de/, ja/, zh/, zh-hant/, ru/, ko/ and es/ (so crawlers and no-JS visitors get each language); src/ui/i18n.js applyStatic() does it again in the browser. test/i18n.test.js keeps this file equal to locales/en.js. -->
   <title data-i18n="meta.title">flux-rc — nạp mode cho Lux-RC NXS R1 bằng ánh sáng</title>
   <meta name="description" data-i18n-attr="content:meta.description" content="Công cụ miễn phí, mã nguồn mở để nạp mode cho đèn dùng module Lux-RC 371/372 (NXS R1). Chọn mode và tuỳ chọn, áp đèn vào màn hình, ô vuông nhấp nháy sẽ nạp chương trình cho đèn.">
   <!-- Link previews (Facebook, chat apps) and search engines. The language pages get their own title, description and URL from the generator. -->
@@ -156,7 +160,7 @@
     </div>
     <section class="about" aria-labelledby="h-about">
       <h2 id="h-about" data-i18n="about.title">Về trang này</h2>
-      <p data-i18n="about.p1">flux-rc do một người mê <a href="https://lux-rc.com/" rel="nofollow noopener noreferrer" data-i18n-slot="link" data-i18n="about.p1.link">Lux-RC</a> làm ra. Trang này không liên quan gì tới Lux-RC, không được Lux-RC bảo trợ hay công nhận, và mình không sở hữu thứ gì của Lux-RC. Tên Lux-RC và NXS thuộc về chủ sở hữu tương ứng.</p>
+      <p data-i18n="about.p1">flux-rc do một người mê <a href="https://lux-rc.com/" rel="nofollow noopener noreferrer" data-i18n-slot="link" data-i18n="about.p1.link">Lux-RC</a> làm ra. Trang này không liên quan gì tới Lux-RC, không được Lux-RC bảo trợ hay công nhận, và mình không nhận là sở hữu bất cứ thứ gì thuộc về Lux-RC. Tên Lux-RC và NXS thuộc về chủ sở hữu tương ứng.</p>
       <p data-i18n="about.p2">Bố cục một số phần cố tình bám theo <a href="https://lux-rc.com/content/NXS/NXS_R1_programming" rel="nofollow noopener noreferrer" data-i18n-slot="link" data-i18n="about.p2.link">chương trình nạp gốc của Lux-RC</a>, để màn hình và các cài đặt nằm đúng chỗ bạn đã quen.</p>
       <p data-i18n="about.p3">Đây là dự án sở thích phi thương mại: miễn phí, không quảng cáo, không tài khoản, và những gì bạn nhập chỉ nằm trong trình duyệt của bạn.</p>
       <p data-i18n="about.p4">Bạn tự chịu rủi ro khi dùng. Mình không chịu trách nhiệm cho đèn, pin hay bất kỳ thiết bị nào, cũng như mọi hư hỏng hay lỗi phát sinh khi dùng trang này.</p>

@@ -17,7 +17,7 @@ export default {
 
   // About section. {link} is the link text from the matching .link key.
   'about.title': '关于本页',
-  'about.p1': 'flux-rc 由 {link} 的爱好者制作，与 Lux-RC 没有任何隶属、认可或关联关系，Lux-RC 的任何东西都不归我所有。Lux-RC 和 NXS 的名称归各自所有者所有。',
+  'about.p1': 'flux-rc 由 {link} 的爱好者制作，与 Lux-RC 没有任何隶属、认可或关联关系，我也不主张对任何属于 Lux-RC 的东西拥有所有权。Lux-RC 和 NXS 的名称归各自所有者所有。',
   'about.p1.link': 'Lux-RC',
   'about.p2': '部分布局有意参照了{link}，界面和设置都在你熟悉的位置。',
   'about.p2.link': 'Lux-RC 原版编程器',
@@ -49,7 +49,7 @@ export default {
   'lang.current': '语言：{name}',
 
   // Toasts
-  'toast.badLink': '无法读取这个链接',
+  'toast.badLink': '无法读取这个链接。',
   'toast.sharedLoaded': '已载入分享的设置。',
   'toast.loadedName': '已载入“{name}”。',
   'toast.presetLoaded': '已载入预设“{name}”。',
@@ -60,7 +60,7 @@ export default {
   'quickPreset.everyday.name': '日常',
   'quickPreset.everyday.description': '低、中、高、最亮四档（0.12 W 到 17 W）。开机进入上次使用的模式。',
   'quickPreset.tactical.name': '战术',
-  'quickPreset.tactical.description': '开机总是最亮（17 W），然后是 10 Hz 爆闪，再是 0.4 W 低亮。',
+  'quickPreset.tactical.description': '开机总是最亮（17 W），然后是 10 Hz 爆闪，再是低亮（0.4 W）。',
   'quickPreset.gentle.name': '柔和',
   'quickPreset.gentle.description': '亮度不超过 3 W，不烫手也不刺眼。开机进入上次使用的模式。',
 
@@ -68,11 +68,11 @@ export default {
   'vendorPreset.fl33-v4-factory.name': 'FL33 v4 Factory Prog',
   'vendorPreset.fl33-v4-factory.description': '单节：档位 1、6、11、16。双节：档位 21、26、极亮。标准记忆，保护和延长续航开启；高级设置不变。',
   'vendorPreset.minion-factory.name': 'MINION Factory Prog',
-  'vendorPreset.minion-factory.description': '红光月光、档位 6 和 18，然后是极亮，两种电池配置都一样。同时设置：模式切换超时 1.5 s，温控 50 °C，两个输出上限都是 28 档，设置震动感应，PIN 设为 1-1-2。',
+  'vendorPreset.minion-factory.description': '红光月光、档位 6 和 18，然后是极亮，两种电池配置都一样。同时设置：模式切换超时设为 1.5 s，温控 50 °C，两个输出上限都是 28 档，设置震动感应，PIN 设为 1-1-2。',
   'vendorPreset.oem-mark.name': 'OEM_Mark',
   'vendorPreset.oem-mark.description': '单节：红光月光、档位 7、11、15。双节：档位 19、23、26、极亮。记忆关闭，保护和延长续航开启，高级设置不变。',
   'vendorPreset.oveready-factory.name': 'OVEREADY Factory Prog',
-  'vendorPreset.oveready-factory.description': '红光月光，然后单节为档位 14、21、28，双节为 16、24、极亮。同时设置：模式切换超时 0.7 s，温控 65 °C，关闭震动感应，PIN 为 2-2-2。',
+  'vendorPreset.oveready-factory.description': '红光月光，然后单节为档位 14、21、28，双节为 16、24、极亮。同时设置：模式切换超时设为 0.7 s，温控 65 °C，关闭震动感应，PIN 设为 2-2-2。',
   'vendorPreset.pin-112.name': 'Set programming PIN to 112',
   'vendorPreset.pin-112.description': '把编程 PIN 设为 1-1-2。同时关闭记忆，开启保护和延长续航；模式和其他设置不变。',
   'vendorPreset.thermal-50c.name': 'Temperature Limit 50C',
@@ -95,7 +95,7 @@ export default {
 
   // Saved dialog
   'saved.title': '已保存',
-  'saved.unavailable': '当前浏览器无法保存（本地存储被禁用）。其他功能照常可用，也可以用分享链接把设置存在链接里。',
+  'saved.unavailable': '当前浏览器无法保存（本地存储被禁用）。其他功能照常可用，你也可以用分享链接把设置保存成一个链接。',
   'saved.nameLabel': '当前设置的名称',
   'saved.saveCurrent': '保存当前',
   'saved.empty': '还没有保存的设置。',
@@ -158,13 +158,13 @@ export default {
   'groups.single.title': '单节',
   'groups.single.note': '371D 灯芯把电池峰值电流限制在约 5 A，所以单节输出通常封顶 17 W（28 档）。厂家可以改这个上限。',
   'groups.single.sub': '1 × 3.7 V Li-ion',
-  'groups.liIonSizes': '18650、18350、21700……',
+  'groups.liIonSizes': '18350、18650、21700……',
   'groups.single.use': '使用单节',
   'groups.single.offCopies': '不使用。这一组沿用双节的模式。',
   'groups.dual.title': '双节串联',
   'groups.dual.note': '档位越高电流越大。请确认电池放电能力够用，电流过大可能导致电池损坏或起火。',
   'groups.dual.subLiIon': '2 × 3.7 V Li-ion 串联',
-  'groups.dual.subCr123a': '2 × CR123A（串联）',
+  'groups.dual.subCr123a': '2 × CR123A 串联',
   'groups.dual.use': '使用双节串联',
   'groups.dual.offCopies': '不使用。这一组沿用单节的模式。',
   'groups.offKeep': '手电里的模式保持不变。',
@@ -229,7 +229,7 @@ export default {
 
   // Advanced (vendor safety settings)
   'advanced.careful': '注意。',
-  'advanced.warning': '{careful}原版编程器只允许厂家修改这些设置。数值不对可能让手电过热或损坏电池。除非你清楚原因，否则请选“保持当前”。',
+  'advanced.warning': '{careful}原版编程器只允许厂家修改这些设置。数值不对可能让手电过热或损坏电池。除非你清楚自己在做什么，否则请选“保持当前”。',
   'advanced.keep': '保持当前',
   'advanced.set': '设置',
   'advanced.none': '不限',
@@ -252,7 +252,7 @@ export default {
   'advanced.pin.title': '编程 PIN',
   'advanced.pin.setting': '编程 PIN 设置',
   'advanced.pin.keepHint': 'PIN 保持不变。',
-  'advanced.pin.setHint': '编程前用机械开关输入的 PIN。',
+  'advanced.pin.setHint': '每次编程前要先按一遍的 PIN。',
   'advanced.pin.digit': '第 {n} 位',
   'advanced.pin.value': 'PIN {pin}',
 
@@ -268,8 +268,8 @@ export default {
   'footer.downloadOff': '无法下载 GIF。{reason}',
   'footer.packet': '数据包详情',
   'footer.program': '编程',
-  'footer.blocked': '无法编程：{reason}',
-  'footer.blockedUnknown': '出了点问题',
+  'footer.blocked': '无法编程。{reason}',
+  'footer.blockedUnknown': '出了点问题。',
   'packet.noChange': '不变',
   'packet.meta': '校验和 {checksum} · {frames} 帧',
 
@@ -319,8 +319,8 @@ export default {
   'program.switch.label': '开关类型',
   'program.switch.next': '下一步',
   'program.switch.mcclicky.name': '机械开关（McClicky）',
-  'program.switch.mcclicky.desc': '橡胶按帽。每次点击就是快速半按一下。',
-  'program.switch.mcclicky.rest': '手电关闭：什么都不按。',
+  'program.switch.mcclicky.desc': '橡胶按帽。每次点击是快速半按一下，不要按到底。',
+  'program.switch.mcclicky.rest': '从手电关闭、开关没按下的状态开始。',
   'program.switch.mcclicky.action': '按',
   'program.switch.mcclicky.verb': '按下',
   'program.switch.mcclicky.final': '开灯并保持开着',
@@ -338,7 +338,7 @@ export default {
   // Program step 2: get ready
   'program.ready.title': '准备',
   'program.ready.brightness': '把屏幕亮度调到最大。',
-  'program.ready.dark': '找个暗处：日光或明亮的室内灯会让手电的感光元件过曝。',
+  'program.ready.dark': '找个暗的房间：日光或明亮的室内灯会盖过屏幕的闪光，让感光元件读不出来。',
   'program.ready.close': '把手电紧贴在屏幕上。',
   'program.ready.button': '准备好了',
 
@@ -352,17 +352,17 @@ export default {
   'program.pin.customPlaceholder': '例如 {pin}',
   'program.pin.customError': '请输入三位数字：第一位 1–4，其余两位 1–8（不能用 4-8-8）。',
   'program.pin.none': '还没有有效的 PIN',
-  'program.pin.oldPin': '如果你刚在高级里改了 PIN，编程完成之前，手电用的还是旧 PIN。',
+  'program.pin.oldPin': '刚在高级里改了 PIN？这里请输入旧 PIN；新 PIN 要在这次编程完成后才生效。',
   'program.pin.speed': '速度',
   'program.pin.speedNormal': '正常',
   'program.pin.speedSlow': '慢',
   'program.pin.sound': '声音',
   'program.pin.soundHint': '提示音对应每一次点击。iPhone 请关闭静音模式。',
-  'program.pin.reverseClicky': '反向尾按、没法半按？选“慢”，每听到一声就按到底开灯，再按一下关灯。',
+  'program.pin.reverseClicky': '反向尾按（关灯时半按没有反应）？选“慢”，每听到一声就按到底开灯，再按一下关灯。',
   'program.pin.start': '开始',
   'program.pin.tailcapLink': 'PIN 不管用？试试尾盖法',
   'program.pin.interrupted': '已中断。准备好后重新开始。',
-  'program.pin.slipped': '节奏跟丢了。请重新开始。',
+  'program.pin.slipped': '浏览器卡了一下，节奏跟丢了。请重新开始。',
 
   // Program step 3: the PIN run
   'program.run.titleBeeps': '跟着提示音',
@@ -376,7 +376,7 @@ export default {
   'program.run.wait': '等待',
   'program.run.waitHint': 'PIN 已输入。接下来：{next}。',
   'program.run.startsIn': '{seconds} s 后开始闪烁',
-  'program.run.announceHold': '{cue}。{seconds} s 后开始闪烁。',
+  'program.run.announceHold': '{cue}。{seconds} 秒后开始闪烁。',
 
   // Program step 3: the rhythm timeline (setup preview and run)
   'program.timeline.title': '节奏',
@@ -387,7 +387,7 @@ export default {
 
   // Program step 3: tailcap method
   'program.tailcap.title': '尾盖法',
-  'program.tailcap.hint': '适用于驱动上带电子按钮、电池一直连着的手电。',
+  'program.tailcap.hint': '适用于按键不切断电源的手电（驱动上的电子开关），这种手电没法用按键输入 PIN。',
   'program.tailcap.step1': '把尾盖拧松一点，断开电池，等几秒。',
   'program.tailcap.step2': '按住按钮不放。',
   'program.tailcap.step3': '继续按住，同时把尾盖拧回去。',
@@ -400,15 +400,15 @@ export default {
   'program.flash.alt': '给手电编程的闪烁方块',
   'program.flash.announce': '{cue}。{hint}',
   'program.flash.seen': '看到红光了',
-  'program.flash.tryAgain': '没有红光，重试',
+  'program.flash.tryAgain': '没有红光？重试',
   'program.flash.keepHolding': '保持贴住方块，直到红光熄灭（10–20 s）。',
-  'program.flash.wentOff': '熄灭了：完成',
+  'program.flash.wentOff': '熄灭了',
   'program.flash.stillRed': '还亮着红光',
   'program.success.title': '编程完成',
-  'program.success.text': '编程完成。把手电关掉再打开，试试你的模式。',
+  'program.success.text': '把手电关掉再打开，试试新的模式。',
   'program.success.announce': '编程完成。',
   'program.stillRed.title': '还是红光？',
-  'program.stillRed.text': '手电没有读完整个信号。再试一次：',
+  'program.stillRed.text': '手电没有读完整个信号。检查下面几点，然后再试一次：',
   'program.stillRed.brightness': '把屏幕亮度调到最大。',
   'program.stillRed.closer': '把手电再靠近些，紧贴方块。',
   'program.stillRed.darker': '让房间再暗一点。',

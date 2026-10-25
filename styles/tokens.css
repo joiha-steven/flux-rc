@@ -129,7 +129,7 @@ h3 { font-size: var(--fs-body); line-height: var(--lh-body); }
   *, *::before, *::after { transition-duration: 0.001ms !important; animation-duration: 0.001ms !important; scroll-behavior: auto !important; }
 }
 
-/* Japanese and Chinese use installed system fonts (no webfont download). Plum Sans / Plum Mono stay first,
+/* Japanese, Chinese and Korean use installed system fonts (no webfont download). Plum Sans / Plum Mono stay first,
    so Latin letters, digits and units keep the page's look; CJK characters fall through to the system font. */
 html:lang(ja) {
   --font: "Plum Sans", "Hiragino Kaku Gothic ProN", "Hiragino Sans", "Noto Sans JP", "Yu Gothic", "Meiryo", sans-serif;
@@ -139,10 +139,20 @@ html:lang(zh-Hans) {
   --font: "Plum Sans", "PingFang SC", "Hiragino Sans GB", "Noto Sans SC", "Microsoft YaHei", sans-serif;
   --mono: "Plum Mono", "PingFang SC", "Hiragino Sans GB", "Noto Sans SC", "Microsoft YaHei", ui-monospace, monospace;
 }
+html:lang(zh-Hant) {
+  --font: "Plum Sans", "PingFang TC", "Noto Sans TC", "Microsoft JhengHei", sans-serif;
+  --mono: "Plum Mono", "PingFang TC", "Noto Sans TC", "Microsoft JhengHei", ui-monospace, monospace;
+}
+html:lang(ko) {
+  --font: "Plum Sans", "Apple SD Gothic Neo", "Noto Sans KR", "Malgun Gothic", sans-serif;
+  --mono: "Plum Mono", "Apple SD Gothic Neo", "Noto Sans KR", "Malgun Gothic", ui-monospace, monospace;
+}
 
 /* Line breaking for longer translated text. Japanese breaks between phrases, not inside a word (auto-phrase,
    ignored by browsers that lack it); both CJK languages keep closing punctuation off the start of a line. */
-html:lang(ja), html:lang(zh-Hans) { line-break: strict; }
+html:lang(ja), html:lang(zh-Hans), html:lang(zh-Hant), html:lang(ko) { line-break: strict; }
 html:lang(ja) { word-break: auto-phrase; }
+/* Korean has spaces between words, so break there rather than between syllables. */
+html:lang(ko) { word-break: keep-all; }
 /* German compounds in the small uppercase option labels hyphenate instead of breaking mid-word. */
 html:lang(de) .option-label { hyphens: auto; }

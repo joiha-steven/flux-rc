@@ -1,4 +1,4 @@
-// The pages in vi/, de/, ja/ and zh/ are generated from index.html and locales/ by
+// The pages in vi/, de/, ja/, zh/, zh-hant/, ru/, ko/ and es/ are generated from index.html and locales/ by
 // scripts/build-pages.mjs and committed (the deploy has no build step). These tests fail when they
 // are out of date, and check the SEO parts every page must carry.
 import { test } from 'node:test';

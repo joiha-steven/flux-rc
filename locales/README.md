@@ -5,7 +5,7 @@ truth; other languages translate its keys.
 
 ## Add a language
 
-1. Copy `en.js` to `<code>.js`, using the language code (`vi.js`, `de.js`, `zh-Hans.js`).
+1. Copy `en.js` to `<code>.js`, using the language code (`vi.js`, `de.js`, `zh-Hans.js`, `zh-Hant.js`).
 2. Translate the values. Leave the keys as they are. A key you leave out falls back to English, so
    you can translate in parts.
 3. In `src/ui/i18n.js`, add the language to `LANGUAGES` (code, its own name, the short label for
@@ -19,16 +19,17 @@ truth; other languages translate its keys.
    - run `npm run pages` to generate `<path>/index.html` (`scripts/build-pages.mjs` reads `LANGUAGES`,
      so the generator needs no edit) and commit it.
 4. For a script the bundled fonts do not cover, add a `html:lang(<code>)` font stack in
-   `styles/tokens.css` (see `ja` and `zh-Hans`). Vietnamese diacritics are in the bundled Plum fonts.
+   `styles/tokens.css` (see `ja`, `zh-Hans`, `zh-Hant`, `ko`). Vietnamese diacritics and Cyrillic are in the bundled Plum fonts
+   (`assets/fonts/`, `styles/fonts.css`); a new script needs its own `@font-face` subset or a system stack.
 5. `npm test` checks that `LANGUAGES` and the files in `locales/` match.
 
-Each language has its own URL (`/vi/`, `/de/`, `/ja/`, `/zh/`; English is `/`). The page's `<html lang>`
+Each language has its own URL (`/vi/`, `/de/`, `/ja/`, `/zh/`, `/zh-hant/`, `/ru/`, `/ko/`, `/es/`; English is `/`). The page's `<html lang>`
 decides the language shown. The language button in the topbar saves the choice in `localStorage`
 (`flux-rc:lang`) and goes to that URL. Only on `/`, a script in `index.html` redirects to the saved
 choice, else to the first of the browser's languages that matches.
 
 After editing `en.js`, another locale or `index.html`, run `npm run pages`: the pages in `vi/`, `de/`,
-`ja/` and `zh/` are generated from them and committed, and `npm test` fails while they are stale.
+`ja/`, `zh/`, `zh-hant/`, `ru/`, `ko/` and `es/` are generated from them and committed, and `npm test` fails while they are stale.
 
 ## Keys
 

@@ -1,4 +1,4 @@
-// Generates the per-language pages (vi/index.html, de/index.html, ja/index.html, zh/index.html)
+// Generates one page per non-English language (<path>/index.html for every entry in LANGUAGES in src/ui/i18n.js)
 // from index.html plus locales/<code>.js. Run `npm run pages` after editing index.html or any
 // locale file, and commit the result: the deploy has no build step. test/pages.test.js fails
 // when a generated page is out of date.

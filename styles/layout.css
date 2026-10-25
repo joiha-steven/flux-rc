@@ -40,7 +40,11 @@
 .pill[aria-pressed="true"] { background: var(--surface-2); box-shadow: var(--well-shade); }
 .pill[aria-pressed="true"]::before { background: var(--accent); }
 .quick-desc { color: var(--muted); font-size: var(--fs-small); line-height: var(--lh-small); min-height: var(--lh-small); margin-top: var(--sp-1); }
-@media (max-width: 767px) { .pills { display: grid; grid-template-columns: repeat(3, 1fr); } .pill { padding: 0 var(--sp-1); } }
+/* Narrow: three equal columns (minmax 0 so a long name cannot widen the grid), the mark above the label so long names such as "Тактический" fit. */
+@media (max-width: 767px) {
+  .pills { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .pill { flex-direction: column; gap: 4px; padding: 0 2px; hyphens: auto; text-align: center; }
+}
 
 .behaviour { display: grid; gap: var(--sp-2); }
 .options { display: grid; gap: var(--sp-1); grid-template-columns: 1fr 1fr; }
