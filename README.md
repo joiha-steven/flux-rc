@@ -1,11 +1,12 @@
 # flux-rc
 
-> Made by a fan of [Lux-RC](https://lux-rc.com/). Not affiliated with, endorsed by or connected to Lux-RC in any way.
+> Made by a fan of [Lux-RC](https://lux-rc.com/). Not affiliated with, endorsed by or connected to Lux-RC or Oveready in any way.
 > Non-commercial. Use at your own risk: no responsibility is taken for any device, battery or
 > damage. Parts of the layout deliberately follow the original Lux-RC programmer so it feels familiar.
 
-An optical programmer for flashlights with a Lux-RC light engine (371 / 372), sending the same
-signal as Lux-RC's NXS R1 web programmer. Pick your modes and options, put the light into
+An optical programmer for custom flashlights with a Lux-RC 371D, 371 v2.0 or 372 v2.0 light engine,
+such as the Oveready TorchLAB BOSS 35/70, Future BOSS and Lux-RC Minion. It sends the same signal as
+Lux-RC's NXS R1 web programmer. Pick your modes and options, put the light into
 programming mode, hold it against the screen, and the flashing square programs it.
 
 **Use it here: https://flux-rc.stevensdesk.com/**

@@ -1,9 +1,9 @@
 // Simplified Chinese (mainland usage). Keys and placeholders match en.js; see locales/README.md.
 export default {
   // <head> and the static page (index.html, filled by applyStatic)
-  'meta.title': 'flux-rc — Lux-RC NXS R1 光学编程器',
-  'meta.description': '免费开源的 Lux-RC 371/372 灯芯（NXS R1）编程工具。选好模式和选项，把手电贴在屏幕上，闪烁的方块就会给手电编程。',
-  'topbar.tagline': 'NXS R1 光学编程器',
+  'meta.title': 'flux-rc — Lux-RC 371D / 372 编程器：BOSS 35、BOSS 70、Minion（爱好者自制）',
+  'meta.description': '免费开源的编程工具，适用于装有 Lux-RC 371D、371 v2.0 或 372 v2.0 灯芯的定制手电，例如 Oveready BOSS 35/70、Future BOSS 和 Lux-RC Minion。选好模式和选项，把手电贴在屏幕上，闪烁的方块就会给手电编程。',
+  'topbar.tagline': '适用于装有 Lux-RC 371D、371 v2.0 或 372 v2.0 灯芯的定制手电，例如 Oveready TorchLAB BOSS 35/70、Future BOSS 和 Lux-RC Minion。',
   'topbar.presets': '预设',
   'topbar.saved': '已保存',
   'quick.label': '快速开始',
@@ -17,7 +17,7 @@ export default {
 
   // About section. {link} is the link text from the matching .link key.
   'about.title': '关于本页',
-  'about.p1': 'flux-rc 由 {link} 的爱好者制作，与 Lux-RC 没有任何隶属、认可或关联关系，我也不主张对任何属于 Lux-RC 的东西拥有所有权。Lux-RC 和 NXS 的名称归各自所有者所有。',
+  'about.p1': 'flux-rc 由 {link} 的爱好者制作，与 Lux-RC 和 Oveready 没有任何隶属、认可或关联关系，我也不主张对任何属于它们的东西拥有所有权。Lux-RC、NXS、Oveready、TorchLAB 和 BOSS 的名称归各自所有者所有。',
   'about.p1.link': 'Lux-RC',
   'about.p2': '部分布局有意参照了{link}，界面和设置都在你熟悉的位置。',
   'about.p2.link': 'Lux-RC 原版编程器',
@@ -345,7 +345,8 @@ export default {
   'program.ready.title': '准备',
   'program.ready.brightness': '把屏幕亮度调到最大。',
   'program.ready.dark': '找个暗的房间：日光或明亮的室内灯会盖过屏幕的闪光，让感光元件读不出来。',
-  'program.ready.close': '把手电紧贴在屏幕上。',
+  'program.ready.close': '把手电的镜片平贴在屏幕上，对准闪烁方块的中央。',
+  'program.ready.phone': '用手机时：把手机平放在桌上，手电头朝下立在方块正中。',
   'program.ready.button': '准备好了',
 
   // Program step 3: PIN setup

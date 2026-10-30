@@ -1,9 +1,9 @@
 // Traditional Chinese (Taiwan usage, readable in Hong Kong). Keys and placeholders match en.js; see locales/README.md.
 export default {
   // <head> and the static page (index.html, filled by applyStatic)
-  'meta.title': 'flux-rc — Lux-RC NXS R1 光學寫入工具（玩家自製）',
-  'meta.description': '免費、開源的 Lux-RC 371/372 LED 模組（NXS R1）寫入工具。選好模式和選項，把手電筒貼在螢幕上，閃爍的方塊就會把設定寫進燈裡。',
-  'topbar.tagline': 'NXS R1 光學寫入工具',
+  'meta.title': 'flux-rc — Lux-RC 371D / 372 寫入工具：BOSS 35、BOSS 70、Minion（玩家自製）',
+  'meta.description': '免費、開源的寫入工具，適用於裝有 Lux-RC 371D、371 v2.0 或 372 v2.0 LED 模組的訂製手電筒，例如 Oveready BOSS 35/70、Future BOSS 和 Lux-RC Minion。選好模式和選項，把手電筒貼在螢幕上，閃爍的方塊就會把設定寫進燈裡。',
+  'topbar.tagline': '適用於裝有 Lux-RC 371D、371 v2.0 或 372 v2.0 LED 模組的訂製手電筒，例如 Oveready TorchLAB BOSS 35/70、Future BOSS 和 Lux-RC Minion。',
   'topbar.presets': '預設組合',
   'topbar.saved': '已儲存',
   'quick.label': '快速開始',
@@ -17,7 +17,7 @@ export default {
 
   // About section. {link} is the link text from the matching .link key.
   'about.title': '關於本頁',
-  'about.p1': 'flux-rc 由一位 {link} 愛好者製作，與 Lux-RC 沒有任何隸屬或關聯，也未經 Lux-RC 認可或背書；凡屬於 Lux-RC 的一切，我都不主張任何所有權。Lux-RC 與 NXS 名稱歸其各自的所有人所有。',
+  'about.p1': 'flux-rc 由一位 {link} 愛好者製作，與 Lux-RC 及 Oveready 沒有任何隸屬或關聯，也未經它們認可或背書；凡屬於它們的一切，我都不主張任何所有權。Lux-RC、NXS、Oveready、TorchLAB 與 BOSS 名稱歸其各自的所有人所有。',
   'about.p1.link': 'Lux-RC',
   'about.p2': '部分版面刻意參照{link}，讓畫面和設定都在你習慣的位置。',
   'about.p2.link': '原版 Lux-RC 寫入工具',
@@ -345,7 +345,8 @@ export default {
   'program.ready.title': '準備',
   'program.ready.brightness': '把螢幕亮度調到最高。',
   'program.ready.dark': '找暗一點的房間：日光或明亮的室內燈會蓋過感光元件。',
-  'program.ready.close': '把燈頭緊貼在螢幕上。',
+  'program.ready.close': '把燈頭鏡片平貼在螢幕上，對準閃爍方塊的中央。',
+  'program.ready.phone': '用手機時：把手機平放在桌上，手電筒燈頭朝下立在方塊正中央。',
   'program.ready.button': '準備好了',
 
   // Program step 3: PIN setup

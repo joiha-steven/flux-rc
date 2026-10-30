@@ -6,9 +6,9 @@
   <!--
     flux-rc is built by Steven Tran (Tran Manh Hung).
 
-    flux-rc is made by a fan of Lux-RC. It is not affiliated with, endorsed by or connected to Lux-RC in
-    any way, and I claim no ownership of anything belonging to Lux-RC. The Lux-RC and NXS names belong
-    to their respective owners.
+    flux-rc is made by a fan of Lux-RC. It is not affiliated with, endorsed by or connected to Lux-RC or
+    Oveready in any way, and I claim no ownership of anything belonging to them. The Lux-RC, NXS,
+    Oveready, TorchLAB and BOSS names belong to their respective owners.
 
     Parts of the layout deliberately follow the original Lux-RC programmer, so the screens and settings
     sit where you already expect them.
@@ -39,20 +39,20 @@
     try { var t = localStorage.getItem('flux-rc:theme'); if (t !== 'light' && t !== 'dark') t = matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark'; if (t === 'light' && CSS.supports('color', 'light-dark(red, red)')) document.documentElement.setAttribute('data-theme', t); } catch (e) {}
   </script>
   <!-- Text marked data-i18n / data-i18n-attr is English here. scripts/build-pages.mjs fills the same text from locales/ into vi/, de/, ja/, zh/, zh-hant/, ru/, ko/ and es/ (so crawlers and no-JS visitors get each language); src/ui/i18n.js applyStatic() does it again in the browser. test/i18n.test.js keeps this file equal to locales/en.js. -->
-  <title data-i18n="meta.title">flux-rc — nạp mode cho Lux-RC NXS R1 bằng ánh sáng</title>
-  <meta name="description" data-i18n-attr="content:meta.description" content="Công cụ miễn phí, mã nguồn mở để nạp mode cho đèn dùng module Lux-RC 371/372 (NXS R1). Chọn mode và tuỳ chọn, áp đèn vào màn hình, ô vuông nhấp nháy sẽ nạp chương trình cho đèn.">
+  <title data-i18n="meta.title">flux-rc — nạp mode cho đèn Lux-RC 371D / 372: BOSS 35, BOSS 70, Minion</title>
+  <meta name="description" data-i18n-attr="content:meta.description" content="Công cụ miễn phí, mã nguồn mở để nạp mode cho đèn pin custom dùng module Lux-RC 371D, 371 v2.0 hoặc 372 v2.0, như Oveready BOSS 35/70, Future BOSS và Lux-RC Minion. Chọn mode và tuỳ chọn, áp đèn vào màn hình, ô vuông nhấp nháy sẽ nạp chương trình cho đèn.">
   <!-- Link previews (Facebook, chat apps) and search engines. The language pages get their own title, description and URL from the generator. -->
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://flux-rc.stevensdesk.com/vi/">
-  <meta property="og:title" content="flux-rc — nạp mode cho Lux-RC NXS R1 bằng ánh sáng">
-  <meta property="og:description" content="Công cụ miễn phí, mã nguồn mở để nạp mode cho đèn dùng module Lux-RC 371/372 (NXS R1). Chọn mode và tuỳ chọn, áp đèn vào màn hình, ô vuông nhấp nháy sẽ nạp chương trình cho đèn.">
+  <meta property="og:title" content="flux-rc — nạp mode cho đèn Lux-RC 371D / 372: BOSS 35, BOSS 70, Minion">
+  <meta property="og:description" content="Công cụ miễn phí, mã nguồn mở để nạp mode cho đèn pin custom dùng module Lux-RC 371D, 371 v2.0 hoặc 372 v2.0, như Oveready BOSS 35/70, Future BOSS và Lux-RC Minion. Chọn mode và tuỳ chọn, áp đèn vào màn hình, ô vuông nhấp nháy sẽ nạp chương trình cho đèn.">
   <meta property="og:image" content="https://flux-rc.stevensdesk.com/assets/og.jpg">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
   <meta name="twitter:card" content="summary_large_image">
   <script type="application/ld+json">
   {"@context": "https://schema.org", "@type": "WebApplication", "name": "flux-rc", "url": "https://flux-rc.stevensdesk.com/vi/",
-   "description": "Free, open-source programmer for Lux-RC 371/372 light engines (NXS R1). Pick modes and options, hold the flashlight against the screen, and the flashing square programs it.",
+   "description": "Free, open-source programmer for custom flashlights with a Lux-RC 371D, 371 v2.0 or 372 v2.0 light engine, such as the Oveready BOSS 35/70, Future BOSS and Lux-RC Minion. Pick modes and options, hold the light against the screen, and the flashing square programs it.",
    "applicationCategory": "UtilitiesApplication", "operatingSystem": "Any (web browser)", "isAccessibleForFree": true,
    "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"},
    "inLanguage": ["en", "vi", "de", "ja", "zh-Hans"],
@@ -69,6 +69,7 @@
   <link rel="preload" href="/assets/fonts/plum-sans-latin.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="/assets/fonts/plum-mono-latin.woff2" as="font" type="font/woff2" crossorigin>
   <!-- Every module the page imports at startup, so they download in parallel instead of one import level at a time. Keep in sync with src/. -->
+  <link rel="modulepreload" href="/src/ui/boot.js">
   <link rel="modulepreload" href="/src/ui/app.js">
   <link rel="modulepreload" href="/locales/en.js">
   <link rel="modulepreload" href="/locales/vi.js">
@@ -113,8 +114,9 @@
   <link rel="modulepreload" href="/src/ui/storage.js">
   <link rel="modulepreload" href="/src/ui/theme.js">
   <link rel="modulepreload" href="/src/ui/toast.js">
-  <script type="module" src="/src/ui/app.js"></script>
-  <!-- Boot guard: app.js sets data-ready on <html> after its first render. If that never happens (a module failed to load, or 6 s pass) show a message instead of a blank page.
+  <script type="module" src="/src/ui/boot.js"></script>
+  <!-- Boot guard: app.js sets data-ready on <html> after its first render. If that never happens (a module failed to load, or 6 s pass) show a message above the page.
+       It only adds the message, so a page that is just slow still starts, and the message hides itself then (html[data-ready] .boot-failed in layout.css).
        It runs without modules, so its text is English only. i18n keys: boot.failed, boot.reload (test/i18n.test.js checks they match locales/en.js). -->
   <script>
     (function () {
@@ -127,7 +129,8 @@
         p.textContent = "flux-rc couldn't load. Check your connection and reload the page.";
         var b = document.createElement('button'); b.type = 'button'; b.className = 'btn btn-primary'; b.textContent = "Reload";
         b.onclick = function () { location.reload(); };
-        main.replaceChildren(p, b);
+        var box = document.createElement('div'); box.className = 'boot-failed'; box.append(p, b);
+        main.prepend(box);
       }
       setTimeout(fail, 6000);
       addEventListener('error', function (e) { if (e.target && e.target.tagName === 'SCRIPT') fail(); }, true);
@@ -140,13 +143,15 @@
     <div class="page topbar-inner">
       <div class="brand">
         <h1 class="wordmark">flux-rc</h1>
-        <p class="tagline" data-i18n="topbar.tagline">Nạp mode cho NXS R1 bằng ánh sáng</p>
+        <p class="tagline" data-i18n="topbar.tagline">Nạp mode cho đèn custom dùng module Lux-RC 371D, 371 v2.0 hoặc 372 v2.0, như Oveready TorchLAB BOSS 35/70, Future BOSS và Lux-RC Minion.</p>
       </div>
-      <div class="topbar-actions">
+      <div class="topbar-tools">
         <div class="menu-wrap lang-wrap">
           <button type="button" class="btn btn-outline lang-btn" id="btn-lang" aria-label="Ngôn ngữ" title="Ngôn ngữ" data-i18n-attr="aria-label:lang.label;title:lang.label" aria-haspopup="menu" aria-expanded="false">VI</button>
         </div>
         <button type="button" class="btn btn-outline btn-icon" id="btn-theme" aria-label="Switch to light theme" title="Switch to light theme"></button>
+      </div>
+      <div class="topbar-actions">
         <button type="button" class="btn btn-outline" id="btn-presets" aria-label="Preset" data-i18n-attr="aria-label:topbar.presets">
           <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M4 7h10M18 7h2M4 17h2M10 17h10"/><circle cx="16" cy="7" r="2"/><circle cx="8" cy="17" r="2"/></svg>
           <span class="btn-label" data-i18n="topbar.presets">Preset</span>
@@ -175,7 +180,7 @@
     </div>
     <section class="about" aria-labelledby="h-about">
       <h2 id="h-about" data-i18n="about.title">Về trang này</h2>
-      <p data-i18n="about.p1">flux-rc do một người mê <a href="https://lux-rc.com/" rel="nofollow noopener noreferrer" data-i18n-slot="link" data-i18n="about.p1.link">Lux-RC</a> làm ra. Trang này không liên quan gì tới Lux-RC, không được Lux-RC bảo trợ hay công nhận, và mình không nhận là sở hữu bất cứ thứ gì thuộc về Lux-RC. Tên Lux-RC và NXS thuộc về chủ sở hữu tương ứng.</p>
+      <p data-i18n="about.p1">flux-rc do một người mê <a href="https://lux-rc.com/" rel="nofollow noopener noreferrer" data-i18n-slot="link" data-i18n="about.p1.link">Lux-RC</a> làm ra. Trang này không liên quan gì tới Lux-RC hay Oveready, không được họ bảo trợ hay công nhận, và mình không nhận là sở hữu bất cứ thứ gì thuộc về họ. Tên Lux-RC, NXS, Oveready, TorchLAB và BOSS thuộc về chủ sở hữu tương ứng.</p>
       <p data-i18n="about.p2">Bố cục một số phần cố tình bám theo <a href="https://lux-rc.com/content/NXS/NXS_R1_programming" rel="nofollow noopener noreferrer" data-i18n-slot="link" data-i18n="about.p2.link">chương trình nạp gốc của Lux-RC</a>, để màn hình và các cài đặt nằm đúng chỗ bạn đã quen.</p>
       <p data-i18n="about.p3">Đây là dự án sở thích phi thương mại: miễn phí, không quảng cáo, không tài khoản, và những gì bạn nhập chỉ nằm trong trình duyệt của bạn.</p>
       <p data-i18n="about.p4">Bạn tự chịu rủi ro khi dùng. Mình không chịu trách nhiệm cho đèn, pin hay bất kỳ thiết bị nào, cũng như mọi hư hỏng hay lỗi phát sinh khi dùng trang này.</p>

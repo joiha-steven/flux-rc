@@ -1,9 +1,9 @@
 // Vietnamese (tiếng Việt), written in everyday flashlight-hobby speech. Keys match en.js; see locales/README.md.
 export default {
   // <head> and the static page (index.html, filled by applyStatic)
-  'meta.title': 'flux-rc — nạp mode cho Lux-RC NXS R1 bằng ánh sáng',
-  'meta.description': 'Công cụ miễn phí, mã nguồn mở để nạp mode cho đèn dùng module Lux-RC 371/372 (NXS R1). Chọn mode và tuỳ chọn, áp đèn vào màn hình, ô vuông nhấp nháy sẽ nạp chương trình cho đèn.',
-  'topbar.tagline': 'Nạp mode cho NXS R1 bằng ánh sáng',
+  'meta.title': 'flux-rc — nạp mode cho đèn Lux-RC 371D / 372: BOSS 35, BOSS 70, Minion',
+  'meta.description': 'Công cụ miễn phí, mã nguồn mở để nạp mode cho đèn pin custom dùng module Lux-RC 371D, 371 v2.0 hoặc 372 v2.0, như Oveready BOSS 35/70, Future BOSS và Lux-RC Minion. Chọn mode và tuỳ chọn, áp đèn vào màn hình, ô vuông nhấp nháy sẽ nạp chương trình cho đèn.',
+  'topbar.tagline': 'Nạp mode cho đèn custom dùng module Lux-RC 371D, 371 v2.0 hoặc 372 v2.0, như Oveready TorchLAB BOSS 35/70, Future BOSS và Lux-RC Minion.',
   'topbar.presets': 'Preset',
   'topbar.saved': 'Đã lưu',
   'quick.label': 'Chọn nhanh',
@@ -17,7 +17,7 @@ export default {
 
   // About section. {link} is the link text from the matching .link key.
   'about.title': 'Về trang này',
-  'about.p1': 'flux-rc do một người mê {link} làm ra. Trang này không liên quan gì tới Lux-RC, không được Lux-RC bảo trợ hay công nhận, và mình không nhận là sở hữu bất cứ thứ gì thuộc về Lux-RC. Tên Lux-RC và NXS thuộc về chủ sở hữu tương ứng.',
+  'about.p1': 'flux-rc do một người mê {link} làm ra. Trang này không liên quan gì tới Lux-RC hay Oveready, không được họ bảo trợ hay công nhận, và mình không nhận là sở hữu bất cứ thứ gì thuộc về họ. Tên Lux-RC, NXS, Oveready, TorchLAB và BOSS thuộc về chủ sở hữu tương ứng.',
   'about.p1.link': 'Lux-RC',
   'about.p2': 'Bố cục một số phần cố tình bám theo {link}, để màn hình và các cài đặt nằm đúng chỗ bạn đã quen.',
   'about.p2.link': 'chương trình nạp gốc của Lux-RC',
@@ -345,7 +345,8 @@ export default {
   'program.ready.title': 'Chuẩn bị',
   'program.ready.brightness': 'Chỉnh độ sáng màn hình lên tối đa.',
   'program.ready.dark': 'Vào phòng tối: ánh nắng hay đèn phòng sáng có thể làm cảm biến bị loá.',
-  'program.ready.close': 'Áp sát đèn vào màn hình.',
+  'program.ready.close': 'Áp mặt kính đèn sát màn hình, ở giữa ô vuông nhấp nháy.',
+  'program.ready.phone': 'Trên điện thoại: đặt máy nằm phẳng trên bàn, dựng đèn úp đầu xuống ngay giữa ô vuông.',
   'program.ready.button': 'Sẵn sàng',
 
   // Program step 3: PIN setup

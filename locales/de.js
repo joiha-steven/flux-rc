@@ -2,9 +2,9 @@
 // Decimals keep the dot ("0.4 s") on purpose: numbers arrive from code and protocol tables that way.
 export default {
   // <head> and the static page (index.html, filled by applyStatic)
-  'meta.title': 'flux-rc — optischer Programmer für Lux-RC NXS R1',
-  'meta.description': 'Kostenloser Open-Source-Programmer für Lux-RC-LED-Module 371/372 (NXS R1). Wähl Modi und Optionen, halt die Taschenlampe an den Bildschirm, und das blinkende Quadrat programmiert sie.',
-  'topbar.tagline': 'Optischer NXS-R1-Programmer',
+  'meta.title': 'flux-rc — Programmer für Lux-RC 371D / 372: BOSS 35, BOSS 70, Minion (Fanprojekt)',
+  'meta.description': 'Kostenloser Open-Source-Programmer für Custom-Taschenlampen mit einem Lux-RC-LED-Modul 371D, 371 v2.0 oder 372 v2.0, etwa Oveready BOSS 35/70, Future BOSS und Lux-RC Minion. Wähl Modi und Optionen, halt die Lampe an den Bildschirm, und das blinkende Quadrat programmiert sie.',
+  'topbar.tagline': 'Programmer für Custom-Taschenlampen mit einem Lux-RC-LED-Modul 371D, 371 v2.0 oder 372 v2.0, etwa Oveready TorchLAB BOSS 35/70, Future BOSS und Lux-RC Minion.',
   'topbar.presets': 'Presets',
   'topbar.saved': 'Gespeichert',
   'quick.label': 'Schnellstart',
@@ -18,7 +18,7 @@ export default {
 
   // About section. {link} is the link text from the matching .link key.
   'about.title': 'Über diese Seite',
-  'about.p1': 'flux-rc stammt von einem Fan von {link}. Das Projekt steht in keinerlei Verbindung zu Lux-RC und ist von Lux-RC weder autorisiert noch unterstützt; ich erhebe keinerlei Anspruch auf irgendetwas, das Lux-RC gehört. Die Namen Lux-RC und NXS gehören ihren jeweiligen Inhabern.',
+  'about.p1': 'flux-rc stammt von einem Fan von {link}. Das Projekt steht in keinerlei Verbindung zu Lux-RC oder Oveready und ist von ihnen weder autorisiert noch unterstützt; ich erhebe keinerlei Anspruch auf irgendetwas, das ihnen gehört. Die Namen Lux-RC, NXS, Oveready, TorchLAB und BOSS gehören ihren jeweiligen Inhabern.',
   'about.p1.link': 'Lux-RC',
   'about.p2': 'Teile des Layouts folgen bewusst dem {link}, damit Ansichten und Einstellungen dort liegen, wo du sie erwartest.',
   'about.p2.link': 'originalen Lux-RC-Programmer',
@@ -346,7 +346,8 @@ export default {
   'program.ready.title': 'Vorbereiten',
   'program.ready.brightness': 'Stell die Bildschirmhelligkeit auf Maximum.',
   'program.ready.dark': 'Nimm einen dunklen Raum: Tageslicht oder helles Raumlicht kann den Sensor überstrahlen.',
-  'program.ready.close': 'Halt die Lampe direkt an den Bildschirm.',
+  'program.ready.close': 'Leg das Glas der Lampe flach auf den Bildschirm, mittig auf das blinkende Quadrat.',
+  'program.ready.phone': 'Am Handy: Leg es flach auf den Tisch und stell die Lampe mit dem Kopf nach unten mitten auf das Quadrat.',
   'program.ready.button': 'Ich bin bereit',
 
   // Program step 3: PIN setup

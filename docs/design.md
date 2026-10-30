@@ -92,8 +92,16 @@ A key left of the theme button (`#btn-lang`) shows the current language's short 
 with its own `lang`). Each language has its own page (`/`, `/vi/`, `/de/`, `/ja/`, `/zh/`, `/zh-hant/`, `/ru/`, `/ko/`, `/es/`). Choosing one saves
 `flux-rc:lang` and goes to that page, keeping the query and `#hash`; the autosaved config survives.
 On `/` only, an inline script in `index.html` sends visitors to their stored or browser language. Keyboard: Enter, Space or ArrowDown opens; arrows, Home, End move; Escape closes
-and returns focus; Tab and outside clicks close. Below 400 px the Presets and Saved keys shrink to 44 px
-icons so the wordmark and this key fit. Logic: `src/ui/language-menu.js`, `src/ui/i18n.js`. Ja, zh-Hans, zh-Hant and ko
+and returns focus; Tab and outside clicks close. The language key and the theme button form one joined pair
+(`.topbar-tools`), set apart from Presets and Saved; the menu drops down right-aligned under the pair
+so it stays on screen on phones.
+
+### Topbar layout
+
+Below 720 px the topbar has three rows: the wordmark with the language/theme pair, the tagline at
+full width, then Presets and Saved as two equal labelled keys. From 720 px it is one row: wordmark
+over tagline, then the pair, then Presets and Saved. Both are one grid in `styles/layout.css`
+(`.brand` is `display: contents`). Logic: `src/ui/language-menu.js`, `src/ui/i18n.js`. Ja, zh-Hans, zh-Hant and ko
 use system CJK fonts after Plum Sans (`styles/tokens.css`); Russian uses the bundled Plum Cyrillic subsets
 (`styles/fonts.css`, downloaded only when Cyrillic text is on the page).
 
@@ -273,7 +281,8 @@ and step 4), `src/ui/pin-rhythm.js` (the schedule, pure), `src/ui/beeper.js` (We
    held down at rest, a click is a quick release). The choice is stored in `localStorage` under
    `flux-rc:switch` and preselected next time; the step is still shown.
 2. **Get ready**: tips as plain text with an icon (not controls): screen brightness to maximum,
-   dark room, hold the light right against the screen, and "Light off: nothing pressed"
+   dark room, the lens flat against the screen and centred on the square, on phone-sized screens
+   (below 720 px) "lay the phone flat and stand the light head-down on the square", and "Light off: nothing pressed"
    (McClicky) or "Hold the button down so the light is off" (MOFF). The "I'm ready" tap is the user
    gesture that requests the screen wake lock and unlocks audio (iOS needs this). No fullscreen:
    switching to fullscreen on that tap surprised people.

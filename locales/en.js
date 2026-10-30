@@ -2,9 +2,9 @@
 // Keys are grouped by area; {name} is a placeholder filled in by the code. See locales/README.md.
 export default {
   // <head> and the static page (index.html, filled by applyStatic)
-  'meta.title': 'flux-rc — Lux-RC NXS R1 optical programmer (fan-made)',
-  'meta.description': 'Free, open-source programmer for Lux-RC 371/372 light engines (NXS R1). Pick modes and options, hold the flashlight against the screen, and the flashing square programs it.',
-  'topbar.tagline': 'NXS R1 optical programmer',
+  'meta.title': 'flux-rc — Lux-RC 371D / 372 programmer for BOSS 35, BOSS 70 and Minion (fan-made)',
+  'meta.description': 'Free, open-source programmer for custom flashlights with a Lux-RC 371D, 371 v2.0 or 372 v2.0 light engine, such as the Oveready BOSS 35/70, Future BOSS and Lux-RC Minion. Pick modes and options, hold the light against the screen, and the flashing square programs it.',
+  'topbar.tagline': 'Programmer for custom flashlights with a Lux-RC 371D, 371 v2.0 or 372 v2.0 light engine, such as the Oveready TorchLAB BOSS 35/70, Future BOSS and Lux-RC Minion.',
   'topbar.presets': 'Presets',
   'topbar.saved': 'Saved',
   'quick.label': 'Quick start',
@@ -18,7 +18,7 @@ export default {
 
   // About section. {link} is the link text from the matching .link key.
   'about.title': 'About this page',
-  'about.p1': 'flux-rc is made by a fan of {link}. It is not affiliated with, endorsed by or connected to Lux-RC in any way, and I claim no ownership of anything belonging to Lux-RC. The Lux-RC and NXS names belong to their respective owners.',
+  'about.p1': 'flux-rc is made by a fan of {link}. It is not affiliated with, endorsed by or connected to Lux-RC or Oveready in any way, and I claim no ownership of anything belonging to them. The Lux-RC, NXS, Oveready, TorchLAB and BOSS names belong to their respective owners.',
   'about.p1.link': 'Lux-RC',
   'about.p2': 'Parts of the layout deliberately follow the {link}, so the screens and settings sit where you already expect them.',
   'about.p2.link': 'original Lux-RC programmer',
@@ -346,7 +346,8 @@ export default {
   'program.ready.title': 'Get ready',
   'program.ready.brightness': 'Set the screen brightness to maximum.',
   'program.ready.dark': 'Use a dark room: daylight or bright room light can swamp the sensor.',
-  'program.ready.close': 'Hold the light right against the screen.',
+  'program.ready.close': 'Put the lens flat against the screen, centred on the flashing square.',
+  'program.ready.phone': 'On a phone: lay it flat on a table and stand the light head-down in the middle of the square.',
   'program.ready.button': "I'm ready",
 
   // Program step 3: PIN setup

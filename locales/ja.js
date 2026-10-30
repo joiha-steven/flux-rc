@@ -1,9 +1,9 @@
 // Japanese. Translates every key of en.js (the source of truth); see locales/README.md.
 export default {
   // <head> and the static page (index.html, filled by applyStatic)
-  'meta.title': 'flux-rc — Lux-RC NXS R1 光学式プログラマー',
-  'meta.description': 'Lux-RC 371/372 ライトエンジン（NXS R1）用の無料・オープンソースのプログラマー。モードとオプションを選び、ライトを画面に当てると、点滅する四角がライトにプログラムを書き込みます。',
-  'topbar.tagline': 'NXS R1 光学式プログラマー',
+  'meta.title': 'flux-rc — Lux-RC 371D / 372 プログラマー（BOSS 35・BOSS 70・Minion 対応、ファン製作）',
+  'meta.description': 'Lux-RC 371D・371 v2.0・372 v2.0 ライトエンジンを積んだカスタムライト（Oveready BOSS 35/70、Future BOSS、Lux-RC Minion など）用の無料・オープンソースのプログラマー。モードとオプションを選び、ライトを画面に当てると、点滅する四角がライトにプログラムを書き込みます。',
+  'topbar.tagline': 'Lux-RC 371D・371 v2.0・372 v2.0 ライトエンジンを積んだカスタムライト用のプログラマー。Oveready TorchLAB BOSS 35/70、Future BOSS、Lux-RC Minion など。',
   'topbar.presets': 'プリセット',
   'topbar.saved': '保存済み',
   'quick.label': 'クイックスタート',
@@ -17,7 +17,7 @@ export default {
 
   // About section. {link} is the link text from the matching .link key.
   'about.title': 'このページについて',
-  'about.p1': 'flux-rc は {link} のファンが作ったページです。Lux-RC とは提携・公認・関係のいずれもなく、Lux-RC に帰属するものについて一切の所有権を主張しません。Lux-RC と NXS の名称はそれぞれの権利者に帰属します。',
+  'about.p1': 'flux-rc は {link} のファンが作ったページです。Lux-RC および Oveready とは提携・公認・関係のいずれもなく、両社に帰属するものについて一切の所有権を主張しません。Lux-RC、NXS、Oveready、TorchLAB、BOSS の名称はそれぞれの権利者に帰属します。',
   'about.p1.link': 'Lux-RC',
   'about.p2': '画面や設定の位置を迷わないよう、レイアウトの一部は意図的に{link}に合わせています。',
   'about.p2.link': '純正の Lux-RC プログラマー',
@@ -345,7 +345,8 @@ export default {
   'program.ready.title': '準備',
   'program.ready.brightness': '画面の明るさを最大にします。',
   'program.ready.dark': '暗い部屋で行ってください。日光や明るい室内灯があると、センサーが信号を拾えなくなることがあります。',
-  'program.ready.close': 'ライトを画面にぴったりと当てます。',
+  'program.ready.close': 'ライトのレンズを画面にぴったり当て、点滅する四角の中央に合わせます。',
+  'program.ready.phone': 'スマホの場合：机に平らに置き、ライトのヘッドを下にして四角の中央に立てます。',
   'program.ready.button': '準備できました',
 
   // Program step 3: PIN setup

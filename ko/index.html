@@ -6,9 +6,9 @@
   <!--
     flux-rc is built by Steven Tran (Tran Manh Hung).
 
-    flux-rc is made by a fan of Lux-RC. It is not affiliated with, endorsed by or connected to Lux-RC in
-    any way, and I claim no ownership of anything belonging to Lux-RC. The Lux-RC and NXS names belong
-    to their respective owners.
+    flux-rc is made by a fan of Lux-RC. It is not affiliated with, endorsed by or connected to Lux-RC or
+    Oveready in any way, and I claim no ownership of anything belonging to them. The Lux-RC, NXS,
+    Oveready, TorchLAB and BOSS names belong to their respective owners.
 
     Parts of the layout deliberately follow the original Lux-RC programmer, so the screens and settings
     sit where you already expect them.
@@ -39,20 +39,20 @@
     try { var t = localStorage.getItem('flux-rc:theme'); if (t !== 'light' && t !== 'dark') t = matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark'; if (t === 'light' && CSS.supports('color', 'light-dark(red, red)')) document.documentElement.setAttribute('data-theme', t); } catch (e) {}
   </script>
   <!-- Text marked data-i18n / data-i18n-attr is English here. scripts/build-pages.mjs fills the same text from locales/ into vi/, de/, ja/, zh/, zh-hant/, ru/, ko/ and es/ (so crawlers and no-JS visitors get each language); src/ui/i18n.js applyStatic() does it again in the browser. test/i18n.test.js keeps this file equal to locales/en.js. -->
-  <title data-i18n="meta.title">flux-rc — Lux-RC NXS R1 광학 프로그래머 (팬 제작)</title>
-  <meta name="description" data-i18n-attr="content:meta.description" content="Lux-RC 371/372 LED 모듈(NXS R1)용 무료 오픈 소스 프로그래머예요. 모드와 옵션을 고르고 손전등을 화면에 대면, 깜빡이는 사각형이 설정을 써 넣어요.">
+  <title data-i18n="meta.title">flux-rc — Lux-RC 371D / 372 프로그래머: BOSS 35, BOSS 70, Minion (팬 제작)</title>
+  <meta name="description" data-i18n-attr="content:meta.description" content="Lux-RC 371D, 371 v2.0, 372 v2.0 LED 모듈이 들어간 커스텀 손전등(Oveready BOSS 35/70, Future BOSS, Lux-RC Minion 등)용 무료 오픈 소스 프로그래머예요. 모드와 옵션을 고르고 손전등을 화면에 대면, 깜빡이는 사각형이 설정을 써 넣어요.">
   <!-- Link previews (Facebook, chat apps) and search engines. The language pages get their own title, description and URL from the generator. -->
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://flux-rc.stevensdesk.com/ko/">
-  <meta property="og:title" content="flux-rc — Lux-RC NXS R1 광학 프로그래머 (팬 제작)">
-  <meta property="og:description" content="Lux-RC 371/372 LED 모듈(NXS R1)용 무료 오픈 소스 프로그래머예요. 모드와 옵션을 고르고 손전등을 화면에 대면, 깜빡이는 사각형이 설정을 써 넣어요.">
+  <meta property="og:title" content="flux-rc — Lux-RC 371D / 372 프로그래머: BOSS 35, BOSS 70, Minion (팬 제작)">
+  <meta property="og:description" content="Lux-RC 371D, 371 v2.0, 372 v2.0 LED 모듈이 들어간 커스텀 손전등(Oveready BOSS 35/70, Future BOSS, Lux-RC Minion 등)용 무료 오픈 소스 프로그래머예요. 모드와 옵션을 고르고 손전등을 화면에 대면, 깜빡이는 사각형이 설정을 써 넣어요.">
   <meta property="og:image" content="https://flux-rc.stevensdesk.com/assets/og.jpg">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
   <meta name="twitter:card" content="summary_large_image">
   <script type="application/ld+json">
   {"@context": "https://schema.org", "@type": "WebApplication", "name": "flux-rc", "url": "https://flux-rc.stevensdesk.com/ko/",
-   "description": "Free, open-source programmer for Lux-RC 371/372 light engines (NXS R1). Pick modes and options, hold the flashlight against the screen, and the flashing square programs it.",
+   "description": "Free, open-source programmer for custom flashlights with a Lux-RC 371D, 371 v2.0 or 372 v2.0 light engine, such as the Oveready BOSS 35/70, Future BOSS and Lux-RC Minion. Pick modes and options, hold the light against the screen, and the flashing square programs it.",
    "applicationCategory": "UtilitiesApplication", "operatingSystem": "Any (web browser)", "isAccessibleForFree": true,
    "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"},
    "inLanguage": ["en", "vi", "de", "ja", "zh-Hans"],
@@ -69,6 +69,7 @@
   <link rel="preload" href="/assets/fonts/plum-sans-latin.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="/assets/fonts/plum-mono-latin.woff2" as="font" type="font/woff2" crossorigin>
   <!-- Every module the page imports at startup, so they download in parallel instead of one import level at a time. Keep in sync with src/. -->
+  <link rel="modulepreload" href="/src/ui/boot.js">
   <link rel="modulepreload" href="/src/ui/app.js">
   <link rel="modulepreload" href="/locales/en.js">
   <link rel="modulepreload" href="/locales/ko.js">
@@ -113,8 +114,9 @@
   <link rel="modulepreload" href="/src/ui/storage.js">
   <link rel="modulepreload" href="/src/ui/theme.js">
   <link rel="modulepreload" href="/src/ui/toast.js">
-  <script type="module" src="/src/ui/app.js"></script>
-  <!-- Boot guard: app.js sets data-ready on <html> after its first render. If that never happens (a module failed to load, or 6 s pass) show a message instead of a blank page.
+  <script type="module" src="/src/ui/boot.js"></script>
+  <!-- Boot guard: app.js sets data-ready on <html> after its first render. If that never happens (a module failed to load, or 6 s pass) show a message above the page.
+       It only adds the message, so a page that is just slow still starts, and the message hides itself then (html[data-ready] .boot-failed in layout.css).
        It runs without modules, so its text is English only. i18n keys: boot.failed, boot.reload (test/i18n.test.js checks they match locales/en.js). -->
   <script>
     (function () {
@@ -127,7 +129,8 @@
         p.textContent = "flux-rc couldn't load. Check your connection and reload the page.";
         var b = document.createElement('button'); b.type = 'button'; b.className = 'btn btn-primary'; b.textContent = "Reload";
         b.onclick = function () { location.reload(); };
-        main.replaceChildren(p, b);
+        var box = document.createElement('div'); box.className = 'boot-failed'; box.append(p, b);
+        main.prepend(box);
       }
       setTimeout(fail, 6000);
       addEventListener('error', function (e) { if (e.target && e.target.tagName === 'SCRIPT') fail(); }, true);
@@ -140,13 +143,15 @@
     <div class="page topbar-inner">
       <div class="brand">
         <h1 class="wordmark">flux-rc</h1>
-        <p class="tagline" data-i18n="topbar.tagline">NXS R1 광학 프로그래머</p>
+        <p class="tagline" data-i18n="topbar.tagline">Lux-RC 371D, 371 v2.0, 372 v2.0 LED 모듈이 들어간 커스텀 손전등용 프로그래머예요. Oveready TorchLAB BOSS 35/70, Future BOSS, Lux-RC Minion 등.</p>
       </div>
-      <div class="topbar-actions">
+      <div class="topbar-tools">
         <div class="menu-wrap lang-wrap">
           <button type="button" class="btn btn-outline lang-btn" id="btn-lang" aria-label="언어" title="언어" data-i18n-attr="aria-label:lang.label;title:lang.label" aria-haspopup="menu" aria-expanded="false">한국어</button>
         </div>
         <button type="button" class="btn btn-outline btn-icon" id="btn-theme" aria-label="Switch to light theme" title="Switch to light theme"></button>
+      </div>
+      <div class="topbar-actions">
         <button type="button" class="btn btn-outline" id="btn-presets" aria-label="프리셋" data-i18n-attr="aria-label:topbar.presets">
           <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M4 7h10M18 7h2M4 17h2M10 17h10"/><circle cx="16" cy="7" r="2"/><circle cx="8" cy="17" r="2"/></svg>
           <span class="btn-label" data-i18n="topbar.presets">프리셋</span>
@@ -175,7 +180,7 @@
     </div>
     <section class="about" aria-labelledby="h-about">
       <h2 id="h-about" data-i18n="about.title">이 페이지에 대해</h2>
-      <p data-i18n="about.p1">flux-rc는 <a href="https://lux-rc.com/" rel="nofollow noopener noreferrer" data-i18n-slot="link" data-i18n="about.p1.link">Lux-RC</a>의 팬이 만들었어요. Lux-RC와 제휴 관계가 없고, Lux-RC의 보증을 받지 않았으며, 어떤 식으로도 Lux-RC와 관련이 없어요. 저는 Lux-RC에 속한 그 무엇에 대해서도 소유권을 주장하지 않아요. Lux-RC와 NXS라는 이름은 각 소유자의 것이에요.</p>
+      <p data-i18n="about.p1">flux-rc는 <a href="https://lux-rc.com/" rel="nofollow noopener noreferrer" data-i18n-slot="link" data-i18n="about.p1.link">Lux-RC</a>의 팬이 만들었어요. Lux-RC나 Oveready와 제휴 관계가 없고, 이들의 보증을 받지 않았으며, 어떤 식으로도 이들과 관련이 없어요. 저는 이들에게 속한 그 무엇에 대해서도 소유권을 주장하지 않아요. Lux-RC, NXS, Oveready, TorchLAB, BOSS라는 이름은 각 소유자의 것이에요.</p>
       <p data-i18n="about.p2">화면과 설정이 익숙한 자리에 있도록, 레이아웃 일부는 일부러 <a href="https://lux-rc.com/content/NXS/NXS_R1_programming" rel="nofollow noopener noreferrer" data-i18n-slot="link" data-i18n="about.p2.link">공식 Lux-RC 프로그래머</a>의 배치를 따랐어요.</p>
       <p data-i18n="about.p3">비상업적인 취미 프로젝트예요. 무료이고, 광고도 계정도 없으며, 입력한 내용은 브라우저 밖으로 나가지 않아요.</p>
       <p data-i18n="about.p4">사용에 따른 책임은 본인에게 있어요. 라이트, 배터리, 그 밖의 어떤 기기에 대해서도, 그리고 이 페이지를 사용해서 생기는 어떤 손상이나 오류에 대해서도 저는 책임지지 않아요.</p>

@@ -3,9 +3,9 @@
 // from code and protocol tables that way. Quotes are “…” as in en.js.
 export default {
   // <head> and the static page (index.html, filled by applyStatic)
-  'meta.title': 'flux-rc — programador óptico para Lux-RC NXS R1 (hecho por un fan)',
-  'meta.description': 'Programador gratuito y de código abierto para los módulos LED Lux-RC 371/372 (NXS R1). Elige modos y opciones, apoya la linterna contra la pantalla y el cuadrado parpadeante la programa.',
-  'topbar.tagline': 'Programador óptico NXS R1',
+  'meta.title': 'flux-rc — programador para Lux-RC 371D / 372: BOSS 35, BOSS 70 y Minion (hecho por un fan)',
+  'meta.description': 'Programador gratuito y de código abierto para linternas custom con un módulo LED Lux-RC 371D, 371 v2.0 o 372 v2.0, como la Oveready BOSS 35/70, la Future BOSS y la Lux-RC Minion. Elige modos y opciones, apoya la linterna contra la pantalla y el cuadrado parpadeante la programa.',
+  'topbar.tagline': 'Programador para linternas custom con un módulo LED Lux-RC 371D, 371 v2.0 o 372 v2.0, como la Oveready TorchLAB BOSS 35/70, la Future BOSS y la Lux-RC Minion.',
   'topbar.presets': 'Presets',
   'topbar.saved': 'Guardados',
   'quick.label': 'Inicio rápido',
@@ -19,7 +19,7 @@ export default {
 
   // About section. {link} is the link text from the matching .link key.
   'about.title': 'Sobre esta página',
-  'about.p1': 'flux-rc es obra de un fan de {link}. No está afiliado ni vinculado de ninguna manera con Lux-RC, ni cuenta con su respaldo, y no reclamo la propiedad de nada que pertenezca a Lux-RC. Los nombres Lux-RC y NXS pertenecen a sus respectivos propietarios.',
+  'about.p1': 'flux-rc es obra de un fan de {link}. No está afiliado ni vinculado de ninguna manera con Lux-RC ni con Oveready, ni cuenta con su respaldo, y no reclamo la propiedad de nada que les pertenezca. Los nombres Lux-RC, NXS, Oveready, TorchLAB y BOSS pertenecen a sus respectivos propietarios.',
   'about.p1.link': 'Lux-RC',
   'about.p2': 'Parte del diseño sigue a propósito el del {link}, para que las pantallas y los ajustes estén donde ya esperas encontrarlos.',
   'about.p2.link': 'programador original de Lux-RC',
@@ -347,7 +347,8 @@ export default {
   'program.ready.title': 'Prepárate',
   'program.ready.brightness': 'Sube el brillo de la pantalla al máximo.',
   'program.ready.dark': 'Busca un lugar oscuro: la luz del día o una luz fuerte en la habitación pueden saturar el sensor.',
-  'program.ready.close': 'Apoya la linterna directamente contra la pantalla.',
+  'program.ready.close': 'Apoya el cristal de la linterna plano contra la pantalla, en el centro del cuadrado parpadeante.',
+  'program.ready.phone': 'En el móvil: déjalo plano sobre la mesa y pon la linterna boca abajo en el centro del cuadrado.',
   'program.ready.button': '¡Listo!',
 
   // Program step 3: PIN setup

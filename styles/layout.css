@@ -1,15 +1,34 @@
 /* Page frame: header, quick start, behaviour, footer and the sticky bottom bar. */
 .page { max-width: 1080px; margin: 0 auto; padding-left: var(--gutter); padding-right: var(--gutter); }
-.topbar-inner { display: flex; align-items: center; justify-content: space-between; gap: var(--sp-2); padding-top: var(--sp-3); padding-bottom: var(--sp-3); }
-.brand { min-width: 0; }
-/* On phones the brand/actions gap is one step smaller so the wider 日本語 language key still leaves the wordmark its full width. */
-@media (max-width: 420px) { .topbar-inner { gap: var(--sp-1); } }
-.wordmark { white-space: nowrap; font: 600 28px/32px var(--mono); letter-spacing: 0.02em; color: var(--accent-strong); }
-.tagline { color: var(--muted); font-size: var(--fs-small); line-height: var(--lh-small); }
-.topbar-actions { display: flex; gap: var(--sp-1); flex: none; }
-/* Language button: the short label (EN, 日本語) sits in a key as wide as its text; the menu drops down from it. */
-.topbar-actions .lang-btn { padding: 0 var(--sp-1); font-size: var(--fs-small); white-space: nowrap; }
-.menu.lang-menu { top: calc(100% + var(--sp-1)); bottom: auto; left: 0; right: auto; min-width: 160px; }
+/* Topbar grid. Phones: wordmark and the language/theme pair on one row, the tagline under them at full
+   width, then Presets and Saved as two labelled keys. From 720 px: one row, tagline under the wordmark.
+   .brand is display: contents so its wordmark and tagline are placed by this grid. */
+.topbar-inner {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  grid-template-areas: "mark tools" "tag tag" "acts acts";
+  align-items: center;
+  column-gap: var(--sp-2);
+  padding-top: var(--sp-2);
+  padding-bottom: var(--sp-2);
+}
+.brand { display: contents; }
+.wordmark { grid-area: mark; white-space: nowrap; font: 600 28px/32px var(--mono); letter-spacing: 0.02em; color: var(--accent-strong); }
+.tagline { grid-area: tag; max-width: 72ch; margin-top: 4px; color: var(--muted); font-size: var(--fs-small); line-height: var(--lh-small); }
+.topbar-tools { grid-area: tools; }
+.topbar-actions { grid-area: acts; display: grid; grid-template-columns: 1fr 1fr; gap: var(--sp-1); margin-top: var(--sp-2); }
+@media (min-width: 720px) {
+  .topbar-inner { grid-template-columns: minmax(0, 1fr) auto auto; grid-template-areas: "mark tools acts" "tag tools acts"; padding-top: var(--sp-3); padding-bottom: var(--sp-3); }
+  .topbar-actions { display: flex; margin-top: 0; }
+}
+/* Language and theme are page settings, not actions: one joined pair of keys, set apart from Presets and Saved.
+   The pair is the menu's anchor, so the language menu drops down right-aligned under it and stays on screen on phones. */
+.topbar-tools { position: relative; display: flex; }
+.topbar-tools .lang-wrap { position: static; display: flex; }
+.topbar-tools .btn { box-shadow: inset 0 1px 0 var(--key-hi); }
+.topbar-tools .lang-btn { min-width: 52px; padding: 0 var(--sp-1); border-radius: var(--radius-s) 0 0 var(--radius-s); font-size: var(--fs-small); white-space: nowrap; }
+.topbar-tools #btn-theme { margin-left: -1px; border-radius: 0 var(--radius-s) var(--radius-s) 0; }
+.menu.lang-menu { top: calc(100% + var(--sp-1)); bottom: auto; left: auto; right: 0; min-width: 160px; }
 .lang-menu[hidden] { display: none; }
 .lang-item { display: flex; align-items: center; justify-content: space-between; gap: var(--sp-2); }
 .lang-item[aria-checked="true"] { color: var(--accent-strong); }
@@ -17,6 +36,9 @@
 
 .main { display: grid; gap: var(--sp-4); padding-bottom: calc(var(--bar-h) + var(--sp-4)); }
 .main > * { min-width: 0; }
+/* The boot guard's message (index.html): shown while the app has not started, gone once it has. */
+.boot-failed { display: grid; gap: var(--sp-2); justify-items: start; }
+html[data-ready] .boot-failed { display: none; }
 
 .pills { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); grid-auto-rows: 1fr; gap: var(--sp-1); }
 .pill {

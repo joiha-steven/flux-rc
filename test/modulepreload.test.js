@@ -13,11 +13,16 @@ const html = readFileSync(join(root, 'index.html'), 'utf8');
 // Paths in the page are root-absolute (/src/ui/app.js) so the pages in vi/, de/... work too.
 const fromRoot = (href) => href.replace(/^\//, '');
 
-/** Static imports of one module, as repo-relative paths. Dynamic import() is not followed. */
+/**
+ * Imports of one module, as repo-relative paths: static imports, plus dynamic import() with a literal path
+ * (boot.js starts app.js that way, so app.js is still part of startup). A template path such as the
+ * locale import in i18n.js is not followed.
+ */
 function importsOf(file) {
   const source = readFileSync(join(root, file), 'utf8');
   const specifiers = [...source.matchAll(/^\s*(?:import|export)\s[^'"]*?from\s*['"](\.[^'"]+)['"]/gm)]
     .concat([...source.matchAll(/^\s*import\s*['"](\.[^'"]+)['"]/gm)])
+    .concat([...source.matchAll(/\bimport\(\s*['"](\.[^'"]+)['"]\s*\)/g)])
     .map((m) => m[1]);
   return specifiers.map((s) => relative(root, normalize(join(root, dirname(file), s))));
 }

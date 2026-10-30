@@ -7,5 +7,8 @@
     "directory": "./",
     "html_handling": "auto-trailing-slash",
     "not_found_handling": "none"
-  }
+  },
+  // Branch previews (Workers Builds runs `npx wrangler preview` on other branches) need this block; it can stay
+  // empty because assets and compatibility settings at the top level apply to previews too.
+  "previews": {}
 }
