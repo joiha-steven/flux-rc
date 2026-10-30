@@ -6,9 +6,9 @@
   <!--
     flux-rc is built by Steven Tran (Tran Manh Hung).
 
-    flux-rc is made by a fan of Lux-RC. It is not affiliated with, endorsed by or connected to Lux-RC in
-    any way, and I claim no ownership of anything belonging to Lux-RC. The Lux-RC and NXS names belong
-    to their respective owners.
+    flux-rc is made by a fan of Lux-RC. It is not affiliated with, endorsed by or connected to Lux-RC or
+    Oveready in any way, and I claim no ownership of anything belonging to them. The Lux-RC, NXS,
+    Oveready, TorchLAB and BOSS names belong to their respective owners.
 
     Parts of the layout deliberately follow the original Lux-RC programmer, so the screens and settings
     sit where you already expect them.
@@ -39,20 +39,20 @@
     try { var t = localStorage.getItem('flux-rc:theme'); if (t !== 'light' && t !== 'dark') t = matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark'; if (t === 'light' && CSS.supports('color', 'light-dark(red, red)')) document.documentElement.setAttribute('data-theme', t); } catch (e) {}
   </script>
   <!-- Text marked data-i18n / data-i18n-attr is English here. scripts/build-pages.mjs fills the same text from locales/ into vi/, de/, ja/, zh/, zh-hant/, ru/, ko/ and es/ (so crawlers and no-JS visitors get each language); src/ui/i18n.js applyStatic() does it again in the browser. test/i18n.test.js keeps this file equal to locales/en.js. -->
-  <title data-i18n="meta.title">flux-rc — optischer Programmer für Lux-RC NXS R1</title>
-  <meta name="description" data-i18n-attr="content:meta.description" content="Kostenloser Open-Source-Programmer für Lux-RC-LED-Module 371/372 (NXS R1). Wähl Modi und Optionen, halt die Taschenlampe an den Bildschirm, und das blinkende Quadrat programmiert sie.">
+  <title data-i18n="meta.title">flux-rc — Programmer für Lux-RC 371D / 372: BOSS 35, BOSS 70, Minion (Fanprojekt)</title>
+  <meta name="description" data-i18n-attr="content:meta.description" content="Kostenloser Open-Source-Programmer für Custom-Taschenlampen mit einem Lux-RC-LED-Modul 371D, 371 v2.0 oder 372 v2.0, etwa Oveready BOSS 35/70, Future BOSS und Lux-RC Minion. Wähl Modi und Optionen, halt die Lampe an den Bildschirm, und das blinkende Quadrat programmiert sie.">
   <!-- Link previews (Facebook, chat apps) and search engines. The language pages get their own title, description and URL from the generator. -->
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://flux-rc.stevensdesk.com/de/">
-  <meta property="og:title" content="flux-rc — optischer Programmer für Lux-RC NXS R1">
-  <meta property="og:description" content="Kostenloser Open-Source-Programmer für Lux-RC-LED-Module 371/372 (NXS R1). Wähl Modi und Optionen, halt die Taschenlampe an den Bildschirm, und das blinkende Quadrat programmiert sie.">
+  <meta property="og:title" content="flux-rc — Programmer für Lux-RC 371D / 372: BOSS 35, BOSS 70, Minion (Fanprojekt)">
+  <meta property="og:description" content="Kostenloser Open-Source-Programmer für Custom-Taschenlampen mit einem Lux-RC-LED-Modul 371D, 371 v2.0 oder 372 v2.0, etwa Oveready BOSS 35/70, Future BOSS und Lux-RC Minion. Wähl Modi und Optionen, halt die Lampe an den Bildschirm, und das blinkende Quadrat programmiert sie.">
   <meta property="og:image" content="https://flux-rc.stevensdesk.com/assets/og.jpg">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
   <meta name="twitter:card" content="summary_large_image">
   <script type="application/ld+json">
   {"@context": "https://schema.org", "@type": "WebApplication", "name": "flux-rc", "url": "https://flux-rc.stevensdesk.com/de/",
-   "description": "Free, open-source programmer for Lux-RC 371/372 light engines (NXS R1). Pick modes and options, hold the flashlight against the screen, and the flashing square programs it.",
+   "description": "Free, open-source programmer for custom flashlights with a Lux-RC 371D, 371 v2.0 or 372 v2.0 light engine, such as the Oveready BOSS 35/70, Future BOSS and Lux-RC Minion. Pick modes and options, hold the light against the screen, and the flashing square programs it.",
    "applicationCategory": "UtilitiesApplication", "operatingSystem": "Any (web browser)", "isAccessibleForFree": true,
    "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"},
    "inLanguage": ["en", "vi", "de", "ja", "zh-Hans"],
@@ -140,7 +140,7 @@
     <div class="page topbar-inner">
       <div class="brand">
         <h1 class="wordmark">flux-rc</h1>
-        <p class="tagline" data-i18n="topbar.tagline">Optischer NXS-R1-Programmer</p>
+        <p class="tagline" data-i18n="topbar.tagline">Programmer für Custom-Taschenlampen mit einem Lux-RC-LED-Modul 371D, 371 v2.0 oder 372 v2.0, etwa Oveready TorchLAB BOSS 35/70, Future BOSS und Lux-RC Minion.</p>
       </div>
       <div class="topbar-tools">
         <div class="menu-wrap lang-wrap">
@@ -177,7 +177,7 @@
     </div>
     <section class="about" aria-labelledby="h-about">
       <h2 id="h-about" data-i18n="about.title">Über diese Seite</h2>
-      <p data-i18n="about.p1">flux-rc stammt von einem Fan von <a href="https://lux-rc.com/" rel="nofollow noopener noreferrer" data-i18n-slot="link" data-i18n="about.p1.link">Lux-RC</a>. Das Projekt steht in keinerlei Verbindung zu Lux-RC und ist von Lux-RC weder autorisiert noch unterstützt; ich erhebe keinerlei Anspruch auf irgendetwas, das Lux-RC gehört. Die Namen Lux-RC und NXS gehören ihren jeweiligen Inhabern.</p>
+      <p data-i18n="about.p1">flux-rc stammt von einem Fan von <a href="https://lux-rc.com/" rel="nofollow noopener noreferrer" data-i18n-slot="link" data-i18n="about.p1.link">Lux-RC</a>. Das Projekt steht in keinerlei Verbindung zu Lux-RC oder Oveready und ist von ihnen weder autorisiert noch unterstützt; ich erhebe keinerlei Anspruch auf irgendetwas, das ihnen gehört. Die Namen Lux-RC, NXS, Oveready, TorchLAB und BOSS gehören ihren jeweiligen Inhabern.</p>
       <p data-i18n="about.p2">Teile des Layouts folgen bewusst dem <a href="https://lux-rc.com/content/NXS/NXS_R1_programming" rel="nofollow noopener noreferrer" data-i18n-slot="link" data-i18n="about.p2.link">originalen Lux-RC-Programmer</a>, damit Ansichten und Einstellungen dort liegen, wo du sie erwartest.</p>
       <p data-i18n="about.p3">Ein nichtkommerzielles Hobbyprojekt: kostenlos, ohne Werbung, ohne Anmeldung, und nichts, was du eingibst, verlässt deinen Browser.</p>
       <p data-i18n="about.p4">Benutzung auf eigene Gefahr. Ich übernehme keine Verantwortung für Taschenlampen, Akkus oder andere Geräte und auch nicht für Schäden oder Fehler, die durch die Nutzung dieser Seite entstehen.</p>

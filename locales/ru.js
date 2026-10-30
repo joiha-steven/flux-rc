@@ -2,9 +2,9 @@
 // Decimals keep the dot ("0.4 s") and units stay Latin on purpose: numbers arrive from code and protocol tables that way.
 export default {
   // <head> and the static page (index.html, filled by applyStatic)
-  'meta.title': 'flux-rc — оптический программатор Lux-RC NXS R1 (фанатский проект)',
-  'meta.description': 'Бесплатный программатор с открытым кодом для светодиодных модулей Lux-RC 371/372 (NXS R1). Выберите режимы и опции, приложите фонарь к экрану — мигающий квадрат его запрограммирует.',
-  'topbar.tagline': 'Оптический программатор NXS R1',
+  'meta.title': 'flux-rc — программатор Lux-RC 371D / 372 для BOSS 35, BOSS 70 и Minion (фанатский проект)',
+  'meta.description': 'Бесплатный программатор с открытым кодом для кастомных фонарей со светодиодным модулем Lux-RC 371D, 371 v2.0 или 372 v2.0, например Oveready BOSS 35/70, Future BOSS и Lux-RC Minion. Выберите режимы и опции, приложите фонарь к экрану — мигающий квадрат его запрограммирует.',
+  'topbar.tagline': 'Программатор для кастомных фонарей с модулем Lux-RC 371D, 371 v2.0 или 372 v2.0, например Oveready TorchLAB BOSS 35/70, Future BOSS и Lux-RC Minion.',
   'topbar.presets': 'Пресеты',
   'topbar.saved': 'Сохранённые',
   'quick.label': 'Быстрый старт',
@@ -18,7 +18,7 @@ export default {
 
   // About section. {link} is the link text from the matching .link key.
   'about.title': 'Об этой странице',
-  'about.p1': 'flux-rc сделал фанат {link}. Проект не аффилирован с компанией Lux-RC, не одобрен ею и никак с ней не связан; я не заявляю прав ни на что из принадлежащего Lux-RC. Названия Lux-RC и NXS принадлежат их соответствующим владельцам.',
+  'about.p1': 'flux-rc сделал фанат {link}. Проект не аффилирован с Lux-RC или Oveready, не одобрен ими и никак с ними не связан; я не заявляю прав ни на что из принадлежащего им. Названия Lux-RC, NXS, Oveready, TorchLAB и BOSS принадлежат их соответствующим владельцам.',
   'about.p1.link': 'Lux-RC',
   'about.p2': 'Часть интерфейса намеренно повторяет {link}, чтобы экраны и настройки были там, где вы привыкли их видеть.',
   'about.p2.link': 'оригинальный программатор Lux-RC',

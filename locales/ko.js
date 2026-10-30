@@ -1,9 +1,9 @@
 // Korean. Translates every key of en.js (the source of truth); see locales/README.md.
 export default {
   // <head> and the static page (index.html, filled by applyStatic)
-  'meta.title': 'flux-rc — Lux-RC NXS R1 광학 프로그래머 (팬 제작)',
-  'meta.description': 'Lux-RC 371/372 LED 모듈(NXS R1)용 무료 오픈 소스 프로그래머예요. 모드와 옵션을 고르고 손전등을 화면에 대면, 깜빡이는 사각형이 설정을 써 넣어요.',
-  'topbar.tagline': 'NXS R1 광학 프로그래머',
+  'meta.title': 'flux-rc — Lux-RC 371D / 372 프로그래머: BOSS 35, BOSS 70, Minion (팬 제작)',
+  'meta.description': 'Lux-RC 371D, 371 v2.0, 372 v2.0 LED 모듈이 들어간 커스텀 손전등(Oveready BOSS 35/70, Future BOSS, Lux-RC Minion 등)용 무료 오픈 소스 프로그래머예요. 모드와 옵션을 고르고 손전등을 화면에 대면, 깜빡이는 사각형이 설정을 써 넣어요.',
+  'topbar.tagline': 'Lux-RC 371D, 371 v2.0, 372 v2.0 LED 모듈이 들어간 커스텀 손전등용 프로그래머예요. Oveready TorchLAB BOSS 35/70, Future BOSS, Lux-RC Minion 등.',
   'topbar.presets': '프리셋',
   'topbar.saved': '저장 목록',
   'quick.label': '빠른 시작',
@@ -17,7 +17,7 @@ export default {
 
   // About section. {link} is the link text from the matching .link key.
   'about.title': '이 페이지에 대해',
-  'about.p1': 'flux-rc는 {link}의 팬이 만들었어요. Lux-RC와 제휴 관계가 없고, Lux-RC의 보증을 받지 않았으며, 어떤 식으로도 Lux-RC와 관련이 없어요. 저는 Lux-RC에 속한 그 무엇에 대해서도 소유권을 주장하지 않아요. Lux-RC와 NXS라는 이름은 각 소유자의 것이에요.',
+  'about.p1': 'flux-rc는 {link}의 팬이 만들었어요. Lux-RC나 Oveready와 제휴 관계가 없고, 이들의 보증을 받지 않았으며, 어떤 식으로도 이들과 관련이 없어요. 저는 이들에게 속한 그 무엇에 대해서도 소유권을 주장하지 않아요. Lux-RC, NXS, Oveready, TorchLAB, BOSS라는 이름은 각 소유자의 것이에요.',
   'about.p1.link': 'Lux-RC',
   'about.p2': '화면과 설정이 익숙한 자리에 있도록, 레이아웃 일부는 일부러 {link}의 배치를 따랐어요.',
   'about.p2.link': '공식 Lux-RC 프로그래머',
