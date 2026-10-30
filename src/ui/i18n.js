@@ -73,18 +73,24 @@ export function setLanguage(code) {
 
 // The page decides its language: each language has its own URL and its static HTML carries <html lang>.
 // Storage and the browser's languages only matter on "/", where the inline script in index.html redirects.
-// Only the chosen locale is downloaded; English is always bundled as the fallback.
+// Only the chosen locale is downloaded, by loadLocale() which boot.js awaits before app.js runs; English is
+// always bundled as the fallback. No top-level await here: 19 modules import this one, and a shared
+// module that awaits has tripped engine bugs (Safari); the non-English pages failed to start there.
 // Outside a browser (the tests) there is no page, so it stays English.
 const pageLang = typeof document === 'undefined' ? null : document.documentElement.lang;
-let current = CODES.includes(pageLang) ? pageLang : FALLBACK;
+let current = FALLBACK;
 /** Locales loaded so far (code -> strings). */
 export const LOCALES = { en };
-if (current !== FALLBACK) {
+
+/** Loads the page's locale (if not English). Resolves once t() speaks it; falls back to English on failure. */
+export async function loadLocale() {
+  if (!CODES.includes(pageLang) || pageLang === FALLBACK || pageLang === current) return;
   try {
-    LOCALES[current] = (await import(`../../locales/${current}.js`)).default;
+    LOCALES[pageLang] = (await import(`../../locales/${pageLang}.js`)).default;
+    current = pageLang;
+    translator = createTranslator(LOCALES, current);
   } catch (error) {
-    console.warn(`flux-rc: could not load the "${current}" texts, using English`, error);
-    current = FALLBACK;
+    console.warn(`flux-rc: could not load the "${pageLang}" texts, using English`, error);
   }
 }
 
@@ -129,8 +135,10 @@ export function createTranslator(locales, code, fallback = FALLBACK) {
   return { t, tParts, has, locale: code };
 }
 
-const translator = createTranslator(LOCALES, current);
-export const { t, tParts, has } = translator;
+let translator = createTranslator(LOCALES, current);
+export const t = (key, params) => translator.t(key, params);
+export const tParts = (key, params) => translator.tParts(key, params);
+export const has = (key) => translator.has(key);
 export const locale = () => current;
 
 /**

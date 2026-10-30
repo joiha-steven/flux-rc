@@ -69,6 +69,7 @@
   <link rel="preload" href="/assets/fonts/plum-sans-latin.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="/assets/fonts/plum-mono-latin.woff2" as="font" type="font/woff2" crossorigin>
   <!-- Every module the page imports at startup, so they download in parallel instead of one import level at a time. Keep in sync with src/. -->
+  <link rel="modulepreload" href="/src/ui/boot.js">
   <link rel="modulepreload" href="/src/ui/app.js">
   <link rel="modulepreload" href="/locales/en.js">
   <link rel="modulepreload" href="/locales/de.js">
@@ -113,8 +114,9 @@
   <link rel="modulepreload" href="/src/ui/storage.js">
   <link rel="modulepreload" href="/src/ui/theme.js">
   <link rel="modulepreload" href="/src/ui/toast.js">
-  <script type="module" src="/src/ui/app.js"></script>
-  <!-- Boot guard: app.js sets data-ready on <html> after its first render. If that never happens (a module failed to load, or 6 s pass) show a message instead of a blank page.
+  <script type="module" src="/src/ui/boot.js"></script>
+  <!-- Boot guard: app.js sets data-ready on <html> after its first render. If that never happens (a module failed to load, or 6 s pass) show a message above the page.
+       It only adds the message, so a page that is just slow still starts, and the message hides itself then (html[data-ready] .boot-failed in layout.css).
        It runs without modules, so its text is English only. i18n keys: boot.failed, boot.reload (test/i18n.test.js checks they match locales/en.js). -->
   <script>
     (function () {
@@ -127,7 +129,8 @@
         p.textContent = "flux-rc couldn't load. Check your connection and reload the page.";
         var b = document.createElement('button'); b.type = 'button'; b.className = 'btn btn-primary'; b.textContent = "Reload";
         b.onclick = function () { location.reload(); };
-        main.replaceChildren(p, b);
+        var box = document.createElement('div'); box.className = 'boot-failed'; box.append(p, b);
+        main.prepend(box);
       }
       setTimeout(fail, 6000);
       addEventListener('error', function (e) { if (e.target && e.target.tagName === 'SCRIPT') fail(); }, true);

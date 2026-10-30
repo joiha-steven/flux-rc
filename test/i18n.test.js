@@ -206,3 +206,43 @@ test('presets read their name and description from the locale', () => {
   }
   assert.equal(PRESETS.find((p) => p.id === 'oem-mark').name, 'OEM_Mark');
 });
+
+// Startup modules must not use top-level await: a shared module that awaits stopped the non-English pages
+// from starting in Safari. The locale is loaded by loadLocale(), which boot.js waits for with .then().
+/** Lines of `source` with an `await` outside any function body (a rough scan: comments and strings are blanked). */
+function topLevelAwaits(source) {
+  const code = source
+    .replace(/\/\*[\s\S]*?\*\//g, (m) => m.replace(/[^\n]/g, ' '))
+    .replace(/\/\/[^\n]*/g, '')
+    .replace(/'(?:[^'\\\n]|\\.)*'|"(?:[^"\\\n]|\\.)*"|`(?:[^`\\]|\\.)*`/g, (m) => m.replace(/[^\n]/g, ' '));
+  const stack = [];
+  const found = [];
+  let segment = '';
+  let line = 1;
+  for (let i = 0; i < code.length; i++) {
+    const c = code[i];
+    if (c === '\n') line++;
+    if (c === '{') {
+      const head = segment.trimEnd();
+      const fn = /=>$/.test(head) || /\bfunction\b[^{}]*$/.test(head) || /\b(?!if\b|for\b|while\b|switch\b|catch\b|with\b)\w+\s*\([^()]*\)$/.test(head);
+      stack.push(fn);
+      segment = '';
+    } else if (c === '}') {
+      stack.pop();
+      segment = '';
+    } else if (c === ';') {
+      segment = '';
+    } else {
+      segment += c;
+      if (code.startsWith('await', i) && !/\w/.test(code[i - 1] ?? '') && !/\w/.test(code[i + 5] ?? '') && !stack.includes(true)) found.push(line);
+    }
+  }
+  return found;
+}
+
+test('no startup module uses top-level await', () => {
+  const dir = join(root, 'src');
+  const files = readdirSync(dir, { recursive: true }).filter((f) => f.endsWith('.js'));
+  assert.deepEqual(topLevelAwaits('const a = await b;\nif (x) { await y; }\nasync function f() { await z; }\nconst g = async () => { await w; };'), [1, 2]);
+  for (const file of files) assert.deepEqual(topLevelAwaits(readFileSync(join(dir, file), 'utf8')), [], `top-level await in src/${file}`);
+});

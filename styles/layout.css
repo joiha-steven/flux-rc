@@ -36,6 +36,9 @@
 
 .main { display: grid; gap: var(--sp-4); padding-bottom: calc(var(--bar-h) + var(--sp-4)); }
 .main > * { min-width: 0; }
+/* The boot guard's message (index.html): shown while the app has not started, gone once it has. */
+.boot-failed { display: grid; gap: var(--sp-2); justify-items: start; }
+html[data-ready] .boot-failed { display: none; }
 
 .pills { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); grid-auto-rows: 1fr; gap: var(--sp-1); }
 .pill {
