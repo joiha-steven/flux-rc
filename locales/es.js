@@ -347,7 +347,8 @@ export default {
   'program.ready.title': 'Prepárate',
   'program.ready.brightness': 'Sube el brillo de la pantalla al máximo.',
   'program.ready.dark': 'Busca un lugar oscuro: la luz del día o una luz fuerte en la habitación pueden saturar el sensor.',
-  'program.ready.close': 'Apoya la linterna directamente contra la pantalla.',
+  'program.ready.close': 'Apoya el cristal de la linterna plano contra la pantalla, en el centro del cuadrado parpadeante.',
+  'program.ready.phone': 'En el móvil: déjalo plano sobre la mesa y pon la linterna boca abajo en el centro del cuadrado.',
   'program.ready.button': '¡Listo!',
 
   // Program step 3: PIN setup

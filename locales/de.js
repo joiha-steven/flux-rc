@@ -346,7 +346,8 @@ export default {
   'program.ready.title': 'Vorbereiten',
   'program.ready.brightness': 'Stell die Bildschirmhelligkeit auf Maximum.',
   'program.ready.dark': 'Nimm einen dunklen Raum: Tageslicht oder helles Raumlicht kann den Sensor überstrahlen.',
-  'program.ready.close': 'Halt die Lampe direkt an den Bildschirm.',
+  'program.ready.close': 'Leg das Glas der Lampe flach auf den Bildschirm, mittig auf das blinkende Quadrat.',
+  'program.ready.phone': 'Am Handy: Leg es flach auf den Tisch und stell die Lampe mit dem Kopf nach unten mitten auf das Quadrat.',
   'program.ready.button': 'Ich bin bereit',
 
   // Program step 3: PIN setup

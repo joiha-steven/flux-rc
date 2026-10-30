@@ -76,13 +76,14 @@ export function readyStep(ctx) {
     ['sun', t('program.ready.brightness')],
     ['moon', t('program.ready.dark')],
     ['closer', t('program.ready.close')],
+    ['phone', t('program.ready.phone'), 'tip-phone'],
     ['power', switchText(ctx.state.switchType, 'rest')],
   ];
   ctx.render({
     step: 2,
     title: t('program.ready.title'),
     body: [
-      h('ul', { class: 'program-tips' }, tips.map(([name, text]) => h('li', {}, icon(name, 18), h('span', {}, text)))),
+      h('ul', { class: 'program-tips' }, tips.map(([name, text, cls]) => h('li', { class: cls }, icon(name, 18), h('span', {}, text)))),
       h('div', { class: 'program-buttons' },
         h('button', { type: 'button', class: 'btn btn-primary', 'data-ready': '', onclick: () => { ctx.ready(); ctx.go('pin'); } }, t('program.ready.button')),
         backButton(ctx, 'switch')),

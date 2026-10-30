@@ -16,6 +16,8 @@
 .program-tips li { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: var(--sp-1); align-items: start; color: var(--muted); font-size: var(--fs-small); line-height: var(--lh-small); }
 .program-tips .icon { color: var(--text); }
 .program-tips .icon svg { width: 18px; height: 18px; }
+/* The lay-the-phone-flat tip only shows on phone-sized screens. */
+@media (min-width: 720px) { .program-tips .tip-phone { display: none; } }
 .program-buttons { display: flex; gap: var(--sp-1); flex-wrap: wrap; }
 .program .btn { background: #141414; color: #bdbdbd; border-color: var(--border); }
 .program .btn:hover:not(:disabled) { background: #1f1f1f; }

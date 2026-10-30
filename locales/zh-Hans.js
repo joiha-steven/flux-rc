@@ -345,7 +345,8 @@ export default {
   'program.ready.title': '准备',
   'program.ready.brightness': '把屏幕亮度调到最大。',
   'program.ready.dark': '找个暗的房间：日光或明亮的室内灯会盖过屏幕的闪光，让感光元件读不出来。',
-  'program.ready.close': '把手电紧贴在屏幕上。',
+  'program.ready.close': '把手电的镜片平贴在屏幕上，对准闪烁方块的中央。',
+  'program.ready.phone': '用手机时：把手机平放在桌上，手电头朝下立在方块正中。',
   'program.ready.button': '准备好了',
 
   // Program step 3: PIN setup

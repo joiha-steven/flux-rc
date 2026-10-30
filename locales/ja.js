@@ -345,7 +345,8 @@ export default {
   'program.ready.title': '準備',
   'program.ready.brightness': '画面の明るさを最大にします。',
   'program.ready.dark': '暗い部屋で行ってください。日光や明るい室内灯があると、センサーが信号を拾えなくなることがあります。',
-  'program.ready.close': 'ライトを画面にぴったりと当てます。',
+  'program.ready.close': 'ライトのレンズを画面にぴったり当て、点滅する四角の中央に合わせます。',
+  'program.ready.phone': 'スマホの場合：机に平らに置き、ライトのヘッドを下にして四角の中央に立てます。',
   'program.ready.button': '準備できました',
 
   // Program step 3: PIN setup

@@ -281,7 +281,8 @@ and step 4), `src/ui/pin-rhythm.js` (the schedule, pure), `src/ui/beeper.js` (We
    held down at rest, a click is a quick release). The choice is stored in `localStorage` under
    `flux-rc:switch` and preselected next time; the step is still shown.
 2. **Get ready**: tips as plain text with an icon (not controls): screen brightness to maximum,
-   dark room, hold the light right against the screen, and "Light off: nothing pressed"
+   dark room, the lens flat against the screen and centred on the square, on phone-sized screens
+   (below 720 px) "lay the phone flat and stand the light head-down on the square", and "Light off: nothing pressed"
    (McClicky) or "Hold the button down so the light is off" (MOFF). The "I'm ready" tap is the user
    gesture that requests the screen wake lock and unlocks audio (iOS needs this). No fullscreen:
    switching to fullscreen on that tap surprised people.

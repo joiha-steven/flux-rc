@@ -345,7 +345,8 @@ export default {
   'program.ready.title': 'Chuẩn bị',
   'program.ready.brightness': 'Chỉnh độ sáng màn hình lên tối đa.',
   'program.ready.dark': 'Vào phòng tối: ánh nắng hay đèn phòng sáng có thể làm cảm biến bị loá.',
-  'program.ready.close': 'Áp sát đèn vào màn hình.',
+  'program.ready.close': 'Áp mặt kính đèn sát màn hình, ở giữa ô vuông nhấp nháy.',
+  'program.ready.phone': 'Trên điện thoại: đặt máy nằm phẳng trên bàn, dựng đèn úp đầu xuống ngay giữa ô vuông.',
   'program.ready.button': 'Sẵn sàng',
 
   // Program step 3: PIN setup

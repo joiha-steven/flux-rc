@@ -345,7 +345,8 @@ export default {
   'program.ready.title': '준비',
   'program.ready.brightness': '화면 밝기를 최대로 올리세요.',
   'program.ready.dark': '어두운 곳에서 하세요. 햇빛이나 밝은 실내 조명이 있으면 센서가 신호를 못 읽을 수 있어요.',
-  'program.ready.close': '라이트를 화면에 바짝 대세요.',
+  'program.ready.close': '라이트 렌즈를 화면에 바짝 대고, 깜빡이는 사각형 가운데에 맞추세요.',
+  'program.ready.phone': '휴대폰이라면: 책상에 평평하게 놓고, 라이트 헤드를 아래로 해서 사각형 가운데에 세우세요.',
   'program.ready.button': '준비됐어요',
 
   // Program step 3: PIN setup

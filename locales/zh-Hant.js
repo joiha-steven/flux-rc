@@ -345,7 +345,8 @@ export default {
   'program.ready.title': '準備',
   'program.ready.brightness': '把螢幕亮度調到最高。',
   'program.ready.dark': '找暗一點的房間：日光或明亮的室內燈會蓋過感光元件。',
-  'program.ready.close': '把燈頭緊貼在螢幕上。',
+  'program.ready.close': '把燈頭鏡片平貼在螢幕上，對準閃爍方塊的中央。',
+  'program.ready.phone': '用手機時：把手機平放在桌上，手電筒燈頭朝下立在方塊正中央。',
   'program.ready.button': '準備好了',
 
   // Program step 3: PIN setup

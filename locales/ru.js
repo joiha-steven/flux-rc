@@ -346,7 +346,8 @@ export default {
   'program.ready.title': 'Подготовка',
   'program.ready.brightness': 'Выкрутите яркость экрана на максимум.',
   'program.ready.dark': 'Нужна тёмная комната: дневной или яркий свет может засветить датчик.',
-  'program.ready.close': 'Приложите фонарь вплотную к экрану.',
+  'program.ready.close': 'Приложите стекло фонаря вплотную к экрану, по центру мигающего квадрата.',
+  'program.ready.phone': 'На телефоне: положите его на стол и поставьте фонарь головой вниз в центр квадрата.',
   'program.ready.button': 'Всё готово',
 
   // Program step 3: PIN setup

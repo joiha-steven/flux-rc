@@ -346,7 +346,8 @@ export default {
   'program.ready.title': 'Get ready',
   'program.ready.brightness': 'Set the screen brightness to maximum.',
   'program.ready.dark': 'Use a dark room: daylight or bright room light can swamp the sensor.',
-  'program.ready.close': 'Hold the light right against the screen.',
+  'program.ready.close': 'Put the lens flat against the screen, centred on the flashing square.',
+  'program.ready.phone': 'On a phone: lay it flat on a table and stand the light head-down in the middle of the square.',
   'program.ready.button': "I'm ready",
 
   // Program step 3: PIN setup
