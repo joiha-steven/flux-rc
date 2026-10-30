@@ -34,8 +34,6 @@
 .btn-icon { padding: 0; width: var(--tap); }
 .btn-danger { color: var(--danger); }
 .btn-small { font-size: var(--fs-small); padding: 0 12px; }
-/* On phones the topbar keys show only their icon, and shrink to the 44 px tap size so the wordmark and the language key fit beside them. */
-@media (max-width: 399px) { .btn-label { display: none; } #btn-presets, #btn-saved { padding: 0; } }
 
 .card {
   background: var(--bg);
