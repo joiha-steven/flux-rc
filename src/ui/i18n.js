@@ -57,18 +57,23 @@ export function languagePath(code) {
   return language.path ? `/${language.path}/` : '/';
 }
 
+/** The root-absolute URL path of a language's PIN guide: '/guide/' for English, '/vi/guide/' for Vietnamese. */
+export function guidePath(code) {
+  return `${languagePath(code)}guide/`;
+}
+
 /**
- * Saves the choice and goes to that language's page, keeping the query and the #hash (share links).
- * English is stored too, so the root page stays English for someone who picked it.
+ * Saves the choice and goes to that language's page (`toPath(code)`: the programmer by default, guidePath on the guide),
+ * keeping the query and the #hash (share links). English is stored too, so the root page stays English for someone who picked it.
  */
-export function setLanguage(code) {
+export function setLanguage(code, toPath = languagePath) {
   if (!CODES.includes(code)) return;
   try {
     localStorage.setItem(LANG_KEY, code);
   } catch (error) {
     console.warn('flux-rc: could not save the language choice', error);
   }
-  location.assign(languagePath(code) + location.search + location.hash);
+  location.assign(toPath(code) + location.search + location.hash);
 }
 
 // The page decides its language: each language has its own URL and its static HTML carries <html lang>.

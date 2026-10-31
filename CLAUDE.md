@@ -14,6 +14,8 @@ file names, test names. No exceptions.
   tests (`node --test`) and the page generator. The language pages (`vi/`, `de/`, `ja/`, `zh/`) are
   generated from `index.html` and `locales/` by `npm run pages` and committed; edit those two,
   never the generated files, and rerun the script (a test fails when they are stale).
+  The PIN guide pages (`guide/` is English and the template; `*/guide/` are generated) come from `guide/index.html` and
+  `locales/guide/` by `npm run guide`: same rule, edit the sources and rerun.
 - No external requests at runtime: no CDNs, web fonts, analytics or trackers.
 - `src/core/` has no DOM access and is fully covered by tests.
 - Keep files small (aim for under 300 lines). Split by responsibility.

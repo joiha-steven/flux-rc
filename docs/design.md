@@ -96,11 +96,19 @@ and returns focus; Tab and outside clicks close. The language key and the theme 
 (`.topbar-tools`), set apart from Presets and Saved; the menu drops down right-aligned under the pair
 so it stays on screen on phones.
 
+### PIN guide links
+
+Two plain `<a href>` links lead to the PIN guide in the page's own language (`guidePath(code)` in
+`src/ui/i18n.js`: `/guide/`, `/vi/guide/`, ...). The top-bar one (`#btn-guide`, `topbar.guide`) is an outline key
+with a book icon and the same label rule as Presets and Saved; `scripts/build-pages.mjs` sets its static `href` per
+language page, so it is right without JS. The other is a quiet line in the Program dialog's step 3, under the tailcap
+link (`program.pin.guideLink`, `.link-button` style, href from `guidePath(locale())`).
+
 ### Topbar layout
 
 Below 720 px the topbar has three rows: the wordmark with the language/theme pair, the tagline at
-full width, then Presets and Saved as two equal labelled keys. From 720 px it is one row: wordmark
-over tagline, then the pair, then Presets and Saved. Both are one grid in `styles/layout.css`
+full width, then Presets and Saved as two equal labelled keys with the PIN guide link on a full-width row
+under them. From 720 px it is one row: wordmark over tagline, then the pair, then Presets, Saved and PIN guide. Both are one grid in `styles/layout.css`
 (`.brand` is `display: contents`). Logic: `src/ui/language-menu.js`, `src/ui/i18n.js`. Ja, zh-Hans, zh-Hant and ko
 use system CJK fonts after Plum Sans (`styles/tokens.css`); Russian uses the bundled Plum Cyrillic subsets
 (`styles/fonts.css`, downloaded only when Cyrillic text is on the page).

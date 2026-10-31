@@ -1,0 +1,95 @@
+// Writes the PIN guide in every language. guide/index.html is the English page and the template: its blocks between the
+// "guide-tagline", "guide-main" and "guide-jsonld" markers are filled from locales/guide/<code>.js and src/data/pins.js, and every
+// other language gets <path>/guide/index.html (vi/guide/, de/guide/ ...). Run `npm run guide` after changing the template, a guide
+// locale or the pins; test/guide.test.js fails when a page is stale.
+// A language whose locales/guide/<code>.js does not exist yet is skipped with a warning (no fallback to English text, which would
+// publish an English page under a translated URL); test/guide-i18n.test.js fails until the file exists.
+import { readFileSync, writeFileSync, mkdirSync, existsSync } from 'node:fs';
+import { dirname, join } from 'node:path';
+import { fileURLToPath, pathToFileURL } from 'node:url';
+import en from '../locales/guide/en.js';
+import mainEn from '../locales/en.js';
+import { LANGUAGES, languagePath, guidePath } from '../src/ui/i18n.js';
+import { mainHtml, jsonLd, taglineHtml, ghostsHtml } from '../src/ui/guide-html.js';
+import { esc } from '../src/ui/guide-svg.js';
+import { loadStrings, ORIGIN } from './build-pages.mjs';
+
+const root = join(dirname(fileURLToPath(import.meta.url)), '..');
+const file = join(root, 'guide', 'index.html');
+
+/** Absolute URL of a language's guide page. */
+export const guideUrl = (language) => `${ORIGIN}${guidePath(language.code)}`;
+/** Path of a language's generated (or, for English, template) file, relative to the repo root. */
+export const guideFile = (language) => `${language.path ? `${language.path}/` : ''}guide/index.html`;
+
+/**
+ * `html` (the English template) with the generated blocks filled from `s` (guide strings). For another language also
+ * pass `language` and `main` (the main locale strings, for the button labels): lang, title, descriptions, URLs, buttons and home links are swapped too.
+ */
+export function fill(html, s = en, language = LANGUAGES[0], mainStrings = {}) {
+  const main = { ...mainEn, ...mainStrings };
+  const swap = (text, pattern, replacement) => {
+    if (!pattern.test(text)) throw new Error(`build-guide: guide/index.html no longer matches ${pattern}`);
+    return text.replace(pattern, replacement);
+  };
+  const block = (text, name, body) => swap(text, new RegExp(`(<!-- ${name}:start -->)[\\s\\S]*?(<!-- ${name}:end -->)`), (_, a, b) => `${a}\n${body}\n${b}`);
+  const home = languagePath(language.code);
+  let page = block(html, 'guide-ghosts', `            ${ghostsHtml(main)}`);
+  page = block(block(block(page, 'guide-tagline', taglineHtml(main)), 'guide-main', `  ${mainHtml(s, home)}`), 'guide-jsonld', `<script type="application/ld+json">\n${jsonLd(s)}\n</script>`);
+  // The head text comes from the strings; a guide locale that has not got the metaTitle / metaDescription / ogDescription keys yet falls back to the h1 and lead.
+  const title = s.metaTitle ?? `${s.h1}: ${s.v1Name} / ${s.v2Name}`;
+  const description = s.metaDescription ?? s.lead;
+  const ogDescription = s.ogDescription ?? description;
+  page = swap(page, /<title>[^<]*<\/title>/, () => `<title>${esc(title)}</title>`);
+  page = swap(page, /(<meta name="description" content=")[^"]*"/, (_, a) => `${a}${esc(description)}"`);
+  page = swap(page, /(<meta property="og:title" content=")[^"]*"/, (_, a) => `${a}${esc(title)}"`);
+  page = swap(page, /(<meta property="og:description" content=")[^"]*"/, (_, a) => `${a}${esc(ogDescription)}"`);
+  if (!language.path) return page;
+
+  const url = guideUrl(language);
+  page = swap(page, /^[ \t]*<!-- Language redirect[\s\S]*?<\/script>\n/m, '');
+  page = swap(page, /<html lang="en">/, `<html lang="${language.code}">`);
+  page = swap(page, /<title>[^<]*<\/title>/, () => `<title>${esc(title)}</title>`);
+  page = swap(page, /(<meta name="description" content=")[^"]*"/, (_, a) => `${a}${esc(description)}"`);
+  page = swap(page, /(<link rel="canonical" href=")[^"]*"/, `$1${url}"`);
+  page = swap(page, /(<meta property="og:url" content=")[^"]*"/, `$1${url}"`);
+  page = swap(page, /(<meta property="og:title" content=")[^"]*"/, (_, a) => `${a}${esc(title)}"`);
+  page = swap(page, /(<meta property="og:description" content=")[^"]*"/, (_, a) => `${a}${esc(ogDescription)}"`);
+  page = swap(page, /(<a class="wordmark" href=")[^"]*"/, `$1${home}"`);
+  page = swap(page, /(id="btn-program" href=")[^"]*(" aria-label=")[^"]*("[\s\S]*?<span class="btn-label">)[^<]*</, (_, a, b, c) => `${a}${home}${b}${esc(main['footer.program'])}${c}${esc(main['footer.program'])}<`);
+  page = swap(page, /(id="btn-lang" aria-label=")[^"]*(" title=")[^"]*("[^>]*>)[^<]*</, (_, a, b, c) => `${a}${esc(main['lang.label'])}${b}${esc(main['lang.label'])}${c}${esc(language.short)}<`);
+  page = swap(page, /(id="btn-theme" aria-label=")[^"]*(" title=")[^"]*"/, (_, a, b) => `${a}${esc(main['theme.switchToLight'])}${b}${esc(main['theme.switchToLight'])}"`);
+  const note = `<!-- GENERATED by scripts/build-guide.mjs from guide/index.html and locales/guide/${language.code}.js. Do not edit by hand: change those files and run \`npm run guide\`. -->\n`;
+  return note + page;
+}
+
+/** The guide strings of a language, or null when locales/guide/<code>.js does not exist yet. */
+export async function loadGuideStrings(code) {
+  if (code === 'en') return en;
+  const path = join(root, 'locales', 'guide', `${code}.js`);
+  return existsSync(path) ? (await import(pathToFileURL(path).href)).default : null;
+}
+
+/** Every guide page that can be built now as { file, text } (file relative to the repo root); languages without a guide locale are left out. */
+export async function renderAll(template = readFileSync(file, 'utf8')) {
+  const pages = [];
+  for (const language of LANGUAGES) {
+    const s = await loadGuideStrings(language.code);
+    if (!s) continue;
+    pages.push({ file: guideFile(language), text: fill(template, s, language, language.path ? await loadStrings(language.code) : {}) });
+  }
+  return pages;
+}
+
+if (process.argv[1] && pathToFileURL(process.argv[1]).href === import.meta.url) {
+  const pages = await renderAll();
+  const written = new Set(pages.map((p) => p.file));
+  for (const { file: out, text } of pages) {
+    mkdirSync(join(root, dirname(out)), { recursive: true });
+    writeFileSync(join(root, out), text);
+    console.log(`wrote ${out}`);
+  }
+  for (const language of LANGUAGES) {
+    if (!written.has(guideFile(language))) console.warn(`WARNING: skipped ${guideFile(language)}: locales/guide/${language.code}.js does not exist yet`);
+  }
+}

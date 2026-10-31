@@ -6,7 +6,7 @@ import assert from 'node:assert/strict';
 import { readFileSync, existsSync } from 'node:fs';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { LANGUAGES } from '../src/ui/i18n.js';
+import { LANGUAGES, guidePath } from '../src/ui/i18n.js';
 import { renderAll, loadStrings, ORIGIN } from '../scripts/build-pages.mjs';
 
 const root = join(dirname(fileURLToPath(import.meta.url)), '..');
@@ -68,11 +68,27 @@ test('a translated page really shows its language in the HTML (no JS needed)', a
 
 test('sitemap.xml lists every page with the same alternates', () => {
   const xml = read('sitemap.xml');
-  const urls = [...xml.matchAll(/<url>([\s\S]*?)<\/url>/g)].map((m) => m[1]);
-  assert.deepEqual(urls.map((u) => u.match(/<loc>([^<]+)<\/loc>/)[1]), LANGUAGES.map(urlOf));
+  const all = [...xml.matchAll(/<url>([\s\S]*?)<\/url>/g)].map((m) => m[1]);
+  const locOf = (u) => u.match(/<loc>([^<]+)<\/loc>/)[1];
+  const alternatesOf = (u) => [...u.matchAll(/<xhtml:link rel="alternate" hreflang="([^"]+)" href="([^"]+)"\s*\/>/g)].map((m) => [m[1], m[2]]);
+  const isGuide = (u) => locOf(u).includes('/guide/');
+  const urls = all.filter((u) => !isGuide(u));
+  assert.deepEqual(urls.map(locOf), LANGUAGES.map(urlOf));
   const expectedAlternates = [...LANGUAGES.map((l) => [l.code, urlOf(l)]), ['x-default', `${ORIGIN}/`]];
-  for (const u of urls) {
-    const alternates = [...u.matchAll(/<xhtml:link rel="alternate" hreflang="([^"]+)" href="([^"]+)"\s*\/>/g)].map((m) => [m[1], m[2]]);
-    assert.deepEqual(alternates, expectedAlternates);
+  for (const u of urls) assert.deepEqual(alternatesOf(u), expectedAlternates);
+  // The PIN guide exists in every language too: one entry per guide page, each with the full guide alternate set.
+  const guideUrlOf = (l) => `${urlOf(l)}guide/`;
+  const guides = all.filter(isGuide);
+  assert.deepEqual(guides.map(locOf), LANGUAGES.map(guideUrlOf));
+  const guideAlternates = [...LANGUAGES.map((l) => [l.code, guideUrlOf(l)]), ['x-default', `${ORIGIN}/guide/`]];
+  for (const u of guides) assert.deepEqual(alternatesOf(u), guideAlternates, locOf(u));
+});
+
+test('the top-bar PIN guide link on every page points to the guide in that page\'s language, without JS', () => {
+  for (const language of LANGUAGES) {
+    const file = fileOf(language);
+    const tag = read(file).match(/<a\b[^>]*id="btn-guide"[^>]*>/);
+    assert.ok(tag, `${file} has #btn-guide`);
+    assert.equal(tag[0].match(/\shref="([^"]*)"/)[1], guidePath(language.code), file);
   }
 });

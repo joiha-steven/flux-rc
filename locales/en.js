@@ -7,6 +7,7 @@ export default {
   'topbar.tagline': 'Programmer for custom flashlights with a Lux-RC 371D, 371 v2.0 or 372 v2.0 light engine, such as the Oveready TorchLAB BOSS 35/70, Future BOSS and Lux-RC Minion.',
   'topbar.presets': 'Presets',
   'topbar.saved': 'Saved',
+  'topbar.guide': 'PIN guide',
   'quick.label': 'Quick start',
   'behaviour.title': 'Behaviour',
   'program.dialogLabel': 'Program the light',
@@ -369,6 +370,7 @@ export default {
   'program.pin.reverseClicky': 'Reverse clicky (a half-press does nothing while the light is off)? Choose Slow and click fully on, then off, at each beep.',
   'program.pin.start': 'Start',
   'program.pin.tailcapLink': 'PIN not working? Try the tailcap method',
+  'program.pin.guideLink': 'Other PINs (voltage meter, battery test, settings): PIN guide',
   'program.pin.interrupted': "Interrupted. Start again when you're ready.",
   'program.pin.slipped': 'The browser fell behind, so the timing slipped. Start again.',
 

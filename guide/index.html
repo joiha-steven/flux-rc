@@ -1,0 +1,444 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <!-- Fan-made, not affiliated with Lux-RC. guide/index.html is the English page and the template of the others: scripts/build-guide.mjs (npm run guide) fills the blocks between the guide-tagline, guide-main and guide-jsonld markers from locales/guide/en.js and src/data/pins.js (edit those, not the blocks), and writes the guide in every other language (vi/guide/, de/guide/ ...) from this file and locales/guide/<code>.js. -->
+  <!-- Language redirect (only "/guide/"; generated pages drop this block). Same rule as the one at the top of index.html and pickLanguage() in
+       src/ui/i18n.js, but the target is the language's guide page; test/language.test.js runs this script against pickLanguage(). -->
+  <script>
+    (function () {
+      if (location.pathname !== '/guide/') return;
+      var paths = { vi: 'vi', de: 'de', ja: 'ja', 'zh-Hans': 'zh', 'zh-Hant': 'zh-hant', ru: 'ru', ko: 'ko', es: 'es' };
+      var stored = null;
+      try { stored = localStorage.getItem('flux-rc:lang'); } catch (e) {}
+      var code = stored === 'en' || Object.prototype.hasOwnProperty.call(paths, stored) ? stored : null;
+      var tags = navigator.languages || [];
+      for (var i = 0; !code && i < tags.length; i++) {
+        var parts = String(tags[i]).toLowerCase().split('-');
+        if (parts[0] === 'zh') {
+          code = parts.indexOf('hant') >= 0 || (parts.indexOf('hans') < 0 && ['tw', 'hk', 'mo'].indexOf(parts[1]) >= 0) ? 'zh-Hant' : 'zh-Hans';
+        } else if (parts[0] === 'en' || Object.prototype.hasOwnProperty.call(paths, parts[0])) code = parts[0];
+      }
+      if (code && code !== 'en') location.replace('/' + paths[code] + '/guide/' + location.search + location.hash);
+    })();
+  </script>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="dark light">
+  <meta name="theme-color" content="#20211f">
+  <title>Lux-RC 371 PIN codes: 371D (v1) and 371 v2.0 flashlight PIN guide</title>
+  <meta name="description" content="Lux-RC 371 PIN codes for the 371D (v1) and 371 v2.0: how to enter a PIN, 111 voltage meter, 113 battery test, 112 programming and the 331-337 settings.">
+  <link rel="canonical" href="https://flux-rc.stevensdesk.com/guide/">
+  <link rel="alternate" hreflang="en" href="https://flux-rc.stevensdesk.com/guide/">
+  <link rel="alternate" hreflang="vi" href="https://flux-rc.stevensdesk.com/vi/guide/">
+  <link rel="alternate" hreflang="de" href="https://flux-rc.stevensdesk.com/de/guide/">
+  <link rel="alternate" hreflang="ja" href="https://flux-rc.stevensdesk.com/ja/guide/">
+  <link rel="alternate" hreflang="zh-Hans" href="https://flux-rc.stevensdesk.com/zh/guide/">
+  <link rel="alternate" hreflang="zh-Hant" href="https://flux-rc.stevensdesk.com/zh-hant/guide/">
+  <link rel="alternate" hreflang="ru" href="https://flux-rc.stevensdesk.com/ru/guide/">
+  <link rel="alternate" hreflang="ko" href="https://flux-rc.stevensdesk.com/ko/guide/">
+  <link rel="alternate" hreflang="es" href="https://flux-rc.stevensdesk.com/es/guide/">
+  <link rel="alternate" hreflang="x-default" href="https://flux-rc.stevensdesk.com/guide/">
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://flux-rc.stevensdesk.com/guide/">
+  <meta property="og:title" content="Lux-RC 371 PIN codes: 371D (v1) and 371 v2.0 flashlight PIN guide">
+  <meta property="og:description" content="How to enter a PIN with the tail switch, and what every Lux-RC 371 PIN does: 111 voltage meter, 113 battery test, 112 programming, memory files and the 331 to 337 settings.">
+  <meta property="og:image" content="https://flux-rc.stevensdesk.com/assets/og.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Crect width='16' height='16' rx='3' fill='%2320211f'/%3E%3Crect x='4' y='4' width='8' height='8' fill='%23eba43b'/%3E%3C/svg%3E">
+  <!-- Same theme rule and key as index.html and src/ui/theme.js. -->
+  <script>
+    try { var t = localStorage.getItem('flux-rc:theme'); if (t !== 'light' && t !== 'dark') t = matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark'; if (t === 'light' && CSS.supports('color', 'light-dark(red, red)')) document.documentElement.setAttribute('data-theme', t); } catch (e) {}
+  </script>
+  <link rel="stylesheet" href="/styles/fonts.css">
+  <link rel="stylesheet" href="/styles/tokens.css">
+  <link rel="stylesheet" href="/styles/layout.css">
+  <link rel="stylesheet" href="/styles/controls.css">
+  <link rel="stylesheet" href="/styles/guide.css">
+  <link rel="preload" href="/assets/fonts/plum-sans-latin.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="/assets/fonts/plum-mono-latin.woff2" as="font" type="font/woff2" crossorigin>
+  <!-- guide-jsonld:start -->
+<script type="application/ld+json">
+{
+ "@context": "https://schema.org",
+ "@graph": [
+  {
+   "@type": "HowTo",
+   "name": "How to enter a PIN on a Lux-RC 371 flashlight",
+   "step": [
+    {
+     "@type": "HowToStep",
+     "position": 1,
+     "text": "Each digit is that many short on-flashes. Keep each flash under half a second, about 0.2 s. In a single-digit PIN, keep each flash to 0.25 s or less."
+    },
+    {
+     "@type": "HowToStep",
+     "position": 2,
+     "text": "Between digits leave the light off for about 1 s. Anything from 0.5 s to 1.25 s works; longer than 1.25 s wipes the digits you have entered."
+    },
+    {
+     "@type": "HowToStep",
+     "position": 3,
+     "text": "After the last digit wait 1 s, then switch the light on and leave it on."
+    }
+   ]
+  },
+  {
+   "@type": "FAQPage",
+   "mainEntity": [
+    {
+     "@type": "Question",
+     "name": "What does PIN 112 do on the Lux-RC 371 v1 and v2?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Starts optical programming. A dim red light: the light is now waiting for the flashing screen."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "What does PIN 222 do on the Lux-RC 371 v1 and v2?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Also starts optical programming. A dim red light: the light is now waiting for the flashing screen."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "What does PIN 111 do on the Lux-RC 371 v1 and v2?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Voltage meter. Shows the battery voltage as flashes. White flashes count whole volts, red flashes count tenths. 3.6 V is 3 white then 6 red. A full cell is about 4.2 V and empty is below 3.0 V. With two cells it shows the average per cell."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "What does PIN 113 do on the Lux-RC 371 v2 (v2 only)?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Battery test for one fully charged cell. The light ramps up and then rates the battery from 1 to 5 stars. Fast red flashing means the test failed: charge the cell and try again."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "What does PIN 311 do on the Lux-RC 371 v2 (v2 only)?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Shows the state of all 7 offline switches. 7 flashes, one per switch. Red means off, white means on."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "What does PIN 4 do on the Lux-RC 371 v2 (v2 only)?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Chooses the memory file. It flashes the number of the current file, then steps through the 4 files. Switch the light off on the one you want."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "What does PIN 331 do on the Lux-RC 371 v2 (v2 only)?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Standby locator beacon on or off. 1 flash: white = now on, red = now off."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "What does PIN 332 do on the Lux-RC 371 v2 (v2 only)?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Motion sensing on or off. 2 flashes: white = now on, red = now off."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "What does PIN 333 do on the Lux-RC 371 v2 (v2 only)?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Motion timer. Slow dims after 1 min and sleeps after 10 min; fast dims after 10 s and sleeps after 1 min. 3 flashes: white = slow, red = fast."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "What does PIN 334 do on the Lux-RC 371 v2 (v2 only)?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Mode layout: 8 modes in one line, or the legacy 4 + 4. 4 flashes: white = 4 + 4, red = 8 modes in one line."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "What does PIN 335 do on the Lux-RC 371 v2 (v2 only)?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Standby mode for clicky and twisty lights. 5 flashes: white = now on, red = now off."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "What does PIN 336 do on the Lux-RC 371 v2 (v2 only)?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Double-click action: jump to the highest mode and back, or go back one mode. 6 flashes: white = a double-click jumps to the highest mode (the last one in the list) and a second double-click jumps back, red = a double-click goes back one mode."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "What does PIN 337 do on the Lux-RC 371 v2 (v2 only)?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Double-click on or off for clicky and twisty lights. 7 flashes: white = now on, red = now off."
+     }
+    }
+   ]
+  }
+ ]
+}
+</script>
+<!-- guide-jsonld:end -->
+  <script type="module" src="/src/ui/guide.js"></script>
+</head>
+<body>
+<div id="app">
+  <header class="topbar">
+    <div class="page topbar-inner">
+      <div class="brand">
+        <a class="wordmark" href="/">flux-rc</a>
+        <!-- guide-tagline:start -->
+<p class="tagline">Programmer for custom flashlights with a Lux-RC 371D, 371 v2.0 or 372 v2.0 light engine, such as the Oveready TorchLAB BOSS 35/70, Future BOSS and Lux-RC Minion.</p>
+<!-- guide-tagline:end -->
+      </div>
+      <div class="topbar-tools">
+        <div class="menu-wrap lang-wrap">
+          <button type="button" class="btn btn-outline lang-btn" id="btn-lang" aria-label="Language" title="Language" aria-haspopup="menu" aria-expanded="false">EN</button>
+        </div>
+        <button type="button" class="btn btn-outline btn-icon" id="btn-theme" aria-label="Switch to light theme" title="Switch to light theme"></button>
+      </div>
+      <div class="topbar-actions">
+        <span class="g-slot">
+          <a class="btn btn-outline" id="btn-program" href="/" aria-label="Program">
+            <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"><path d="M8 5l11 7-11 7z"/></svg>
+            <span class="btn-label">Program</span>
+          </a>
+          <span class="g-ghosts" aria-hidden="true">
+            <!-- guide-ghosts:start -->
+            <span class="btn btn-outline"><svg width="20" height="20"></svg><span class="btn-label">Presets</span></span>
+            <span class="btn btn-outline"><svg width="20" height="20"></svg><span class="btn-label">Saved</span></span>
+            <span class="btn btn-outline"><svg width="20" height="20"></svg><span class="btn-label">PIN guide</span></span>
+<!-- guide-ghosts:end -->
+          </span>
+        </span>
+      </div>
+    </div>
+  </header>
+  <main class="page main g-main" id="main" data-board="v2">
+  <!-- guide-main:start -->
+  <section class="g-hero"><h1>Lux-RC 371 PIN codes</h1><p class="g-lead">A PIN is entered by switching the light on and off with the tail (clicky) switch. Lights with an electronic momentary button use button shortcuts instead.</p></section>
+  <section class="g-section" aria-labelledby="g-boards">
+    <h2 id="g-boards">Which board do you have?</h2>
+    <div class="g-two">
+    <article class="g-card g-board is-v1">
+      <div class="g-board-head"><h3>371 v1</h3><span class="g-tag">v1</span></div>
+      <div class="g-board-body"><svg class="g-board-art" viewBox="0 0 52 40" width="104" height="80" role="img" aria-label="Mode slots: 4"><rect x="1" y="1" width="50" height="38" rx="8" fill="none" stroke="currentColor" stroke-width="1.5"/><circle cx="14" cy="20" r="2.4"/><circle cx="22" cy="20" r="2.4"/><circle cx="30" cy="20" r="2.4"/><circle cx="38" cy="20" r="2.4"/></svg><p class="g-muted">The first-generation board, also sold as the 371D.</p></div>
+      <ul class="g-facts"><li>Up to 4 modes</li><li>Voltage meter (PIN 111)</li><li>Motion sensing on boards made from 2019</li><li>No memory files, double-click or battery test</li></ul>
+    </article>
+    <article class="g-card g-board is-v2">
+      <div class="g-board-head"><h3>371 v2</h3><span class="g-tag">v2</span></div>
+      <div class="g-board-body"><svg class="g-board-art" viewBox="0 0 84 48" width="168" height="96" role="img" aria-label="Mode slots: 32"><rect x="1" y="1" width="82" height="46" rx="8" fill="none" stroke="currentColor" stroke-width="1.5"/><circle cx="14" cy="12" r="2.4"/><circle cx="22" cy="12" r="2.4"/><circle cx="30" cy="12" r="2.4"/><circle cx="38" cy="12" r="2.4"/><circle cx="46" cy="12" r="2.4"/><circle cx="54" cy="12" r="2.4"/><circle cx="62" cy="12" r="2.4"/><circle cx="70" cy="12" r="2.4"/><circle cx="14" cy="20" r="2.4"/><circle cx="22" cy="20" r="2.4"/><circle cx="30" cy="20" r="2.4"/><circle cx="38" cy="20" r="2.4"/><circle cx="46" cy="20" r="2.4"/><circle cx="54" cy="20" r="2.4"/><circle cx="62" cy="20" r="2.4"/><circle cx="70" cy="20" r="2.4"/><circle cx="14" cy="28" r="2.4"/><circle cx="22" cy="28" r="2.4"/><circle cx="30" cy="28" r="2.4"/><circle cx="38" cy="28" r="2.4"/><circle cx="46" cy="28" r="2.4"/><circle cx="54" cy="28" r="2.4"/><circle cx="62" cy="28" r="2.4"/><circle cx="70" cy="28" r="2.4"/><circle cx="14" cy="36" r="2.4"/><circle cx="22" cy="36" r="2.4"/><circle cx="30" cy="36" r="2.4"/><circle cx="38" cy="36" r="2.4"/><circle cx="46" cy="36" r="2.4"/><circle cx="54" cy="36" r="2.4"/><circle cx="62" cy="36" r="2.4"/><circle cx="70" cy="36" r="2.4"/></svg><p class="g-muted">The newer board, sold as the 371 v2.0. The 372 v2.0 uses the same PINs as the 371 v2.</p></div>
+      <ul class="g-facts"><li>32 modes in 4 files of 8</li><li>Double-click action</li><li>Battery test</li><li>Standby with a locator beacon</li></ul>
+    </article>
+    </div>
+  </section>
+  <div class="g-bar"><span class="g-bar-label">Show PINs for</span>
+    <div class="seg" role="radiogroup" aria-label="Show PINs for"><label class="seg-opt"><input type="radio" name="board" value="v1"><span>371 v1</span></label><label class="seg-opt"><input type="radio" name="board" value="v2" checked><span>371 v2</span></label></div></div>
+  <section class="g-section" aria-labelledby="g-enter">
+    <h2 id="g-enter">How to enter a PIN</h2>
+    <div class="g-card g-enter">
+      <div class="g-strip"><svg class="timing-svg" viewBox="0 0 340 100" role="img" aria-label="Timing of PIN 1-1-2: one flash, a pause, one flash, a pause, two flashes, a longer pause, then on."><line x1="10" y1="70" x2="330" y2="70" class="timing-base"/><path d="M10 70 V30 H22 V70 H82 V30 H94 V70 H154 V30 H166 V70 H178 V30 H190 V70 H250 V30 H330" class="timing-wave"/><text x="16" y="20" class="timing-digit" text-anchor="middle">Digit 1</text><text x="88" y="20" class="timing-digit" text-anchor="middle">Digit 2</text><text x="172" y="20" class="timing-digit" text-anchor="middle">Digit 3</text><text x="52" y="92" class="timing-gap" text-anchor="middle">1 s off</text><text x="124" y="92" class="timing-gap" text-anchor="middle">1 s off</text><text x="220" y="92" class="timing-gap" text-anchor="middle">wait 1 s</text><text x="290" y="20" class="timing-gap" text-anchor="middle">stays on</text></svg></div>
+      <ol class="g-steps"><li>Each digit is that many short on-flashes. Keep each flash under half a second, about 0.2 s. In a single-digit PIN, keep each flash to 0.25 s or less.</li><li>Between digits leave the light off for about 1 s. Anything from 0.5 s to 1.25 s works; longer than 1.25 s wipes the digits you have entered.</li><li>After the last digit wait 1 s, then switch the light on and leave it on.</li></ol>
+      <p class="g-muted">Example: PIN 1-1-2 is one flash, pause, one flash, pause, two flashes, pause, then on.</p>
+      <p class="g-tip">Tip: point the light away from your eyes and count your clicks. Do not rely on seeing the flashes.</p>
+    </div>
+  </section>
+  <section class="g-section" aria-labelledby="g-pins">
+    <h2 id="g-pins">PIN codes</h2>
+    <div class="g-group" data-boards="v1 v2">
+      <div class="g-group-head"><svg class="g-icon" viewBox="0 0 24 24" width="24" height="24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="5" width="14" height="14" rx="2"/><path d="M9 9h6v6H9z"/></svg><h3>Programming</h3></div>
+      <p class="g-muted g-group-note">Put the light into optical programming, ready for the flashing screen.</p>
+      <div class="g-grid">
+      <article class="g-card g-pin" id="p112" data-boards="v1 v2">
+      <div class="g-pin-head"><h4 class="g-pin-digits">1 · 1 · 2</h4><span class="g-badge">v1 / v2</span></div>
+      <p class="g-q">What does PIN 112 do on the Lux-RC 371 v1 and v2?</p>
+      <svg class="g-pattern" viewBox="0 0 56 24" width="56" height="24" role="img" aria-label="Clicks: 1, 1, 2"><rect x="0" y="0" width="5" height="24" rx="1.5"/><rect x="21" y="0" width="5" height="24" rx="1.5"/><rect x="42" y="0" width="5" height="24" rx="1.5"/><rect x="51" y="0" width="5" height="24" rx="1.5"/></svg>
+      
+      
+      <p class="g-does">Starts optical programming.</p>
+      <div class="g-answer"><strong>The light answers:</strong>
+        <div class="g-flash" aria-hidden="true"><span class="g-row"><span class="g-dotset"><span class="fl fl-dim"></span></span><span class="g-cap">dim red, waiting for the screen</span></span></div>
+        <p>A dim red light: the light is now waiting for the flashing screen.</p></div>
+    </article>
+      <article class="g-card g-pin" id="p222" data-boards="v1 v2">
+      <div class="g-pin-head"><h4 class="g-pin-digits">2 · 2 · 2</h4><span class="g-badge">v1 / v2</span></div>
+      <p class="g-q">What does PIN 222 do on the Lux-RC 371 v1 and v2?</p>
+      <svg class="g-pattern" viewBox="0 0 74 24" width="74" height="24" role="img" aria-label="Clicks: 2, 2, 2"><rect x="0" y="0" width="5" height="24" rx="1.5"/><rect x="9" y="0" width="5" height="24" rx="1.5"/><rect x="30" y="0" width="5" height="24" rx="1.5"/><rect x="39" y="0" width="5" height="24" rx="1.5"/><rect x="60" y="0" width="5" height="24" rx="1.5"/><rect x="69" y="0" width="5" height="24" rx="1.5"/></svg>
+      
+      
+      <p class="g-does">Also starts optical programming.</p>
+      <div class="g-answer"><strong>The light answers:</strong>
+        <div class="g-flash" aria-hidden="true"><span class="g-row"><span class="g-dotset"><span class="fl fl-dim"></span></span><span class="g-cap">dim red, waiting for the screen</span></span></div>
+        <p>A dim red light: the light is now waiting for the flashing screen.</p></div>
+    </article>
+      </div>
+    </div>
+    <div class="g-group" data-boards="v1 v2">
+      <div class="g-group-head"><svg class="g-icon" viewBox="0 0 24 24" width="24" height="24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="8"/><path d="M12 11v5M12 8v.01"/></svg><h3>Information</h3></div>
+      <p class="g-muted g-group-note">Ask the light about its battery and its settings. Nothing is changed.</p>
+      <div class="g-grid">
+      <article class="g-card g-pin" id="p111" data-boards="v1 v2">
+      <div class="g-pin-head"><h4 class="g-pin-digits">1 · 1 · 1</h4><span class="g-badge">v1 / v2</span></div>
+      <p class="g-q">What does PIN 111 do on the Lux-RC 371 v1 and v2?</p>
+      <svg class="g-pattern" viewBox="0 0 47 24" width="47" height="24" role="img" aria-label="Clicks: 1, 1, 1"><rect x="0" y="0" width="5" height="24" rx="1.5"/><rect x="21" y="0" width="5" height="24" rx="1.5"/><rect x="42" y="0" width="5" height="24" rx="1.5"/></svg>
+      
+      
+      <p class="g-does">Voltage meter. Shows the battery voltage as flashes.</p>
+      <div class="g-answer"><strong>The light answers:</strong>
+        <div class="g-flash" aria-hidden="true"><span class="g-row"><span class="g-dotset"><span class="fl fl-white"></span><span class="fl fl-white"></span><span class="fl fl-white"></span><span class="g-sep"></span><span class="fl fl-red"></span><span class="fl fl-red"></span><span class="fl fl-red"></span><span class="fl fl-red"></span><span class="fl fl-red"></span><span class="fl fl-red"></span></span><span class="g-cap">example: 3.6 V</span></span></div>
+        <p>White flashes count whole volts, red flashes count tenths. 3.6 V is 3 white then 6 red. A full cell is about 4.2 V and empty is below 3.0 V. With two cells it shows the average per cell.</p></div>
+    </article>
+      <article class="g-card g-pin" id="p113" data-boards="v2">
+      <div class="g-pin-head"><h4 class="g-pin-digits">1 · 1 · 3</h4><span class="g-badge is-v2">v2 only</span></div>
+      <p class="g-q">What does PIN 113 do on the Lux-RC 371 v2 (v2 only)?</p>
+      <svg class="g-pattern" viewBox="0 0 65 24" width="65" height="24" role="img" aria-label="Clicks: 1, 1, 3"><rect x="0" y="0" width="5" height="24" rx="1.5"/><rect x="21" y="0" width="5" height="24" rx="1.5"/><rect x="42" y="0" width="5" height="24" rx="1.5"/><rect x="51" y="0" width="5" height="24" rx="1.5"/><rect x="60" y="0" width="5" height="24" rx="1.5"/></svg>
+      
+      
+      <p class="g-does">Battery test for one fully charged cell.</p>
+      <div class="g-answer"><strong>The light answers:</strong>
+        <div class="g-flash" aria-hidden="true"><span class="g-row"><span class="g-dotset"><svg class="g-star is-on" viewBox="0 0 24 24" width="18" height="18"><path d="M12 3l2.7 5.6 6.1.8-4.5 4.2 1.1 6.1L12 16.8 6.6 19.7l1.1-6.1L3.2 9.4l6.1-.8z"/></svg><svg class="g-star is-on" viewBox="0 0 24 24" width="18" height="18"><path d="M12 3l2.7 5.6 6.1.8-4.5 4.2 1.1 6.1L12 16.8 6.6 19.7l1.1-6.1L3.2 9.4l6.1-.8z"/></svg><svg class="g-star is-on" viewBox="0 0 24 24" width="18" height="18"><path d="M12 3l2.7 5.6 6.1.8-4.5 4.2 1.1 6.1L12 16.8 6.6 19.7l1.1-6.1L3.2 9.4l6.1-.8z"/></svg><svg class="g-star is-on" viewBox="0 0 24 24" width="18" height="18"><path d="M12 3l2.7 5.6 6.1.8-4.5 4.2 1.1 6.1L12 16.8 6.6 19.7l1.1-6.1L3.2 9.4l6.1-.8z"/></svg><svg class="g-star" viewBox="0 0 24 24" width="18" height="18"><path d="M12 3l2.7 5.6 6.1.8-4.5 4.2 1.1 6.1L12 16.8 6.6 19.7l1.1-6.1L3.2 9.4l6.1-.8z"/></svg></span><span class="g-cap">example: 4 of 5 stars</span></span></div>
+        <p>The light ramps up and then rates the battery from 1 to 5 stars. Fast red flashing means the test failed: charge the cell and try again.</p></div>
+    </article>
+      <article class="g-card g-pin" id="p311" data-boards="v2">
+      <div class="g-pin-head"><h4 class="g-pin-digits">3 · 1 · 1</h4><span class="g-badge is-v2">v2 only</span></div>
+      <p class="g-q">What does PIN 311 do on the Lux-RC 371 v2 (v2 only)?</p>
+      <svg class="g-pattern" viewBox="0 0 65 24" width="65" height="24" role="img" aria-label="Clicks: 3, 1, 1"><rect x="0" y="0" width="5" height="24" rx="1.5"/><rect x="9" y="0" width="5" height="24" rx="1.5"/><rect x="18" y="0" width="5" height="24" rx="1.5"/><rect x="39" y="0" width="5" height="24" rx="1.5"/><rect x="60" y="0" width="5" height="24" rx="1.5"/></svg>
+      
+      
+      <p class="g-does">Shows the state of all 7 offline switches.</p>
+      <div class="g-answer"><strong>The light answers:</strong>
+        <div class="g-flash" aria-hidden="true"><span class="g-row"><span class="g-dotset"><span class="fl fl-white"></span><span class="fl fl-white"></span><span class="fl fl-red"></span><span class="fl fl-white"></span><span class="fl fl-red"></span><span class="fl fl-white"></span><span class="fl fl-white"></span></span><span class="g-cap">example: 7 switches</span></span></div>
+        <p>7 flashes, one per switch. Red means off, white means on.</p></div>
+    </article>
+      </div>
+    </div>
+    <div class="g-group" data-boards="v2">
+      <div class="g-group-head"><svg class="g-icon" viewBox="0 0 24 24" width="24" height="24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M7 4h7l4 4v12H7z"/><path d="M14 4v4h4M10 13h5M10 16h5"/></svg><h3>Memory file</h3></div>
+      <p class="g-muted g-group-note">Choose which of the 4 files of 8 modes the light uses.</p>
+      <div class="g-grid">
+      <article class="g-card g-pin" id="p4" data-boards="v2">
+      <div class="g-pin-head"><h4 class="g-pin-digits">4</h4><span class="g-badge is-v2">v2 only</span></div>
+      <p class="g-q">What does PIN 4 do on the Lux-RC 371 v2 (v2 only)?</p>
+      <svg class="g-pattern" viewBox="0 0 32 24" width="32" height="24" role="img" aria-label="Clicks: 4"><rect x="0" y="0" width="5" height="24" rx="1.5"/><rect x="9" y="0" width="5" height="24" rx="1.5"/><rect x="18" y="0" width="5" height="24" rx="1.5"/><rect x="27" y="0" width="5" height="24" rx="1.5"/></svg>
+      <p class="g-muted">Some vendors use 1 · 1 · 4.</p>
+      
+      <p class="g-does">Chooses the memory file.</p>
+      <div class="g-answer"><strong>The light answers:</strong>
+        <div class="g-flash" aria-hidden="true"><span class="g-row"><span class="g-dotset"><span class="g-file"></span><span class="g-file is-on"></span><span class="g-file"></span><span class="g-file"></span></span><span class="g-cap">files 1 to 4</span></span></div>
+        <p>It flashes the number of the current file, then steps through the 4 files. Switch the light off on the one you want.</p></div>
+    </article>
+      </div>
+    </div>
+    <div class="g-group" data-boards="v2">
+      <div class="g-group-head"><svg class="g-icon" viewBox="0 0 24 24" width="24" height="24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h10M18 7h2M4 17h2M10 17h10"/><circle cx="16" cy="7" r="2"/><circle cx="8" cy="17" r="2"/></svg><h3>Settings</h3></div>
+      <p class="g-muted g-group-note">Each PIN toggles one of the 7 offline switches. The light confirms with that many flashes: white means the switch is now on, red means it is now off. Enter the same PIN again to flip it back, and use PIN 311 to check all seven.</p>
+      <div class="g-grid">
+      <article class="g-card g-pin" id="p331" data-boards="v2">
+      <div class="g-pin-head"><h4 class="g-pin-digits">3 · 3 · 1</h4><span class="g-badge is-v2">v2 only</span></div>
+      <p class="g-q">What does PIN 331 do on the Lux-RC 371 v2 (v2 only)?</p>
+      <svg class="g-pattern" viewBox="0 0 83 24" width="83" height="24" role="img" aria-label="Clicks: 3, 3, 1"><rect x="0" y="0" width="5" height="24" rx="1.5"/><rect x="9" y="0" width="5" height="24" rx="1.5"/><rect x="18" y="0" width="5" height="24" rx="1.5"/><rect x="39" y="0" width="5" height="24" rx="1.5"/><rect x="48" y="0" width="5" height="24" rx="1.5"/><rect x="57" y="0" width="5" height="24" rx="1.5"/><rect x="78" y="0" width="5" height="24" rx="1.5"/></svg>
+      
+      <span class="g-dots" role="img" aria-label="Switch 1 of 7"><span class="g-dot is-on"></span><span class="g-dot"></span><span class="g-dot"></span><span class="g-dot"></span><span class="g-dot"></span><span class="g-dot"></span><span class="g-dot"></span></span>
+      <p class="g-does">Standby locator beacon on or off.</p>
+      <div class="g-answer"><strong>The light answers:</strong>
+        <div class="g-flash" aria-hidden="true"><span class="g-row"><span class="g-dotset"><span class="fl fl-white"></span></span><span class="g-cap">now on</span></span><span class="g-row"><span class="g-dotset"><span class="fl fl-red"></span></span><span class="g-cap">now off</span></span></div>
+        <p>1 flash: white = now on, red = now off.</p></div>
+    </article>
+      <article class="g-card g-pin" id="p332" data-boards="v2">
+      <div class="g-pin-head"><h4 class="g-pin-digits">3 · 3 · 2</h4><span class="g-badge is-v2">v2 only</span></div>
+      <p class="g-q">What does PIN 332 do on the Lux-RC 371 v2 (v2 only)?</p>
+      <svg class="g-pattern" viewBox="0 0 92 24" width="92" height="24" role="img" aria-label="Clicks: 3, 3, 2"><rect x="0" y="0" width="5" height="24" rx="1.5"/><rect x="9" y="0" width="5" height="24" rx="1.5"/><rect x="18" y="0" width="5" height="24" rx="1.5"/><rect x="39" y="0" width="5" height="24" rx="1.5"/><rect x="48" y="0" width="5" height="24" rx="1.5"/><rect x="57" y="0" width="5" height="24" rx="1.5"/><rect x="78" y="0" width="5" height="24" rx="1.5"/><rect x="87" y="0" width="5" height="24" rx="1.5"/></svg>
+      
+      <span class="g-dots" role="img" aria-label="Switch 2 of 7"><span class="g-dot"></span><span class="g-dot is-on"></span><span class="g-dot"></span><span class="g-dot"></span><span class="g-dot"></span><span class="g-dot"></span><span class="g-dot"></span></span>
+      <p class="g-does">Motion sensing on or off.</p>
+      <div class="g-answer"><strong>The light answers:</strong>
+        <div class="g-flash" aria-hidden="true"><span class="g-row"><span class="g-dotset"><span class="fl fl-white"></span><span class="fl fl-white"></span></span><span class="g-cap">now on</span></span><span class="g-row"><span class="g-dotset"><span class="fl fl-red"></span><span class="fl fl-red"></span></span><span class="g-cap">now off</span></span></div>
+        <p>2 flashes: white = now on, red = now off.</p></div>
+    </article>
+      <article class="g-card g-pin" id="p333" data-boards="v2">
+      <div class="g-pin-head"><h4 class="g-pin-digits">3 · 3 · 3</h4><span class="g-badge is-v2">v2 only</span></div>
+      <p class="g-q">What does PIN 333 do on the Lux-RC 371 v2 (v2 only)?</p>
+      <svg class="g-pattern" viewBox="0 0 101 24" width="101" height="24" role="img" aria-label="Clicks: 3, 3, 3"><rect x="0" y="0" width="5" height="24" rx="1.5"/><rect x="9" y="0" width="5" height="24" rx="1.5"/><rect x="18" y="0" width="5" height="24" rx="1.5"/><rect x="39" y="0" width="5" height="24" rx="1.5"/><rect x="48" y="0" width="5" height="24" rx="1.5"/><rect x="57" y="0" width="5" height="24" rx="1.5"/><rect x="78" y="0" width="5" height="24" rx="1.5"/><rect x="87" y="0" width="5" height="24" rx="1.5"/><rect x="96" y="0" width="5" height="24" rx="1.5"/></svg>
+      
+      <span class="g-dots" role="img" aria-label="Switch 3 of 7"><span class="g-dot"></span><span class="g-dot"></span><span class="g-dot is-on"></span><span class="g-dot"></span><span class="g-dot"></span><span class="g-dot"></span><span class="g-dot"></span></span>
+      <p class="g-does">Motion timer. Slow dims after 1 min and sleeps after 10 min; fast dims after 10 s and sleeps after 1 min.</p>
+      <div class="g-answer"><strong>The light answers:</strong>
+        <div class="g-flash" aria-hidden="true"><span class="g-row"><span class="g-dotset"><span class="fl fl-white"></span><span class="fl fl-white"></span><span class="fl fl-white"></span></span><span class="g-cap">slow</span></span><span class="g-row"><span class="g-dotset"><span class="fl fl-red"></span><span class="fl fl-red"></span><span class="fl fl-red"></span></span><span class="g-cap">fast</span></span></div>
+        <p>3 flashes: white = slow, red = fast.</p></div>
+    </article>
+      <article class="g-card g-pin" id="p334" data-boards="v2">
+      <div class="g-pin-head"><h4 class="g-pin-digits">3 · 3 · 4</h4><span class="g-badge is-v2">v2 only</span></div>
+      <p class="g-q">What does PIN 334 do on the Lux-RC 371 v2 (v2 only)?</p>
+      <svg class="g-pattern" viewBox="0 0 110 24" width="110" height="24" role="img" aria-label="Clicks: 3, 3, 4"><rect x="0" y="0" width="5" height="24" rx="1.5"/><rect x="9" y="0" width="5" height="24" rx="1.5"/><rect x="18" y="0" width="5" height="24" rx="1.5"/><rect x="39" y="0" width="5" height="24" rx="1.5"/><rect x="48" y="0" width="5" height="24" rx="1.5"/><rect x="57" y="0" width="5" height="24" rx="1.5"/><rect x="78" y="0" width="5" height="24" rx="1.5"/><rect x="87" y="0" width="5" height="24" rx="1.5"/><rect x="96" y="0" width="5" height="24" rx="1.5"/><rect x="105" y="0" width="5" height="24" rx="1.5"/></svg>
+      
+      <span class="g-dots" role="img" aria-label="Switch 4 of 7"><span class="g-dot"></span><span class="g-dot"></span><span class="g-dot"></span><span class="g-dot is-on"></span><span class="g-dot"></span><span class="g-dot"></span><span class="g-dot"></span></span>
+      <p class="g-does">Mode layout: 8 modes in one line, or the legacy 4 + 4.</p>
+      <div class="g-answer"><strong>The light answers:</strong>
+        <div class="g-flash" aria-hidden="true"><span class="g-row"><span class="g-dotset"><span class="fl fl-white"></span><span class="fl fl-white"></span><span class="fl fl-white"></span><span class="fl fl-white"></span></span><span class="g-cap">4 + 4</span></span><span class="g-row"><span class="g-dotset"><span class="fl fl-red"></span><span class="fl fl-red"></span><span class="fl fl-red"></span><span class="fl fl-red"></span></span><span class="g-cap">8 in one line</span></span></div>
+        <p>4 flashes: white = 4 + 4, red = 8 modes in one line.</p></div>
+    </article>
+      <article class="g-card g-pin" id="p335" data-boards="v2">
+      <div class="g-pin-head"><h4 class="g-pin-digits">3 · 3 · 5</h4><span class="g-badge is-v2">v2 only</span></div>
+      <p class="g-q">What does PIN 335 do on the Lux-RC 371 v2 (v2 only)?</p>
+      <svg class="g-pattern" viewBox="0 0 119 24" width="119" height="24" role="img" aria-label="Clicks: 3, 3, 5"><rect x="0" y="0" width="5" height="24" rx="1.5"/><rect x="9" y="0" width="5" height="24" rx="1.5"/><rect x="18" y="0" width="5" height="24" rx="1.5"/><rect x="39" y="0" width="5" height="24" rx="1.5"/><rect x="48" y="0" width="5" height="24" rx="1.5"/><rect x="57" y="0" width="5" height="24" rx="1.5"/><rect x="78" y="0" width="5" height="24" rx="1.5"/><rect x="87" y="0" width="5" height="24" rx="1.5"/><rect x="96" y="0" width="5" height="24" rx="1.5"/><rect x="105" y="0" width="5" height="24" rx="1.5"/><rect x="114" y="0" width="5" height="24" rx="1.5"/></svg>
+      
+      <span class="g-dots" role="img" aria-label="Switch 5 of 7"><span class="g-dot"></span><span class="g-dot"></span><span class="g-dot"></span><span class="g-dot"></span><span class="g-dot is-on"></span><span class="g-dot"></span><span class="g-dot"></span></span>
+      <p class="g-does">Standby mode for clicky and twisty lights.</p>
+      <div class="g-answer"><strong>The light answers:</strong>
+        <div class="g-flash" aria-hidden="true"><span class="g-row"><span class="g-dotset"><span class="fl fl-white"></span><span class="fl fl-white"></span><span class="fl fl-white"></span><span class="fl fl-white"></span><span class="fl fl-white"></span></span><span class="g-cap">now on</span></span><span class="g-row"><span class="g-dotset"><span class="fl fl-red"></span><span class="fl fl-red"></span><span class="fl fl-red"></span><span class="fl fl-red"></span><span class="fl fl-red"></span></span><span class="g-cap">now off</span></span></div>
+        <p>5 flashes: white = now on, red = now off.</p></div>
+    </article>
+      <article class="g-card g-pin" id="p336" data-boards="v2">
+      <div class="g-pin-head"><h4 class="g-pin-digits">3 · 3 · 6</h4><span class="g-badge is-v2">v2 only</span></div>
+      <p class="g-q">What does PIN 336 do on the Lux-RC 371 v2 (v2 only)?</p>
+      <svg class="g-pattern" viewBox="0 0 128 24" width="128" height="24" role="img" aria-label="Clicks: 3, 3, 6"><rect x="0" y="0" width="5" height="24" rx="1.5"/><rect x="9" y="0" width="5" height="24" rx="1.5"/><rect x="18" y="0" width="5" height="24" rx="1.5"/><rect x="39" y="0" width="5" height="24" rx="1.5"/><rect x="48" y="0" width="5" height="24" rx="1.5"/><rect x="57" y="0" width="5" height="24" rx="1.5"/><rect x="78" y="0" width="5" height="24" rx="1.5"/><rect x="87" y="0" width="5" height="24" rx="1.5"/><rect x="96" y="0" width="5" height="24" rx="1.5"/><rect x="105" y="0" width="5" height="24" rx="1.5"/><rect x="114" y="0" width="5" height="24" rx="1.5"/><rect x="123" y="0" width="5" height="24" rx="1.5"/></svg>
+      
+      <span class="g-dots" role="img" aria-label="Switch 6 of 7"><span class="g-dot"></span><span class="g-dot"></span><span class="g-dot"></span><span class="g-dot"></span><span class="g-dot"></span><span class="g-dot is-on"></span><span class="g-dot"></span></span>
+      <p class="g-does">Double-click action: jump to the highest mode and back, or go back one mode.</p>
+      <div class="g-answer"><strong>The light answers:</strong>
+        <div class="g-flash" aria-hidden="true"><span class="g-row"><span class="g-dotset"><span class="fl fl-white"></span><span class="fl fl-white"></span><span class="fl fl-white"></span><span class="fl fl-white"></span><span class="fl fl-white"></span><span class="fl fl-white"></span></span><span class="g-cap">highest mode and back</span></span><span class="g-row"><span class="g-dotset"><span class="fl fl-red"></span><span class="fl fl-red"></span><span class="fl fl-red"></span><span class="fl fl-red"></span><span class="fl fl-red"></span><span class="fl fl-red"></span></span><span class="g-cap">back one mode</span></span></div>
+        <p>6 flashes: white = a double-click jumps to the highest mode (the last one in the list) and a second double-click jumps back, red = a double-click goes back one mode.</p></div>
+    </article>
+      <article class="g-card g-pin" id="p337" data-boards="v2">
+      <div class="g-pin-head"><h4 class="g-pin-digits">3 · 3 · 7</h4><span class="g-badge is-v2">v2 only</span></div>
+      <p class="g-q">What does PIN 337 do on the Lux-RC 371 v2 (v2 only)?</p>
+      <svg class="g-pattern" viewBox="0 0 137 24" width="137" height="24" role="img" aria-label="Clicks: 3, 3, 7"><rect x="0" y="0" width="5" height="24" rx="1.5"/><rect x="9" y="0" width="5" height="24" rx="1.5"/><rect x="18" y="0" width="5" height="24" rx="1.5"/><rect x="39" y="0" width="5" height="24" rx="1.5"/><rect x="48" y="0" width="5" height="24" rx="1.5"/><rect x="57" y="0" width="5" height="24" rx="1.5"/><rect x="78" y="0" width="5" height="24" rx="1.5"/><rect x="87" y="0" width="5" height="24" rx="1.5"/><rect x="96" y="0" width="5" height="24" rx="1.5"/><rect x="105" y="0" width="5" height="24" rx="1.5"/><rect x="114" y="0" width="5" height="24" rx="1.5"/><rect x="123" y="0" width="5" height="24" rx="1.5"/><rect x="132" y="0" width="5" height="24" rx="1.5"/></svg>
+      
+      <span class="g-dots" role="img" aria-label="Switch 7 of 7"><span class="g-dot"></span><span class="g-dot"></span><span class="g-dot"></span><span class="g-dot"></span><span class="g-dot"></span><span class="g-dot"></span><span class="g-dot is-on"></span></span>
+      <p class="g-does">Double-click on or off for clicky and twisty lights.</p>
+      <div class="g-answer"><strong>The light answers:</strong>
+        <div class="g-flash" aria-hidden="true"><span class="g-row"><span class="g-dotset"><span class="fl fl-white"></span><span class="fl fl-white"></span><span class="fl fl-white"></span><span class="fl fl-white"></span><span class="fl fl-white"></span><span class="fl fl-white"></span><span class="fl fl-white"></span></span><span class="g-cap">now on</span></span><span class="g-row"><span class="g-dotset"><span class="fl fl-red"></span><span class="fl fl-red"></span><span class="fl fl-red"></span><span class="fl fl-red"></span><span class="fl fl-red"></span><span class="fl fl-red"></span><span class="fl fl-red"></span></span><span class="g-cap">now off</span></span></div>
+        <p>7 flashes: white = now on, red = now off.</p></div>
+    </article>
+      </div>
+    </div>
+    <div class="g-v1-only"><p class="g-card g-note">PINs 331 and 332 do nothing on a 371 v1 (tested on a real light), and 333 to 337 are v2 features. The v1 has its own PINs for the locator beacon and motion sensing; they are not listed yet.</p><p class="g-muted">Other v1 PINs are not listed yet.</p></div>
+  </section>
+  <footer class="g-section g-foot">
+    <p>Source: the Lux-RC 371 / 372 v2 manual: <a href="https://lux-rc.com/data/files/pdf/LUXRC-371-372-V2-EN.pdf" rel="noopener">LUXRC-371-372-V2-EN.pdf</a></p>
+    <p class="g-muted">Fan-made and not affiliated with Lux-RC. Check the official manual before relying on a PIN, and use everything at your own risk.</p>
+    <p><a class="g-back" href="/">Open the programmer</a></p>
+  </footer>
+<!-- guide-main:end -->
+  </main>
+</div>
+</body>
+</html>

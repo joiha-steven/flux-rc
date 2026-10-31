@@ -6,7 +6,7 @@ import { icon } from './icons.js';
 import { writePref } from './storage.js';
 import { parsePin } from './pin-rhythm.js';
 import { rhythmTimeline } from './rhythm-timeline.js';
-import { t } from './i18n.js';
+import { t, locale, guidePath } from './i18n.js';
 
 export const SWITCH_KEY = 'flux-rc:switch';
 export const SOUND_KEY = 'flux-rc:sound';
@@ -147,6 +147,7 @@ export function pinStep(ctx, options = {}) {
       h('p', { class: 'hint' }, t('program.pin.reverseClicky')),
       h('div', { class: 'program-buttons' }, start, backButton(ctx, 'ready')),
       h('button', { type: 'button', class: 'link-button', onclick: () => ctx.go('tailcap') }, t('program.pin.tailcapLink')),
+      h('a', { class: 'link-button', href: guidePath(locale()), 'data-guide-link': '' }, t('program.pin.guideLink')),
     ],
     focus: '[data-start]',
     announce: options.notice,

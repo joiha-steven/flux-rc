@@ -1,0 +1,107 @@
+/* PIN guide page (guide/index.html). Shared tokens only, except the flash colours (the light's real colours).
+   Rhythm: sections --sp-4 apart; inside a section and between a title and its cards --sp-2; every card pads --sp-2 (--sp-3 from 720 px). */
+.g-main { padding-top: var(--sp-4); padding-bottom: var(--sp-4); gap: var(--sp-4); }
+.g-section, .g-group { display: grid; gap: var(--sp-2); align-content: start; }
+.g-section > *, .g-group > * { min-width: 0; }
+.g-hero { display: grid; gap: var(--sp-1); }
+.g-hero h1 { font-size: var(--fs-display); line-height: var(--lh-display); letter-spacing: -0.01em; }
+.g-lead { max-width: 64ch; color: var(--muted); }
+.g-muted { color: var(--muted); font-size: var(--fs-small); line-height: var(--lh-small); }
+.g-card { --pad: var(--sp-2); background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: var(--pad); display: grid; gap: var(--sp-1); align-content: start; min-width: 0; }
+.g-two, .g-grid { display: grid; gap: var(--sp-2); grid-template-columns: minmax(0, 1fr); }
+
+/* Boards */
+.g-board-head { display: flex; align-items: center; justify-content: space-between; gap: var(--sp-1); }
+.g-board h3 { font-size: var(--fs-title); line-height: var(--lh-title); }
+.g-tag { padding: 2px var(--sp-1); border: 1px solid var(--key-edge); border-radius: var(--radius-xs); font: 600 var(--fs-caption)/var(--lh-caption) var(--mono); text-transform: uppercase; color: var(--muted); }
+.g-board.is-v2 .g-tag { background: var(--accent); border-color: var(--accent-edge); color: var(--on-accent); }
+.g-board-body { display: flex; flex-wrap: wrap; align-items: center; gap: var(--sp-2); }
+.g-board-art { flex: none; color: var(--accent-strong); }
+.g-board-art circle { fill: currentColor; }
+.g-board.is-v1 .g-board-art { color: var(--muted); }
+.g-facts { list-style: none; display: grid; gap: 4px; }
+.g-facts li { padding-left: var(--sp-2); position: relative; }
+.g-facts li::before { content: ""; position: absolute; left: 0; top: 10px; width: 8px; height: 3px; border-radius: 2px; background: var(--accent); }
+.g-board.is-v1 .g-facts li::before { background: var(--key-edge); }
+
+/* Sticky board switch: stays under the top edge while the lists scroll. */
+.g-bar { position: sticky; top: 0; z-index: 5; display: flex; align-items: center; gap: var(--sp-2); padding: var(--sp-1) 0; background: var(--bg); border-bottom: 1px solid var(--line); }
+.g-bar-label { flex: none; color: var(--muted); font-size: var(--fs-small); }
+.g-bar .seg { flex: 1; max-width: 320px; }
+
+/* How to enter */
+.g-enter { gap: var(--sp-2); }
+.g-strip { background: var(--well); border: 1px solid var(--well-edge); border-radius: var(--radius-s); padding: var(--sp-2); }
+.timing-svg { display: block; width: 100%; max-width: 520px; height: auto; margin: 0 auto; }
+.timing-base { stroke: var(--line); stroke-width: 1; }
+.timing-wave { fill: none; stroke: var(--accent-strong); stroke-width: 2.5; stroke-linejoin: round; }
+.timing-digit, .timing-gap { fill: var(--muted); font: 500 11px var(--font); }
+.timing-digit { fill: var(--text); }
+/* Numbered steps flush with the card's content edge: a round badge column (--sp-3 wide) and a text column that lines up across steps. */
+.g-steps { list-style: none; counter-reset: step; display: grid; gap: var(--sp-1); padding: 0; margin: 0; }
+.g-steps li { counter-increment: step; line-height: var(--sp-3); display: grid; grid-template-columns: var(--sp-3) minmax(0, 1fr); column-gap: var(--sp-1); align-items: start; }
+.g-steps li::before { content: counter(step); display: grid; place-items: center; width: var(--sp-3); height: var(--sp-3); border-radius: 50%; background: var(--accent); color: var(--on-accent); font: 600 var(--fs-caption)/1 var(--mono); }
+.g-tip { font-weight: 500; }
+
+/* PIN groups and cards */
+.g-group { margin-top: var(--sp-2); }
+.g-group[hidden] { display: none; }
+.g-group-head { display: flex; align-items: center; gap: var(--sp-1); color: var(--accent-strong); }
+.g-group-head h3 { color: var(--text); font-size: var(--fs-title); line-height: var(--lh-title); }
+.g-group-note { max-width: 72ch; }
+.g-pin-head { display: flex; align-items: center; justify-content: space-between; gap: var(--sp-1); }
+.g-pin-digits { font: 600 28px/32px var(--mono); letter-spacing: 0.02em; color: var(--accent-strong); }
+.g-badge { flex: none; padding: 2px var(--sp-1); border: 1px solid var(--key-edge); border-radius: var(--radius-xs); background: var(--key); font-size: var(--fs-caption); line-height: var(--lh-caption); font-weight: 600; }
+.g-badge.is-v2 { color: var(--muted); }
+.g-pattern { display: block; max-width: 100%; height: auto; fill: var(--accent-strong); }
+.g-q { color: var(--muted); font-size: var(--fs-caption); line-height: var(--lh-caption); }
+.g-does { font-weight: 500; }
+.g-answer { display: grid; gap: var(--sp-1); padding-top: var(--sp-1); border-top: 1px solid var(--line); color: var(--muted); font-size: var(--fs-small); line-height: var(--lh-small); }
+.g-answer strong { color: var(--text); font-weight: 600; }
+.g-flash { display: grid; gap: 6px; }
+.g-row { display: flex; align-items: center; gap: var(--sp-1); min-height: 20px; }
+.g-dotset { display: inline-flex; align-items: center; gap: 4px; flex-wrap: wrap; }
+.g-cap { color: var(--muted); font-size: var(--fs-caption); line-height: var(--lh-caption); }
+.fl { width: 12px; height: 12px; border-radius: 50%; border: 1.5px solid transparent; }
+.fl-white { background: #fff; border-color: var(--muted); }
+.fl-red { background: #e0393e; border-color: #e0393e; }
+.fl-dim { background: #e0393e; opacity: 0.4; border-color: #e0393e; }
+.g-sep { width: 8px; }
+.g-star { fill: none; stroke: var(--muted); stroke-width: 1.5; }
+.g-star.is-on { fill: var(--accent); stroke: var(--accent-edge); }
+.g-file { width: 12px; height: 12px; border-radius: 3px; border: 1.5px solid var(--key-edge); }
+.g-file.is-on { background: var(--accent); border-color: var(--accent-edge); }
+.g-dots { display: flex; gap: 6px; }
+.g-dot { width: 14px; height: 14px; border-radius: 50%; border: 1.5px solid var(--key-edge); background: var(--well); }
+.g-dot.is-on { background: var(--accent); border-color: var(--accent-edge); }
+.g-v1-only { display: none; gap: var(--sp-2); }
+.g-note { color: var(--muted); }
+.g-foot { gap: var(--sp-1); padding-top: var(--sp-3); border-top: 1px solid var(--line); }
+.g-main a:not(.wordmark) { color: var(--accent-strong); }
+.g-back { display: inline-flex; align-items: center; min-height: var(--tap); }
+
+/* The v1/v2 switch (src/ui/guide.js sets data-board on <main>): v2-only cards and empty groups hide on v1. */
+.g-main[data-board="v1"] [data-boards="v2"] { display: none; }
+.g-main[data-board="v1"] .g-v1-only { display: grid; }
+
+@media (min-width: 720px) {
+  .g-card { --pad: var(--sp-3); }
+  .g-two, .g-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .g-main { padding-top: calc(var(--sp-4) + var(--sp-2)); }
+}
+.g-board-body .g-muted { flex: 1 1 160px; }
+.g-bar { margin-top: calc(-1 * var(--sp-2)); }
+
+/* Guide header: the Program link shares a cell with invisible copies of the programmer's three keys, so the actions row is as wide as the
+   programmer's (see ghostsHtml in src/ui/guide-html.js). Phones stack the rows, so the copies are not needed there. */
+.g-slot { display: grid; }
+.g-slot > * { grid-area: 1 / 1; }
+.g-slot > .btn { justify-self: end; }
+.g-ghosts { display: flex; gap: var(--sp-1); visibility: hidden; pointer-events: none; }
+@media (max-width: 719px) {
+  /* Phones: the copies keep the programmer's two rows (Presets and Saved, then PIN guide); the Program link takes the first row. */
+  .g-slot { grid-column: 1 / -1; }
+  .g-ghosts { display: grid; grid-template-columns: 1fr 1fr; }
+  .g-ghosts > :nth-child(3) { grid-column: 1 / -1; }
+  .g-slot > .btn { justify-self: stretch; align-self: start; }
+}

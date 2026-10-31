@@ -6,6 +6,7 @@ export default {
   'topbar.tagline': 'Lux-RC 371D, 371 v2.0, 372 v2.0 LED 모듈이 들어간 커스텀 손전등용 프로그래머예요. Oveready TorchLAB BOSS 35/70, Future BOSS, Lux-RC Minion 등.',
   'topbar.presets': '프리셋',
   'topbar.saved': '저장 목록',
+  'topbar.guide': 'PIN 가이드',
   'quick.label': '빠른 시작',
   'behaviour.title': '동작',
   'program.dialogLabel': '라이트 프로그래밍',
@@ -368,6 +369,7 @@ export default {
   'program.pin.reverseClicky': '리버스 클리키인가요(꺼진 상태에서 반만 누르면 아무 반응이 없는 스위치)? ‘느리게’를 고르고, 삐 소리마다 끝까지 눌러 켰다가 다시 눌러 끄세요.',
   'program.pin.start': '시작',
   'program.pin.tailcapLink': 'PIN이 안 먹히나요? 테일캡 방법을 써 보세요',
+  'program.pin.guideLink': '다른 PIN(전압계, 배터리 테스트, 설정): PIN 가이드',
   'program.pin.interrupted': '중단됐어요. 준비되면 다시 시작하세요.',
   'program.pin.slipped': '브라우저 처리가 밀려서 타이밍이 어긋났어요. 다시 시작하세요.',
 

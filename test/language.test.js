@@ -5,7 +5,7 @@ import assert from 'node:assert/strict';
 import { readFileSync, readdirSync } from 'node:fs';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { pickLanguage, languagePath, LANGUAGES, LANG_KEY } from '../src/ui/i18n.js';
+import { pickLanguage, languagePath, guidePath, LANGUAGES, LANG_KEY } from '../src/ui/i18n.js';
 
 const root = join(dirname(fileURLToPath(import.meta.url)), '..');
 const localeFiles = readdirSync(join(root, 'locales')).filter((f) => f.endsWith('.js')).map((f) => f.replace(/\.js$/, ''));
@@ -60,8 +60,8 @@ test('each language has its own URL folder; English is the root', () => {
 });
 
 // The inline script at the top of index.html repeats pickLanguage(); run it against the real rule.
-function runRedirect({ pathname = '/', stored, languages, storageThrows = false, search = '', hash = '' }) {
-  const html = readFileSync(join(root, 'index.html'), 'utf8');
+function runRedirect({ pathname = '/', stored, languages, storageThrows = false, search = '', hash = '', page = 'index.html' }) {
+  const html = readFileSync(join(root, page), 'utf8');
   const script = html.match(/<!-- Language redirect[\s\S]*?<script>([\s\S]*?)<\/script>/)[1];
   let target = null;
   const location = { pathname, search, hash, replace: (url) => { target = url; } };
@@ -103,4 +103,23 @@ test('no locale other than en is statically imported or modulepreloaded', () => 
       assert.ok(!new RegExp(`^\\s*import[^\\n]*locales/${code}\\.js`, 'm').test(text), `${file} must not statically import locales/${code}.js`);
     }
   }
+});
+
+test('each language has a guide URL next to its page; English is /guide/', () => {
+  assert.deepEqual(LANGUAGES.map((l) => guidePath(l.code)), ['/guide/', '/vi/guide/', '/de/guide/', '/ja/guide/', '/zh/guide/', '/zh-hant/guide/', '/ru/guide/', '/ko/guide/', '/es/guide/']);
+  assert.equal(guidePath('nope'), '/guide/');
+});
+
+test('the redirect on "/guide/" sends each visitor to the guide of the language pickLanguage() says, and keeps ?query and #hash', () => {
+  const stores = [undefined, 'en', 'vi', 'de', 'ja', 'zh-Hans', 'zh-Hant', 'ru', 'ko', 'es', 'fr', 'constructor', ''];
+  const browsers = [[], ['en-US'], ['vi-VN', 'en'], ['de-AT'], ['ja-JP'], ['zh-CN'], ['zh-TW'], ['zh-HK', 'ja'], ['zh-Hant-TW'], ['ru-RU'], ['ko-KR'], ['es-419', 'de'], ['pt-BR', 'it'], ['fr', 'de']];
+  const guide = (options) => runRedirect({ ...options, pathname: '/guide/', page: 'guide/index.html' });
+  for (const stored of stores) for (const languages of browsers) {
+    const code = pickLanguage(stored ?? null, languages);
+    assert.equal(guide({ stored, languages }), code === 'en' ? null : guidePath(code), `${stored} ${languages}`);
+  }
+  assert.equal(guide({ languages: ['vi'], search: '?a=1', hash: '#pin-112' }), '/vi/guide/?a=1#pin-112');
+  assert.equal(guide({ stored: 'en', languages: ['vi'] }), null);
+  assert.equal(guide({ storageThrows: true, languages: ['ja'] }), '/ja/guide/');
+  assert.equal(runRedirect({ pathname: '/vi/guide/', stored: 'de', languages: ['ja'], page: 'guide/index.html' }), null);
 });
