@@ -16,7 +16,9 @@ What changed and when: [CHANGELOG.md](CHANGELOG.md).
 
 ![flux-rc on desktop and phone](docs/screenshots/1-hero.jpg)
 
-![The PIN guide page, entering a PIN with the beeping rhythm guide, the mode picker with every level and its power, and the page in Vietnamese, German, Japanese and Chinese](docs/screenshots/overview.webp)
+![The PIN guide page in the light theme: the 371 v1 and v2 boards and the PIN codes](docs/screenshots/5-guide.jpg)
+
+![The light theme, entering a PIN with the beeping rhythm guide, the mode picker with every level and its power, and the page in Vietnamese, German, Japanese and Chinese](docs/screenshots/overview.webp)
 
 ## What it does
 
@@ -83,7 +85,7 @@ Every other branch gets a preview build (`npx wrangler preview`, which needs the
 | `docs/protocol.md` | The optical protocol, reverse engineered and verified |
 | `docs/config-model.md` | The config object the UI edits |
 | `docs/design.md` | UI layout and behaviour |
-| `docs/screenshots/` | Images for this README (not deployed); `overview.webp` is a 2 × 2 grid of `5-guide`, `2-pin`, `3-picker` and `4-languages` |
+| `docs/screenshots/` | Images for this README (not deployed); `overview.webp` is a 2 × 2 grid of `6-light`, `2-pin`, `3-picker` and `4-languages` |
 | `CHANGELOG.md` | What changed on the live page, by date |
 | `wrangler.jsonc`, `.assetsignore`, `_headers` | Cloudflare deploy settings |
 | `robots.txt`, `sitemap.xml`, `assets/og.jpg` | For search engines and link previews |
