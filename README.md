@@ -12,14 +12,11 @@ programming mode, hold it against the screen, and the flashing square programs i
 **Use it here: https://flux-rc.stevensdesk.com/**
 
 It is one static web page: no account, no server code, no analytics, nothing leaves your browser.
+What changed and when: [CHANGELOG.md](CHANGELOG.md).
 
 ![flux-rc on desktop and phone](docs/screenshots/1-hero.jpg)
 
-<p>
-  <img src="docs/screenshots/2-pin.jpg" width="32%" alt="The PIN guide: setup, a beep, the hold">
-  <img src="docs/screenshots/3-picker.jpg" width="32%" alt="The mode picker with every level and its power">
-  <img src="docs/screenshots/4-languages.jpg" width="32%" alt="The page in several languages">
-</p>
+![The PIN guide page, entering a PIN with the beeping rhythm guide, the mode picker with every level and its power, and the page in Vietnamese, German, Japanese and Chinese](docs/screenshots/overview.webp)
 
 ## What it does
 
@@ -86,7 +83,8 @@ Every other branch gets a preview build (`npx wrangler preview`, which needs the
 | `docs/protocol.md` | The optical protocol, reverse engineered and verified |
 | `docs/config-model.md` | The config object the UI edits |
 | `docs/design.md` | UI layout and behaviour |
-| `docs/screenshots/` | Images for this README (not deployed) |
+| `docs/screenshots/` | Images for this README (not deployed); `overview.webp` is a 2 × 2 grid of `5-guide`, `2-pin`, `3-picker` and `4-languages` |
+| `CHANGELOG.md` | What changed on the live page, by date |
 | `wrangler.jsonc`, `.assetsignore`, `_headers` | Cloudflare deploy settings |
 | `robots.txt`, `sitemap.xml`, `assets/og.jpg` | For search engines and link previews |
 
