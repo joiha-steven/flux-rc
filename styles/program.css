@@ -51,7 +51,7 @@
 .program-notice { padding: 12px var(--sp-2); border: 1px solid var(--danger); border-radius: var(--radius-s); color: var(--text); font-size: var(--fs-small); line-height: var(--lh-small); }
 .pulse-note:empty { display: none; }
 .pulse-note { text-align: center; }
-.link-button { justify-self: start; min-height: var(--tap); padding: 0; background: none; border: 0; color: var(--accent-strong); font: inherit; font-size: var(--fs-small); text-decoration: underline; text-underline-offset: 3px; cursor: pointer; }
+.link-button { display: inline-flex; align-items: center; justify-self: start; min-height: var(--tap); padding: 0; background: none; border: 0; color: var(--accent-strong); font: inherit; font-size: var(--fs-small); text-decoration: underline; text-underline-offset: 3px; cursor: pointer; }
 
 /* Step 3 run: the pulse circle */
 .pulse-stage { display: grid; justify-items: center; gap: var(--sp-2); padding: var(--sp-2) 0; }

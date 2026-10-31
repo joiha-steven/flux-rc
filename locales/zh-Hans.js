@@ -6,6 +6,7 @@ export default {
   'topbar.tagline': '适用于装有 Lux-RC 371D、371 v2.0 或 372 v2.0 灯芯的定制手电，例如 Oveready TorchLAB BOSS 35/70、Future BOSS 和 Lux-RC Minion。',
   'topbar.presets': '预设',
   'topbar.saved': '已保存',
+  'topbar.guide': 'PIN 指南',
   'quick.label': '快速开始',
   'behaviour.title': '功能设置',
   'program.dialogLabel': '给手电编程',
@@ -368,6 +369,7 @@ export default {
   'program.pin.reverseClicky': '反向尾按（关灯时半按没有反应）？选“慢”，每听到一声就按到底开灯，再按一下关灯。',
   'program.pin.start': '开始',
   'program.pin.tailcapLink': 'PIN 不管用？试试尾盖法',
+  'program.pin.guideLink': '其他 PIN（电压表、电池检测、设置）：PIN 指南',
   'program.pin.interrupted': '已中断。准备好后重新开始。',
   'program.pin.slipped': '浏览器卡了一下，节奏跟丢了。请重新开始。',
 

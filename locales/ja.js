@@ -6,6 +6,7 @@ export default {
   'topbar.tagline': 'Lux-RC 371D・371 v2.0・372 v2.0 ライトエンジンを積んだカスタムライト用のプログラマー。Oveready TorchLAB BOSS 35/70、Future BOSS、Lux-RC Minion など。',
   'topbar.presets': 'プリセット',
   'topbar.saved': '保存済み',
+  'topbar.guide': 'PIN ガイド',
   'quick.label': 'クイックスタート',
   'behaviour.title': '動作設定',
   'program.dialogLabel': 'ライトに書き込む',
@@ -368,6 +369,7 @@ export default {
   'program.pin.reverseClicky': 'リバースクリッキー（消灯中に半押ししても何も起きない）の場合は、「ゆっくり」を選び、ビープ音ごとに全押しでオン、続けてオフにします。',
   'program.pin.start': '開始',
   'program.pin.tailcapLink': 'PIN でうまくいかない場合：テールキャップ方式を試す',
+  'program.pin.guideLink': 'ほかの PIN（電圧メーター、バッテリーテスト、設定）：PIN ガイド',
   'program.pin.interrupted': '中断されました。準備ができたらもう一度開始してください。',
   'program.pin.slipped': 'ブラウザーの処理が追いつかず、タイミングがずれました。もう一度開始してください。',
 

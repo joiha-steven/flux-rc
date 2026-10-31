@@ -7,6 +7,7 @@ export default {
   'topbar.tagline': 'Программатор для кастомных фонарей с модулем Lux-RC 371D, 371 v2.0 или 372 v2.0, например Oveready TorchLAB BOSS 35/70, Future BOSS и Lux-RC Minion.',
   'topbar.presets': 'Пресеты',
   'topbar.saved': 'Сохранённые',
+  'topbar.guide': 'PIN-коды',
   'quick.label': 'Быстрый старт',
   'behaviour.title': 'Настройки',
   'program.dialogLabel': 'Программирование фонаря',
@@ -369,6 +370,7 @@ export default {
   'program.pin.reverseClicky': 'Реверсная кнопка (полунажатие на выключенном фонаре ничего не делает)? Выберите «Медленный» и на каждый сигнал полностью включайте и выключайте.',
   'program.pin.start': 'Старт',
   'program.pin.tailcapLink': 'PIN не срабатывает? Попробуйте способ с хвостовой крышкой',
+  'program.pin.guideLink': 'Другие PIN (вольтметр, проверка батареи, настройки): справочник PIN-кодов',
   'program.pin.interrupted': 'Прервано. Начните заново, когда будете готовы.',
   'program.pin.slipped': 'Браузер не успевал, и тайминг сбился. Начните заново.',
 

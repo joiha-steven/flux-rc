@@ -7,6 +7,7 @@ export default {
   'topbar.tagline': 'Programmer für Custom-Taschenlampen mit einem Lux-RC-LED-Modul 371D, 371 v2.0 oder 372 v2.0, etwa Oveready TorchLAB BOSS 35/70, Future BOSS und Lux-RC Minion.',
   'topbar.presets': 'Presets',
   'topbar.saved': 'Gespeichert',
+  'topbar.guide': 'PIN-Anleitung',
   'quick.label': 'Schnellstart',
   'behaviour.title': 'Verhalten',
   'program.dialogLabel': 'Lampe programmieren',
@@ -369,6 +370,7 @@ export default {
   'program.pin.reverseClicky': 'Reverse Clicky (Antippen bewirkt bei ausgeschalteter Lampe nichts)? Wähl „Langsam“ und klick bei jedem Piepton ganz an und wieder aus.',
   'program.pin.start': 'Start',
   'program.pin.tailcapLink': 'PIN klappt nicht? Probier die Endkappen-Methode',
+  'program.pin.guideLink': 'Weitere PINs (Voltmeter, Akkutest, Einstellungen): PIN-Anleitung',
   'program.pin.interrupted': 'Unterbrochen. Starte neu, wenn du so weit bist.',
   'program.pin.slipped': 'Der Browser kam nicht hinterher, deshalb ist der Takt verrutscht. Starte neu.',
 

@@ -2,10 +2,10 @@
 // of languages (each in its own name) that saves the choice and goes to that language's URL. Logic for which languages
 // exist and how one is picked lives in i18n.js.
 import { h } from './dom.js';
-import { t, locale, LANGUAGES, setLanguage } from './i18n.js';
+import { t, locale, LANGUAGES, setLanguage, languagePath } from './i18n.js';
 
-/** Wires the topbar button `button` (inside a .menu-wrap element). */
-export function mountLanguageMenu(button) {
+/** Wires the topbar button `button` (inside a .menu-wrap element). `toPath(code)` is the page a choice goes to: the programmer by default, the guide on the guide pages. */
+export function mountLanguageMenu(button, toPath = languagePath) {
   const wrap = button.parentElement;
   const current = LANGUAGES.find((l) => l.code === locale()) ?? LANGUAGES[0];
   const label = t('lang.current', { name: current.name });
@@ -41,7 +41,7 @@ export function mountLanguageMenu(button) {
   }
   function choose(code) {
     if (code === current.code) { close(true); return; }
-    setLanguage(code);
+    setLanguage(code, toPath);
   }
 
   button.addEventListener('click', () => (isOpen() ? close(true) : open()));

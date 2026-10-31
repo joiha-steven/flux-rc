@@ -2,7 +2,7 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
     <loc>https://flux-rc.stevensdesk.com/</loc>
-    <lastmod>2026-10-25</lastmod>
+    <lastmod>2026-10-31</lastmod>
     <xhtml:link rel="alternate" hreflang="en" href="https://flux-rc.stevensdesk.com/"/>
     <xhtml:link rel="alternate" hreflang="vi" href="https://flux-rc.stevensdesk.com/vi/"/>
     <xhtml:link rel="alternate" hreflang="de" href="https://flux-rc.stevensdesk.com/de/"/>
@@ -16,7 +16,7 @@
   </url>
   <url>
     <loc>https://flux-rc.stevensdesk.com/vi/</loc>
-    <lastmod>2026-10-25</lastmod>
+    <lastmod>2026-10-31</lastmod>
     <xhtml:link rel="alternate" hreflang="en" href="https://flux-rc.stevensdesk.com/"/>
     <xhtml:link rel="alternate" hreflang="vi" href="https://flux-rc.stevensdesk.com/vi/"/>
     <xhtml:link rel="alternate" hreflang="de" href="https://flux-rc.stevensdesk.com/de/"/>
@@ -30,7 +30,7 @@
   </url>
   <url>
     <loc>https://flux-rc.stevensdesk.com/de/</loc>
-    <lastmod>2026-10-25</lastmod>
+    <lastmod>2026-10-31</lastmod>
     <xhtml:link rel="alternate" hreflang="en" href="https://flux-rc.stevensdesk.com/"/>
     <xhtml:link rel="alternate" hreflang="vi" href="https://flux-rc.stevensdesk.com/vi/"/>
     <xhtml:link rel="alternate" hreflang="de" href="https://flux-rc.stevensdesk.com/de/"/>
@@ -44,7 +44,7 @@
   </url>
   <url>
     <loc>https://flux-rc.stevensdesk.com/ja/</loc>
-    <lastmod>2026-10-25</lastmod>
+    <lastmod>2026-10-31</lastmod>
     <xhtml:link rel="alternate" hreflang="en" href="https://flux-rc.stevensdesk.com/"/>
     <xhtml:link rel="alternate" hreflang="vi" href="https://flux-rc.stevensdesk.com/vi/"/>
     <xhtml:link rel="alternate" hreflang="de" href="https://flux-rc.stevensdesk.com/de/"/>
@@ -58,7 +58,7 @@
   </url>
   <url>
     <loc>https://flux-rc.stevensdesk.com/zh/</loc>
-    <lastmod>2026-10-25</lastmod>
+    <lastmod>2026-10-31</lastmod>
     <xhtml:link rel="alternate" hreflang="en" href="https://flux-rc.stevensdesk.com/"/>
     <xhtml:link rel="alternate" hreflang="vi" href="https://flux-rc.stevensdesk.com/vi/"/>
     <xhtml:link rel="alternate" hreflang="de" href="https://flux-rc.stevensdesk.com/de/"/>
@@ -72,7 +72,7 @@
   </url>
   <url>
     <loc>https://flux-rc.stevensdesk.com/zh-hant/</loc>
-    <lastmod>2026-10-25</lastmod>
+    <lastmod>2026-10-31</lastmod>
     <xhtml:link rel="alternate" hreflang="en" href="https://flux-rc.stevensdesk.com/"/>
     <xhtml:link rel="alternate" hreflang="vi" href="https://flux-rc.stevensdesk.com/vi/"/>
     <xhtml:link rel="alternate" hreflang="de" href="https://flux-rc.stevensdesk.com/de/"/>
@@ -86,7 +86,7 @@
   </url>
   <url>
     <loc>https://flux-rc.stevensdesk.com/ru/</loc>
-    <lastmod>2026-10-25</lastmod>
+    <lastmod>2026-10-31</lastmod>
     <xhtml:link rel="alternate" hreflang="en" href="https://flux-rc.stevensdesk.com/"/>
     <xhtml:link rel="alternate" hreflang="vi" href="https://flux-rc.stevensdesk.com/vi/"/>
     <xhtml:link rel="alternate" hreflang="de" href="https://flux-rc.stevensdesk.com/de/"/>
@@ -100,7 +100,7 @@
   </url>
   <url>
     <loc>https://flux-rc.stevensdesk.com/ko/</loc>
-    <lastmod>2026-10-25</lastmod>
+    <lastmod>2026-10-31</lastmod>
     <xhtml:link rel="alternate" hreflang="en" href="https://flux-rc.stevensdesk.com/"/>
     <xhtml:link rel="alternate" hreflang="vi" href="https://flux-rc.stevensdesk.com/vi/"/>
     <xhtml:link rel="alternate" hreflang="de" href="https://flux-rc.stevensdesk.com/de/"/>
@@ -114,7 +114,7 @@
   </url>
   <url>
     <loc>https://flux-rc.stevensdesk.com/es/</loc>
-    <lastmod>2026-10-25</lastmod>
+    <lastmod>2026-10-31</lastmod>
     <xhtml:link rel="alternate" hreflang="en" href="https://flux-rc.stevensdesk.com/"/>
     <xhtml:link rel="alternate" hreflang="vi" href="https://flux-rc.stevensdesk.com/vi/"/>
     <xhtml:link rel="alternate" hreflang="de" href="https://flux-rc.stevensdesk.com/de/"/>
@@ -125,5 +125,131 @@
     <xhtml:link rel="alternate" hreflang="ko" href="https://flux-rc.stevensdesk.com/ko/"/>
     <xhtml:link rel="alternate" hreflang="es" href="https://flux-rc.stevensdesk.com/es/"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://flux-rc.stevensdesk.com/"/>
+  </url>
+  <url>
+    <loc>https://flux-rc.stevensdesk.com/guide/</loc>
+    <lastmod>2026-10-31</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://flux-rc.stevensdesk.com/guide/"/>
+    <xhtml:link rel="alternate" hreflang="vi" href="https://flux-rc.stevensdesk.com/vi/guide/"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://flux-rc.stevensdesk.com/de/guide/"/>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://flux-rc.stevensdesk.com/ja/guide/"/>
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://flux-rc.stevensdesk.com/zh/guide/"/>
+    <xhtml:link rel="alternate" hreflang="zh-Hant" href="https://flux-rc.stevensdesk.com/zh-hant/guide/"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://flux-rc.stevensdesk.com/ru/guide/"/>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://flux-rc.stevensdesk.com/ko/guide/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://flux-rc.stevensdesk.com/es/guide/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://flux-rc.stevensdesk.com/guide/"/>
+  </url>
+  <url>
+    <loc>https://flux-rc.stevensdesk.com/vi/guide/</loc>
+    <lastmod>2026-10-31</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://flux-rc.stevensdesk.com/guide/"/>
+    <xhtml:link rel="alternate" hreflang="vi" href="https://flux-rc.stevensdesk.com/vi/guide/"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://flux-rc.stevensdesk.com/de/guide/"/>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://flux-rc.stevensdesk.com/ja/guide/"/>
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://flux-rc.stevensdesk.com/zh/guide/"/>
+    <xhtml:link rel="alternate" hreflang="zh-Hant" href="https://flux-rc.stevensdesk.com/zh-hant/guide/"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://flux-rc.stevensdesk.com/ru/guide/"/>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://flux-rc.stevensdesk.com/ko/guide/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://flux-rc.stevensdesk.com/es/guide/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://flux-rc.stevensdesk.com/guide/"/>
+  </url>
+  <url>
+    <loc>https://flux-rc.stevensdesk.com/de/guide/</loc>
+    <lastmod>2026-10-31</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://flux-rc.stevensdesk.com/guide/"/>
+    <xhtml:link rel="alternate" hreflang="vi" href="https://flux-rc.stevensdesk.com/vi/guide/"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://flux-rc.stevensdesk.com/de/guide/"/>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://flux-rc.stevensdesk.com/ja/guide/"/>
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://flux-rc.stevensdesk.com/zh/guide/"/>
+    <xhtml:link rel="alternate" hreflang="zh-Hant" href="https://flux-rc.stevensdesk.com/zh-hant/guide/"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://flux-rc.stevensdesk.com/ru/guide/"/>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://flux-rc.stevensdesk.com/ko/guide/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://flux-rc.stevensdesk.com/es/guide/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://flux-rc.stevensdesk.com/guide/"/>
+  </url>
+  <url>
+    <loc>https://flux-rc.stevensdesk.com/ja/guide/</loc>
+    <lastmod>2026-10-31</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://flux-rc.stevensdesk.com/guide/"/>
+    <xhtml:link rel="alternate" hreflang="vi" href="https://flux-rc.stevensdesk.com/vi/guide/"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://flux-rc.stevensdesk.com/de/guide/"/>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://flux-rc.stevensdesk.com/ja/guide/"/>
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://flux-rc.stevensdesk.com/zh/guide/"/>
+    <xhtml:link rel="alternate" hreflang="zh-Hant" href="https://flux-rc.stevensdesk.com/zh-hant/guide/"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://flux-rc.stevensdesk.com/ru/guide/"/>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://flux-rc.stevensdesk.com/ko/guide/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://flux-rc.stevensdesk.com/es/guide/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://flux-rc.stevensdesk.com/guide/"/>
+  </url>
+  <url>
+    <loc>https://flux-rc.stevensdesk.com/zh/guide/</loc>
+    <lastmod>2026-10-31</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://flux-rc.stevensdesk.com/guide/"/>
+    <xhtml:link rel="alternate" hreflang="vi" href="https://flux-rc.stevensdesk.com/vi/guide/"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://flux-rc.stevensdesk.com/de/guide/"/>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://flux-rc.stevensdesk.com/ja/guide/"/>
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://flux-rc.stevensdesk.com/zh/guide/"/>
+    <xhtml:link rel="alternate" hreflang="zh-Hant" href="https://flux-rc.stevensdesk.com/zh-hant/guide/"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://flux-rc.stevensdesk.com/ru/guide/"/>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://flux-rc.stevensdesk.com/ko/guide/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://flux-rc.stevensdesk.com/es/guide/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://flux-rc.stevensdesk.com/guide/"/>
+  </url>
+  <url>
+    <loc>https://flux-rc.stevensdesk.com/zh-hant/guide/</loc>
+    <lastmod>2026-10-31</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://flux-rc.stevensdesk.com/guide/"/>
+    <xhtml:link rel="alternate" hreflang="vi" href="https://flux-rc.stevensdesk.com/vi/guide/"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://flux-rc.stevensdesk.com/de/guide/"/>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://flux-rc.stevensdesk.com/ja/guide/"/>
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://flux-rc.stevensdesk.com/zh/guide/"/>
+    <xhtml:link rel="alternate" hreflang="zh-Hant" href="https://flux-rc.stevensdesk.com/zh-hant/guide/"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://flux-rc.stevensdesk.com/ru/guide/"/>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://flux-rc.stevensdesk.com/ko/guide/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://flux-rc.stevensdesk.com/es/guide/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://flux-rc.stevensdesk.com/guide/"/>
+  </url>
+  <url>
+    <loc>https://flux-rc.stevensdesk.com/ru/guide/</loc>
+    <lastmod>2026-10-31</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://flux-rc.stevensdesk.com/guide/"/>
+    <xhtml:link rel="alternate" hreflang="vi" href="https://flux-rc.stevensdesk.com/vi/guide/"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://flux-rc.stevensdesk.com/de/guide/"/>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://flux-rc.stevensdesk.com/ja/guide/"/>
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://flux-rc.stevensdesk.com/zh/guide/"/>
+    <xhtml:link rel="alternate" hreflang="zh-Hant" href="https://flux-rc.stevensdesk.com/zh-hant/guide/"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://flux-rc.stevensdesk.com/ru/guide/"/>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://flux-rc.stevensdesk.com/ko/guide/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://flux-rc.stevensdesk.com/es/guide/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://flux-rc.stevensdesk.com/guide/"/>
+  </url>
+  <url>
+    <loc>https://flux-rc.stevensdesk.com/ko/guide/</loc>
+    <lastmod>2026-10-31</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://flux-rc.stevensdesk.com/guide/"/>
+    <xhtml:link rel="alternate" hreflang="vi" href="https://flux-rc.stevensdesk.com/vi/guide/"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://flux-rc.stevensdesk.com/de/guide/"/>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://flux-rc.stevensdesk.com/ja/guide/"/>
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://flux-rc.stevensdesk.com/zh/guide/"/>
+    <xhtml:link rel="alternate" hreflang="zh-Hant" href="https://flux-rc.stevensdesk.com/zh-hant/guide/"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://flux-rc.stevensdesk.com/ru/guide/"/>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://flux-rc.stevensdesk.com/ko/guide/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://flux-rc.stevensdesk.com/es/guide/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://flux-rc.stevensdesk.com/guide/"/>
+  </url>
+  <url>
+    <loc>https://flux-rc.stevensdesk.com/es/guide/</loc>
+    <lastmod>2026-10-31</lastmod>
+    <xhtml:link rel="alternate" hreflang="en" href="https://flux-rc.stevensdesk.com/guide/"/>
+    <xhtml:link rel="alternate" hreflang="vi" href="https://flux-rc.stevensdesk.com/vi/guide/"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://flux-rc.stevensdesk.com/de/guide/"/>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://flux-rc.stevensdesk.com/ja/guide/"/>
+    <xhtml:link rel="alternate" hreflang="zh-Hans" href="https://flux-rc.stevensdesk.com/zh/guide/"/>
+    <xhtml:link rel="alternate" hreflang="zh-Hant" href="https://flux-rc.stevensdesk.com/zh-hant/guide/"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://flux-rc.stevensdesk.com/ru/guide/"/>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://flux-rc.stevensdesk.com/ko/guide/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://flux-rc.stevensdesk.com/es/guide/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://flux-rc.stevensdesk.com/guide/"/>
   </url>
 </urlset>

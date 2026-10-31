@@ -6,6 +6,7 @@ export default {
   'topbar.tagline': 'Nạp mode cho đèn custom dùng module Lux-RC 371D, 371 v2.0 hoặc 372 v2.0, như Oveready TorchLAB BOSS 35/70, Future BOSS và Lux-RC Minion.',
   'topbar.presets': 'Preset',
   'topbar.saved': 'Đã lưu',
+  'topbar.guide': 'Các mã PIN',
   'quick.label': 'Chọn nhanh',
   'behaviour.title': 'Tuỳ chọn',
   'program.dialogLabel': 'Nạp chương trình cho đèn',
@@ -368,6 +369,7 @@ export default {
   'program.pin.reverseClicky': 'Reverse clicky (lúc đèn tắt thì nhấn nửa không ăn gì)? Chọn Chậm, mỗi tiếng bíp click bật hẳn rồi tắt hẳn.',
   'program.pin.start': 'Bắt đầu',
   'program.pin.tailcapLink': 'PIN không ăn? Thử cách vặn đuôi',
+  'program.pin.guideLink': 'Các mã PIN khác (đo điện áp, kiểm tra pin, cài đặt): hướng dẫn PIN',
   'program.pin.interrupted': 'Bị ngắt. Sẵn sàng thì bắt đầu lại.',
   'program.pin.slipped': 'Trình duyệt bị chậm nên lệch nhịp. Bắt đầu lại.',
 

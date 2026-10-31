@@ -42,6 +42,17 @@ Shared decisions:
 | PIN | mã PIN in titles, "PIN {pin}" before a number | Avoid clash with pin = cell |
 | frames | frame | Kept English, no plural |
 | Share link | Chia sẻ link | "link" is what everyone says |
+| Guide: PIN tone | "mã PIN" in titles and lead, "PIN {pin}" before a number | Same rule as the page; "pin" stays the battery |
+| Guide: click (PIN) | click, "số lần click" | Hobby loan word; "bấm" is used for the e-switch |
+| Guide: tail switch | công tắc đuôi (clicky) | "đuôi" as in "vặn đuôi"; clicky kept English |
+| Guide: voltage meter | Đo điện áp | Names the action; short enough for a card title |
+| Guide: locator beacon | beacon định vị | Beacon kept English as on the page; "định vị" says why it exists |
+| Guide: motion sensing | cảm biến chuyển động | Plain; "cảm biến rung" is the bounce sensor, a different thing |
+| Guide: standby | chế độ chờ | What Vietnamese manuals say |
+| Guide: double-click | double-click | Kept English like click and clicky |
+| Guide: memory file | file mode | "Nhớ mode" is the memory behaviour; a file is a set of 8 modes |
+| Guide: offline switch | công tắc offline | Offline = set without the programmer; kept English |
+| Guide: now on / now off | vừa bật / vừa tắt | Says the flip just happened |
 
 ## German (de)
 
@@ -80,6 +91,17 @@ Quotes: „…“ where English has “…”.
 | driver | Treiber | Forum term |
 | light engine | LED-Modul | "Lichtmaschine" means car alternator |
 | Programmer | Programmer | Hobby loan word, same as the page title |
+| PIN (guide) | PIN (die PIN) | Feminine, as in the main page; "PIN-Codes" in headings; "einklicken" is not used, the guide says "eingeben" |
+| voltage meter | Voltmeter | What the forum calls the 111 readout; short |
+| locator beacon (standby) | Locator-Beacon | No German forum term; Beacon stays English as above, "Locator" says what it is for |
+| motion sensing | Bewegungserkennung | Plain word; "Bewegungssensor" would name the part, not the function |
+| standby | Standby | Loan word, normal in German |
+| double-click | Doppelklick | Standard |
+| memory file | Speicherbank | "Bank" is the forum word for a set of stored modes; "Datei" would sound like a computer file |
+| offline switch | Offline-Schalter | Kept as the manual's term |
+| clicky / twisty | Clicky / Twisty | Forum keeps English |
+| PIN flash | Blitz (Plural Blitze) | Short; "Impuls" is too technical |
+| highest mode (last in list) | höchster Modus (der letzte der Liste) | Manual: double-click jumps to the final mode number; "höchster" is the natural reading |
 
 ## Japanese (ja)
 
@@ -112,6 +134,17 @@ Quotes: „…“ where English has “…”.
 | Programming / program | 書き込む / 書き込み | "program the light" reads as writing to it; プログラミング only in "プログラミング PIN" |
 | Clicky switch | クリックスイッチ / リバースクリッキー | katakana |
 | Decimals | dot, half-width digits, "17 W" with space | per lead's decision |
+| Guide: PIN | PIN (title: PIN コード) | Latin letters, as on the page |
+| Guide: tail switch | テール側のクリックスイッチ（クリッキー） | Spells out where the switch is; クリッキー as hobby sites say |
+| Guide: voltage meter | 電圧メーター | Katakana ーメーター as in shop copy |
+| Guide: locator beacon | ロケータービーコン | Katakana, same as ビーコン on the page |
+| Guide: motion sensing | モーションセンサー | The usual katakana; 振動センサー is the bounce sensor |
+| Guide: standby | スタンバイ | Katakana norm |
+| Guide: double-click | ダブルクリック | Katakana norm |
+| Guide: memory file | メモリーファイル | Follows メモリー機能 |
+| Guide: offline switch | オフラインスイッチ | Katakana; no native term |
+| Guide: now on / now off | オンになった / オフになった | Plain past tense, short for the tag |
+| Guide: flashes | 点灯 for one on-flash, 点滅 for repeated | Matches how Japanese manuals count PIN input |
 
 ## Simplified Chinese (zh-Hans)
 
@@ -144,6 +177,15 @@ Quotes: „…“ where English has “…”.
 | McClicky / MOFF | kept | As brief; "机械开关" and "电子开关" added as glosses. |
 | decimal point | dot kept | Per lead decision ("0.4 s"). |
 | punctuation | full-width in Chinese, half-width around digits/units | Spaces kept between Chinese text and numbers or Latin for readability. |
+| PIN (guide) | PIN 码 in titles, PIN kept Latin | Same as the main page; 密码 would suggest a lock. |
+| voltage meter | 电压表 | Short, what hobbyists call the battery readout. |
+| locator beacon | 定位信标 | 信标 is already the beacon word; 定位 says it is for finding the light. |
+| motion sensing | 运动感应 | Matches 震动感应 style on the main page. |
+| standby | 待机 | Standard. |
+| double-click | 双击 | Standard; the single click rhythm of a PIN stays 点击. |
+| memory file | 记忆组 (guide); shown as 第 1 到 4 组 | 文件 reads as a computer file; a group of 8 modes. |
+| offline switch | 离线开关 | Settings changed without the programmer; 离线 is the manual's sense. |
+| tail (clicky) switch / electronic button | 尾按（clicky）开关 / 电子开关 | Hobby word 尾按; 电子开关 as MOFF gloss above. |
 
 ## Russian (ru)
 
@@ -197,6 +239,16 @@ Quotes: «…» where English has “…”. No plurals in code: counts go after
 | Share link | Поделиться ссылкой | Standard Russian UI phrase |
 | I'm ready | Всё готово | Avoids готов/готова gender |
 | Programmed (success) | Готово (announce: Фонарь запрограммирован.) | "Запрограммировано" alone is heavy as a title |
+| PIN (guide) | PIN (masculine: «этот PIN»; «PIN-коды» in headings) | Matches the main page; units like min and s stay Latin |
+| voltage meter | вольтметр | Forum word for the 111 readout |
+| locator beacon (standby) | маяк для поиска | Same маяк as the red beacon mode, plus its purpose |
+| motion sensing | датчик движения | Plain; «детектор» is not used |
+| standby | режим ожидания | Native phrase, no loan word needed |
+| double-click | двойной клик | Same «клик» as for PIN clicks |
+| memory file | файл памяти | Close to the English; the manual's term |
+| offline switch | офлайн-переключатель | No native hobby term; hyphenated loan |
+| clicky / twisty (light type) | кнопка clicky / twisty | Latin names kept, like McClicky; the forum uses them |
+| highest mode (last in list) | последний режим | Manual: jumps to the final mode number; «последний» is plain, «самый яркий» would be wrong |
 
 ## Traditional Chinese (zh-Hant)
 
@@ -243,6 +295,16 @@ Address: 你. Quotes: 「…」. Full-width punctuation in Chinese text; units, 
 | beep | 嗶聲 | 提示音 | What Taiwan users call it; shorter |
 | half-press | 半按 | same | Research |
 | theme | 淺色 / 深色主題 | same | 模式 avoided: it clashes with flashlight modes |
+| PIN (guide) | PIN 碼 in titles, PIN kept Latin; digits 第 {n} 碼 | 码 | Same as the main page; 密碼 would suggest a lock |
+| voltage meter | 電壓表 | 电压表 | Short, what hobbyists call the battery readout |
+| locator beacon | 定位信標 | 定位信标 | 信標 is already the beacon word; 定位 says it is for finding the light |
+| motion sensing | 動作感應 | 运动感应 | 動作 is the Taiwan word for motion here; 運動 reads as sport |
+| standby | 待機 | 待机 | Standard in Taiwan too |
+| double-click | 雙擊 | 双击 | Standard |
+| memory file | 記憶組 (shown as 第 1 到 4 組) | 记忆组 | 檔案 reads as a computer file |
+| offline switch | 離線開關 | 离线开关 | Settings changed without the programmer |
+| tail (clicky) switch / electronic button | 尾蓋的機械開關（clicky） / 電子開關 | 尾按开关 / 电子开关 | Follows the 尾蓋 and 機械開關 / 電子開關 decisions above; 尾按 kept for reverse clicky only |
+| PIN rhythm clicks | 按的次數 | 点击 | Plain Taiwan wording, avoids 點擊 (mouse click) |
 
 Notes:
 - "seconds": visible text keeps "s" ("3 s 後開始閃爍") per the units decision; the screen-reader-only `program.run.announceHold` says 秒 so it is read aloud naturally.
@@ -296,6 +358,16 @@ Vendor preset names stay in English, like every other locale.
 | frames | 프레임 ("{frames}프레임") | No plural needed |
 | Quick start names | 데일리 / 택티컬 / 은은하게 | 데일리 and 택티컬 are how Korean EDC users name these; 은은하게 says "soft, never too bright" |
 | PIN progress | 자리 {digit}/{digits} · 클릭 {click}/{clicks} | Works for any number and stays short on a phone |
+| Guide: tail switch | 테일 클리키 스위치 | Loanwords as in the tailcap and clicky rows |
+| Guide: voltage meter | 전압계 | Standard word for a meter |
+| Guide: locator beacon | 로케이터 비콘 | Loanword, same 비콘 as on the page |
+| Guide: motion sensing | 모션 센서 | Loanword; 진동 센서 is the bounce sensor |
+| Guide: standby | 대기 모드 | Plain Korean; 스탠바이 is rarer |
+| Guide: double-click | 더블클릭 | Loanword |
+| Guide: memory file | 메모리 파일 | Follows 메모리 |
+| Guide: offline switch | 오프라인 스위치 | Loanword; no native term |
+| Guide: now on / now off | 지금 켜짐 / 지금 꺼짐 | Short tag, no particle problem |
+| Guide: flash count | N회 점등 / N회 점멸 | 점등 for the on-flash in PIN input, 점멸 for the light's answer, as in the 1회 점멸 row |
 
 ## Spanish (es)
 
@@ -346,3 +418,13 @@ Vendor preset names stay in English, as in de.
 | reverse clicky / overboost / checksum | kept in English | Hobby jargon with no common Spanish term |
 | frames | fotogramas | Always plural in packet.meta |
 | I'm ready | ¡Listo! | Avoids gendered "Estoy listo/lista" |
+| PIN (guide) | PIN (el PIN, "Códigos PIN" in headings) | Matches the main page; "marcar" for entering it |
+| voltage meter | voltímetro | Plain word for the 111 readout |
+| locator beacon (standby) | baliza localizadora | Same baliza as the red beacon mode, plus its purpose |
+| motion sensing | detección de movimiento | Names the function, not the part |
+| standby | standby | Loan word used in Spanish manuals; "en espera" is vague |
+| double-click | doble clic | Same "clic" as for PIN clicks |
+| memory file | archivo de memoria | Close to the English; "banco" would sound like a bank |
+| offline switch | interruptor offline | "Offline" is common in Spanish; "interruptor" as in the switch glossary row |
+| on / off (a setting) | activado(a) / desactivado(a) | Agrees with the noun (baliza, detección: activada) |
+| highest mode (last in list) | modo más alto (el último de la lista) | Manual: jumps to the final mode number |

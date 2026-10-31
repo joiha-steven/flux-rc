@@ -8,6 +8,7 @@ export default {
   'topbar.tagline': 'Programador para linternas custom con un módulo LED Lux-RC 371D, 371 v2.0 o 372 v2.0, como la Oveready TorchLAB BOSS 35/70, la Future BOSS y la Lux-RC Minion.',
   'topbar.presets': 'Presets',
   'topbar.saved': 'Guardados',
+  'topbar.guide': 'Guía PIN',
   'quick.label': 'Inicio rápido',
   'behaviour.title': 'Comportamiento',
   'program.dialogLabel': 'Programar la linterna',
@@ -370,6 +371,7 @@ export default {
   'program.pin.reverseClicky': '¿Tu interruptor es reverse clicky (una media pulsación no hace nada con la linterna apagada)? Elige Lenta y, con cada pitido, haz un clic completo para encender y otro para apagar.',
   'program.pin.start': 'Empezar',
   'program.pin.tailcapLink': '¿El PIN no funciona? Prueba el método de la tapa trasera',
+  'program.pin.guideLink': 'Otros PIN (voltímetro, prueba de batería, ajustes): guía de PIN',
   'program.pin.interrupted': 'Interrumpido. Vuelve a empezar cuando quieras.',
   'program.pin.slipped': 'El navegador se retrasó y el ritmo se desajustó. Vuelve a empezar.',
 
