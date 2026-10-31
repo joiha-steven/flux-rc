@@ -11,7 +11,7 @@ file names, test names. No exceptions.
 ## Constraints
 
 - No dependencies, no build step, no framework. Plain HTML, CSS and ES modules. Node only runs
-  tests (`node --test`) and the page generator. The language pages (`vi/`, `de/`, `ja/`, `zh/`) are
+  tests (`node --test`) and the page generator. The language pages (`vi/`, `de/`, `ja/`, `zh/`, `zh-hant/`, `ru/`, `ko/`, `es/`) are
   generated from `index.html` and `locales/` by `npm run pages` and committed; edit those two,
   never the generated files, and rerun the script (a test fails when they are stale).
   The PIN guide pages (`guide/` is English and the template; `*/guide/` are generated) come from `guide/index.html` and
