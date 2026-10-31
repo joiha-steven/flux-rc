@@ -35,7 +35,10 @@ It is one static web page: no account, no server code, no analytics, nothing lea
   of its loop, inside the few seconds the light waits in programming mode. Lights with a
   button-port e-switch can use the tailcap method instead.
 - **Saved setups and share links**, stored in the browser.
-- **Five languages**: English, Vietnamese, German, Japanese and Chinese, picked from the browser or the topbar button.
+- **PIN guide**: a separate page (`/guide/`) explaining how the PIN works, how to enter it with each switch type,
+  and what to do when the light does not respond, linked from the topbar and the PIN step.
+- **Nine languages**: English, Vietnamese, German, Japanese, Simplified and Traditional Chinese, Russian, Korean
+  and Spanish, each on its own URL, picked from the browser or the topbar button.
 - **Dark and light themes**: follows the browser at first, and one button flips to the other.
 
 ## Run it locally
@@ -62,6 +65,9 @@ Every push to `main` is built and published by Cloudflare (Workers static assets
 the repo root, `.assetsignore` leaves out tests and tooling, and `_headers` sets caching (HTML
 revalidates, code caches for 10 minutes, images and fonts for a week). The old GitHub Pages address
 (joiha-steven.github.io/flux-rc) still serves the repo and redirects to the new domain.
+
+Every other branch gets a preview build (`npx wrangler preview`, which needs the empty `previews` block in
+`wrangler.jsonc`); the Cloudflare bot posts its URL on the pull request.
 
 ## Project layout
 

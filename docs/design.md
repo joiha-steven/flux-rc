@@ -165,11 +165,21 @@ portrait; use `object-fit: cover` with `object-position: center 65%` so the lit 
 | 768–1199 px (tablet) | Desktop layout, four tiles per row, slightly smaller tiles. Sticky bottom bar. |
 | ≥ 1200 px (desktop) | As the reference: four tiles per row with arrows, footer bar at the end of the page (not sticky). |
 
+
+### Start-up
+
+`src/ui/boot.js` is the entry module: it calls `loadLocale()` (`src/ui/i18n.js`) to fetch the page's
+locale, then imports `app.js`, which renders and sets `data-ready` on `<html>`. No module uses top-level
+await (a test checks): a shared module that awaited stopped the non-English pages from starting in Safari.
+The boot guard in `index.html` shows "couldn't load" with a Reload key if a script fails or 6 s pass
+without `data-ready`; it adds the message above the page instead of replacing it, and CSS hides it once
+the app is ready, so a page that is only slow still starts.
 ### Header
 
-Wordmark "flux-rc" (amber, monospace, letter-spacing 0.15em), subtitle "NXS R1 optical programmer"
-in muted monospace. Right: raised-key buttons "Presets" and "Saved" with icons (labels may hide below
-400 px; keep accessible names).
+Wordmark "flux-rc" (amber, Plum Mono, letter-spacing 0.02em). Under it, in muted body text, the intro line
+(`topbar.tagline`): which custom lights the page programs (Lux-RC 371D, 371 v2.0 and 372 v2.0 light engines, such as
+the Oveready TorchLAB BOSS 35/70, Future BOSS and Lux-RC Minion). Right: the language/theme pair, then the
+outline keys Presets, Saved and PIN guide with icons and labels. Arrangement per width: see Topbar layout above.
 
 ### Quick start
 

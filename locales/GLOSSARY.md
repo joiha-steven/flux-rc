@@ -5,7 +5,8 @@ change a term here first, then everywhere it appears in the locale file.
 
 Shared decisions:
 
-- Brand and part names, PIN digits and units stay as in English (Lux-RC, NXS R1, 371/372, McClicky, MOFF, CR123A, 18650, mW, W, ms, °C, V).
+- Brand and part names, PIN digits and units stay as in English (Lux-RC, NXS R1, 371D, 371 v2.0, 372 v2.0, Oveready, TorchLAB, BOSS, Future BOSS, Minion, McClicky, MOFF, CR123A, 18650, mW, W, ms, °C, V). Write BOSS in capitals and Oveready with one r.
+- "Custom flashlight" (the intro line and the description): vi đèn custom (đèn pin custom in meta), de Custom-Taschenlampe, ja カスタムライト, zh-Hans 定制手电, zh-Hant 訂製手電筒, ru кастомный фонарь, ko 커스텀 손전등, es linterna custom. The hobby's own word in each language, not a literal "made to order".
 - Decimals keep the dot ("0.4 s", "3.7 V") in every language, German included: numbers also come from the code and the protocol tables with a dot, and mixing both would look broken.
 - The ` · ` separator in mode labels stays; screen readers get `a11y.listSeparator` instead.
 
