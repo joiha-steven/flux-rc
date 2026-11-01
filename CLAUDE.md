@@ -30,6 +30,4 @@ relax a test to make it pass; if a rule seems wrong, report it with evidence ins
 ## Checks before calling something done
 
 - `npm test` is green.
-- UI changes: serve with `npm run serve`, check widths 375, 768 and 1440 in both colour schemes,
-  run `~/.claude/tools/do-giao-dien.js` on the page at each width and fix what it reports (or give a
-  reason per item), then take one screenshot per width.
+- UI changes: serve with `npm run serve`, check widths 375, 768 and 1440 in both colour schemes.
