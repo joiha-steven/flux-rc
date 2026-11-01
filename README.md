@@ -12,14 +12,13 @@ programming mode, hold it against the screen, and the flashing square programs i
 **Use it here: https://flux-rc.stevensdesk.com/**
 
 It is one static web page: no account, no server code, no analytics, nothing leaves your browser.
+What changed and when: [CHANGELOG.md](CHANGELOG.md).
 
 ![flux-rc on desktop and phone](docs/screenshots/1-hero.jpg)
 
-<p>
-  <img src="docs/screenshots/2-pin.jpg" width="32%" alt="The PIN guide: setup, a beep, the hold">
-  <img src="docs/screenshots/3-picker.jpg" width="32%" alt="The mode picker with every level and its power">
-  <img src="docs/screenshots/4-languages.jpg" width="32%" alt="The page in several languages">
-</p>
+![The PIN guide page in the light theme: the 371 v1 and v2 boards and the PIN codes](docs/screenshots/5-guide.jpg)
+
+![The light theme, entering a PIN with the beeping rhythm guide, the mode picker with every level and its power, and the page in Vietnamese, German, Japanese and Chinese](docs/screenshots/overview.webp)
 
 ## What it does
 
@@ -35,7 +34,10 @@ It is one static web page: no account, no server code, no analytics, nothing lea
   of its loop, inside the few seconds the light waits in programming mode. Lights with a
   button-port e-switch can use the tailcap method instead.
 - **Saved setups and share links**, stored in the browser.
-- **Five languages**: English, Vietnamese, German, Japanese and Chinese, picked from the browser or the topbar button.
+- **PIN guide**: a separate page (`/guide/`) explaining how the PIN works, how to enter it with each switch type,
+  and what to do when the light does not respond, linked from the topbar and the PIN step.
+- **Nine languages**: English, Vietnamese, German, Japanese, Simplified and Traditional Chinese, Russian, Korean
+  and Spanish, each on its own URL, picked from the browser or the topbar button.
 - **Dark and light themes**: follows the browser at first, and one button flips to the other.
 
 ## Run it locally
@@ -63,6 +65,9 @@ the repo root, `.assetsignore` leaves out tests and tooling, and `_headers` sets
 revalidates, code caches for 10 minutes, images and fonts for a week). The old GitHub Pages address
 (joiha-steven.github.io/flux-rc) still serves the repo and redirects to the new domain.
 
+Every other branch gets a preview build (`npx wrangler preview`, which needs the empty `previews` block in
+`wrangler.jsonc`); the Cloudflare bot posts its URL on the pull request.
+
 ## Project layout
 
 | Path | What it is |
@@ -80,7 +85,8 @@ revalidates, code caches for 10 minutes, images and fonts for a week). The old G
 | `docs/protocol.md` | The optical protocol, reverse engineered and verified |
 | `docs/config-model.md` | The config object the UI edits |
 | `docs/design.md` | UI layout and behaviour |
-| `docs/screenshots/` | Images for this README (not deployed) |
+| `docs/screenshots/` | Images for this README (not deployed); `overview.webp` is a 2 × 2 grid of `6-light`, `2-pin`, `3-picker` and `4-languages` |
+| `CHANGELOG.md` | What changed on the live page, by date |
 | `wrangler.jsonc`, `.assetsignore`, `_headers` | Cloudflare deploy settings |
 | `robots.txt`, `sitemap.xml`, `assets/og.jpg` | For search engines and link previews |
 
